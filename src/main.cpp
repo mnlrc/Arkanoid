@@ -1,8 +1,6 @@
 #include <iostream>
-
+#include "allegro_test.hpp"
 #include "game.hpp"
-#include "bricks.hpp"
-#include "racket.hpp"
 
 // TODO 
 /**
@@ -13,5 +11,8 @@
 
 
 int main(){
+    init_test(al_init(), "allegro");
+    Game game = Game();
+    game.runGame();
     return 0;
 }

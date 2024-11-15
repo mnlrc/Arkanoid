@@ -4,14 +4,10 @@
 
 #include "window.hpp"
 
-
-#define WIDTH 500
-#define HEIGHT 500
-
-
 class Game {
     private:
         Window window;
     public:
         Game();
+        void runGame();
 };

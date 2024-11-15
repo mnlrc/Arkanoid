@@ -10,7 +10,10 @@ class Window {
     private:
         const unsigned width;
         const unsigned height;
+        ALLEGRO_DISPLAY* display;
     public:
     
-        Window(const unsigned w, const unsigned h);
+        Window();
+
+        ALLEGRO_DISPLAY* getDisplay() const noexcept;
 };

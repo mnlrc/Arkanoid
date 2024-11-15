@@ -1,12 +1,14 @@
 #include "window.hpp"
+#include "allegro_test.hpp"
 
+Window::Window() : width(500), height(500) {
 
-bool init_test(bool test, const char* description){
-    if (!test){
-        std::cerr << "Couldn't initialize " << description << std::endl;
-        exit (1);
-    }
-    return;
+    // Initializing ALLEGRO_DISPLAY
+    display = al_create_display(width, height);
+    init_test(display, "display");
+
+    al_clear_to_color(al_map_rgb(255, 255, 255));
+    al_flip_display();  // Update display
 }
 
-Window::Window(const unsigned w, const unsigned h) : width(w), height(h) {}
+ALLEGRO_DISPLAY* Window::getDisplay() const noexcept { return display; }
