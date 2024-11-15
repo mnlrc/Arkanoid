@@ -1,14 +1,22 @@
 #include "window.hpp"
-#include "allegro_test.hpp"
 
-Window::Window() : width(500), height(500) {
-
+Window::Window() {
     // Initializing ALLEGRO_DISPLAY
-    display = al_create_display(width, height);
+    display = al_create_display(WIDTH, HEIGHT);
     init_test(display, "display");
-
-    al_clear_to_color(al_map_rgb(255, 255, 255));
-    al_flip_display();  // Update display
 }
 
 ALLEGRO_DISPLAY* Window::getDisplay() const noexcept { return display; }
+
+void Window::center_window(){  
+    // Calculating postions
+    int x_pos = (1920 - WIDTH) / 2;
+    int y_pos = (1080 - HEIGHT) / 2;
+    // Centering window
+    al_set_window_position(display, x_pos, y_pos);
+}
+
+void Window::draw_game_limits(){
+    al_draw_rectangle(0, 100, WIDTH, HEIGHT, al_map_rgb(255, 255, 255), 2.0);
+    al_draw_rectangle(0, HEIGHT - 500, WIDTH, 0, al_map_rgb(255, 255, 255), 2.0);
+}

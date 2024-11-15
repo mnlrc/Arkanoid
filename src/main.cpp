@@ -1,12 +1,10 @@
-#include <iostream>
-#include "allegro_test.hpp"
-#include "game.hpp"
-
+#include "main.hpp"
 // TODO 
 /**
  * MUSIQUE
  * Classes
  * Appliquer au mieux les concepts vus au cours
+ * chaque classe a une fonction draw appelée par la fonction draw de game
  */
 
 

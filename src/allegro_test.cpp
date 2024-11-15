@@ -6,3 +6,7 @@ void init_test(bool test, const char* description){
         exit (1);
     }
 }
+
+void init_test(void* test, const char* description) {
+    init_test(test != nullptr, description);
+}
