@@ -17,8 +17,15 @@ void Game::cleanUpGame(){
 void Game::draw(){
     al_clear_to_color(al_map_rgb(0, 0, 0));
     window.draw_game_limits();
-    racket.draw();
+    draw(racket);
     al_flip_display();
+}
+
+void Game::draw(Racket& racket){
+    float y1 = LIMIT_HEIGHT + (RACKET_HEIGHT - (RACKET_HEIGHT / 2));
+    float y2 = LIMIT_HEIGHT + (RACKET_HEIGHT + (RACKET_HEIGHT / 2));
+    al_draw_rectangle(racket.getLeftBorder(), y1, racket.getRightBorder(), y2, al_map_rgb(0, 0, 255), 5.0);
+    al_draw_filled_rectangle(racket.getLeftBorder(), y1, racket.getRightBorder(), y2, al_map_rgb(255, 255, 255));
 }
 
 void Game::manageKey(ALLEGRO_EVENT event){
@@ -67,7 +74,7 @@ void Game::runGame(){
         case ALLEGRO_EVENT_TIMER:
             draw();
             break;
-        case ALLEGRO_EVENT_KEY_DOWN:
+        case ALLEGRO_EVENT_KEY_CHAR:
             manageKey(event);
         default: {
       }

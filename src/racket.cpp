@@ -17,16 +17,13 @@ float Racket::getX() const noexcept { return x_; }
 
 float Racket::getWidth() const noexcept { return width_; }
 
+float Racket::getLeftBorder() const noexcept { return left_border; }
+
+float Racket::getRightBorder() const noexcept { return right_border; }
+
 void Racket::setX(float x) noexcept { x_ = x; }
 
 double Racket::returnAngle(int x) { return (30 + (120 * (1 - x/width_))); }
-
-void Racket::draw(){
-    float y1 = LIMIT_HEIGHT + (RACKET_HEIGHT - (RACKET_HEIGHT / 2));
-    float y2 = LIMIT_HEIGHT + (RACKET_HEIGHT + (RACKET_HEIGHT / 2));
-    al_draw_rectangle(left_border, y1, right_border, y2, al_map_rgb(0, 0, 255), 5.0);
-    al_draw_filled_rectangle(left_border, y1, right_border, y2, al_map_rgb(255, 255, 255));
-}
 
 void Racket::move(float dx){
     if (IsInBounds(dx)){

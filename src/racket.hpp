@@ -9,7 +9,7 @@
 #ifndef racket_HPP
 #define racket_HPP
 
-#include "allegro5/allegro_primitives.h"
+#include "point.hpp"
 
 #define RACKET_HEIGHT 15 // height of the racket on the window
 #define LIMIT_HEIGHT 565 // 565 is an arbitrary number chosen so that the racket isn't to close to the border of the Window
@@ -51,6 +51,18 @@ class Racket {
          */
         float getWidth() const noexcept;
 
+        /**
+         * @brief Get the left border coordinate of the racket
+         * @return The value of the left border
+         */
+        float getLeftBorder() const noexcept;
+
+        /**
+         * @brief Get the right border coordinate of the racket
+         * @return The value of the right border
+         */
+        float getRightBorder() const noexcept;
+
         // #### Setters ####
 
         /**
@@ -67,11 +79,6 @@ class Racket {
          * @param x Position of the ball compared to the start of the racket
          */
         double returnAngle(int x);
-
-        /**
-         * @brief Draws the racket
-         */
-        void draw();
 
         /**
          * @brief Changes the x coordinate of the racket

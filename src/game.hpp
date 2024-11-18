@@ -36,4 +36,5 @@ class Game {
         void cleanUpGame();
         void draw();
         void manageKey(ALLEGRO_EVENT);
+        void draw(Racket& racket);
 };
