@@ -1,32 +1,20 @@
 #include "game.hpp"
 
 void Game::setupGame(){
-    al_register_event_source(queue, al_get_display_event_source(window.getDisplay()));
+    al_register_event_source(queue, al_get_display_event_source(gameView.getDisplay()));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_keyboard_event_source());
     
     al_start_timer(timer);
 }
 
+
 void Game::cleanUpGame(){
     al_destroy_event_queue(queue);
-    al_destroy_display(window.getDisplay());
+    al_destroy_display(gameView.getDisplay());
     al_destroy_timer(timer);
 }
 
-void Game::draw(){
-    al_clear_to_color(al_map_rgb(0, 0, 0));
-    window.draw_game_limits();
-    draw(racket);
-    al_flip_display();
-}
-
-void Game::draw(Racket& racket){
-    float y1 = LIMIT_HEIGHT + (RACKET_HEIGHT - (RACKET_HEIGHT / 2));
-    float y2 = LIMIT_HEIGHT + (RACKET_HEIGHT + (RACKET_HEIGHT / 2));
-    al_draw_rectangle(racket.getLeftBorder(), y1, racket.getRightBorder(), y2, al_map_rgb(0, 0, 255), 5.0);
-    al_draw_filled_rectangle(racket.getLeftBorder(), y1, racket.getRightBorder(), y2, al_map_rgb(255, 255, 255));
-}
 
 void Game::manageKey(ALLEGRO_EVENT event){
     switch (event.keyboard.keycode) {
@@ -41,27 +29,9 @@ void Game::manageKey(ALLEGRO_EVENT event){
             racket.move(15);
             break;
         default: {}
-
-    }
-    
+    } 
 }
 
-Game::Game(): window(), racket((WIDTH / 2), (WIDTH / 5)){
-    //INITIALIZE ATTRIBUTES => racket, window, ball?, bricks, ...
-    window.center_window();
-    timer = al_create_timer(1.0/FREQUENCY);
-    queue = al_create_event_queue();
-    
-    // Tests if everything is correctly initialized
-    init_test(timer, "timer");
-    init_test(queue, "queue");
-    init_test(al_init_primitives_addon(), "primitives");
-    init_test(al_install_keyboard(), "keyboard");
-}
-
-Game::~Game(){
-
-}
 
 void Game::runGame(){
     setupGame();
@@ -72,9 +42,9 @@ void Game::runGame(){
             done = true;
             break;
         case ALLEGRO_EVENT_TIMER:
-            draw();
+            gameView.draw(); // TODO
             break;
-        case ALLEGRO_EVENT_KEY_CHAR:
+        case ALLEGRO_EVENT_KEY_CHAR: // TODO
             manageKey(event);
         default: {
       }
@@ -82,3 +52,20 @@ void Game::runGame(){
   }
     cleanUpGame();
 }
+
+
+Game::Game() {
+    init_test(al_init(), "allegro");
+    //INITIALIZE ATTRIBUTES => racket, window, ball?, bricks, ...
+    timer = al_create_timer(1.0/FREQUENCY);
+    queue = al_create_event_queue();
+    
+    // Tests if everything is correctly initialized
+    init_test(timer, "timer");
+    init_test(queue, "queue");
+    init_test(al_init_primitives_addon(), "primitives");
+    init_test(al_install_keyboard(), "keyboard");
+}
+
+
+Game::~Game() {}

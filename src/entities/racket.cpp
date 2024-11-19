@@ -8,32 +8,25 @@
 #include <iostream>
 #include "racket.hpp"
 
-Racket::Racket(float x, float w) : x_(x), width_(w) {
-    left_border = x_ - (width_ / 2);
-    right_border = x_ + (width_ / 2);
-}
+Racket::Racket(Point pt) : center_(pt), width_(DEFAULT_RACKET_WIDTH) {}
 
-float Racket::getX() const noexcept { return x_; }
+Point Racket::getCenter() const noexcept { return center_; }
 
 float Racket::getWidth() const noexcept { return width_; }
 
-float Racket::getLeftBorder() const noexcept { return left_border; }
-
-float Racket::getRightBorder() const noexcept { return right_border; }
-
-void Racket::setX(float x) noexcept { x_ = x; }
+void Racket::setCenter(Point pt) noexcept { center_ = pt; }
 
 double Racket::returnAngle(int x) { return (30 + (120 * (1 - x/width_))); }
 
-void Racket::move(float dx){
-    if (IsInBounds(dx)){
-        x_ += dx;
-        // Reevaluate the positions of the borders
-        left_border = x_ - (width_ / 2);
-        right_border = x_ + (width_ / 2);
-    }
-}
+// void Racket::move(float dx){
+//     if (IsInBounds(dx)){
+//         x_ += dx;
+//         // Reevaluate the positions of the borders
+//         left_border = x_ - (width_ / 2);
+//         right_border = x_ + (width_ / 2);
+//     }
+// }
 
-bool Racket::IsInBounds(float dx) const {
-    return !((left_border + dx) < 0 || (right_border + dx) > WINDOW_WIDTH);
-}
+// bool Racket::IsInBounds(float dx) const {
+//     return !((left_border + dx) < 0 || (right_border + dx) > WINDOW_WIDTH);
+// }

@@ -1,5 +1,5 @@
 /**
- * @file raqutte.hpp
+ * @file raquette.hpp
  * @author Manuel Rocca
  * @brief Header file for the Racket class
  * @date 2024
@@ -12,6 +12,7 @@
 #include "point.hpp"
 
 #define RACKET_HEIGHT 15 // height of the racket on the window
+#define DEFAULT_RACKET_WIDTH 100
 #define LIMIT_HEIGHT 565 // 565 is an arbitrary number chosen so that the racket isn't to close to the border of the Window
 #define WINDOW_WIDTH 500
 
@@ -24,10 +25,8 @@
 class Racket {
     
     private:
-        float x_; // x coordinate of the racket
+        Point center_; // Coordinates of the middle of the racket
         float width_; // width of the racket
-        float left_border;
-        float right_border;
     
     public:
         // ### Constructors ###
@@ -35,7 +34,7 @@ class Racket {
          * @brief Constructor for the Racket class
          * @param x Initial x coordinate of the racket
          */
-        Racket(float x, float w);
+        Racket(Point pt);
 
         // #### Getters ####
 
@@ -43,7 +42,7 @@ class Racket {
          * @brief Get the x coordinate of the racket
          * @return The x coordinate of the racket
          */
-        float getX() const noexcept;
+        Point getCenter() const noexcept;
 
         /**
          * @brief Get the width of the racket
@@ -51,25 +50,13 @@ class Racket {
          */
         float getWidth() const noexcept;
 
-        /**
-         * @brief Get the left border coordinate of the racket
-         * @return The value of the left border
-         */
-        float getLeftBorder() const noexcept;
-
-        /**
-         * @brief Get the right border coordinate of the racket
-         * @return The value of the right border
-         */
-        float getRightBorder() const noexcept;
-
         // #### Setters ####
 
         /**
          * @brief Set the x coordinate of the racket
          * @param x The new x coordinate of the racket
          */
-        void setX(float x) noexcept;
+        void setCenter(Point pt) noexcept;
 
         // ### Methods ###
 

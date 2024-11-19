@@ -9,8 +9,6 @@
 
 
 int main(){
-    init_test(al_init(), "allegro");
-    Game game = Game();
-    game.runGame();
+    Game().runGame();
     return 0;
 }
