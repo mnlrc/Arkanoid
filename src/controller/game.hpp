@@ -6,10 +6,10 @@
 #include <allegro5/events.h>
 
 
-#include "window.hpp"
-#include "racket.hpp"
-#include "brick.hpp"
-#include "allegro_test.hpp"
+#include "view/window.hpp"
+#include "entities/racket.hpp"
+#include "entities/brick.hpp"
+#include "tests/allegro_test.hpp"
 
 
 #define FREQUENCY 60
