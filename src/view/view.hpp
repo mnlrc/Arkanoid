@@ -29,10 +29,10 @@ class View {
         ALLEGRO_DISPLAY* getDisplay() const noexcept;
         
         // Draw methods
-        void draw(Racket racket, std::vector<Ball> balls, std::vector<std::vector<Brick>> bricks);
-        void drawRacket(Racket racket);
-        void drawBricks(std::vector<std::vector<Brick>> bricks);
-        void drawBall(std::vector<Ball> balls);
+        void draw(Racket& racket, std::vector<Ball>& balls, std::vector<std::vector<Brick>>& bricks);
+        void drawRacket(Racket& racket);
+        void drawBricks(std::vector<std::vector<Brick>>& bricks);
+        void drawBall(std::vector<Ball>& balls);
 };
 
 

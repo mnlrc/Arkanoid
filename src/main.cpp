@@ -9,6 +9,7 @@
 
 
 int main(){
+    al_init();
     Game().runGame();
     return 0;
 }

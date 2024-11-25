@@ -22,9 +22,9 @@ class Game {
         std::vector<std::vector<Brick>> bricks_;
         
         // Allegro instances
-        ALLEGRO_TIMER* timer;
-        ALLEGRO_EVENT event;
-        ALLEGRO_EVENT_QUEUE* queue;
+        ALLEGRO_TIMER* timer_;
+        ALLEGRO_EVENT event_;
+        ALLEGRO_EVENT_QUEUE* queue_;
         
         // Others
         bool done = false;
