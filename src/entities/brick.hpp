@@ -1,16 +1,23 @@
 #ifndef BRICK_HPP
 #define BRICK_HPP
 
+#include "point.hpp"
+
+#define BRICK_WIDTH 35
+#define BRICK_HEIGHT 20
+
 class Brick{
     private:
-        const unsigned width_;
-        const unsigned height_;
+        const float width_;
+        const float height_;
+        const Point center_;
         bool isBreakable; // for later phases 
     public:
-        Brick(unsigned w, unsigned h);
+        Brick(float w, float h, Point pt);
         ~Brick();
-        unsigned getWidth() const noexcept;
-        unsigned getHeight() const noexcept;
+        float getWidth() const noexcept;
+        float getHeight() const noexcept;
+        Point getCenter() const noexcept;
 };
 
 #endif

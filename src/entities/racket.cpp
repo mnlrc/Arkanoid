@@ -16,6 +16,8 @@ Point Racket::getCenter() const noexcept { return center_; }
 
 float Racket::getWidth() const noexcept { return width_; }
 
+float Racket::getHeight() const noexcept { return height_; }
+
 void Racket::setCenter(Point pt) noexcept { center_ = pt; }
 
 double Racket::returnAngle(int x) { return (30 + (120 * (1 - x/width_))); }

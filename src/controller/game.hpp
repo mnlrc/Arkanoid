@@ -10,15 +10,16 @@
 
 
 #define FREQUENCY 60
-#define NUMBER_OF_BRICKS 78 // By counting the ones on the example given in the instructions
+#define BRICKS_COLS 14 // number of brick columns
+#define BRICKS_ROWS 8 // number of brick rows
 
 class Game {
     private:
         // Objects
-        View gameView;
-        Racket racket;
-        Ball ball;
-        Brick bricks[NUMBER_OF_BRICKS];
+        View gameView_;
+        Racket racket_;
+        std::vector<Ball> balls_;
+        std::vector<std::vector<Brick>> bricks_;
         
         // Allegro instances
         ALLEGRO_TIMER* timer;
@@ -31,10 +32,11 @@ class Game {
         // Private methods
         void cleanUpGame();
         void manageKey(ALLEGRO_EVENT);
+        void setupGame();
 
     public:
         Game();
         ~Game();
         void runGame();
-        void setupGame();
+        void update();
 };

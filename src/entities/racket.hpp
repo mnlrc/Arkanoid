@@ -53,6 +53,12 @@ class Racket {
          */
         float getWidth() const noexcept;
 
+        /**
+         * @brief Get the height of the racket
+         * @return The height of the racket
+         */
+        float getHeight() const noexcept;
+
 
         // #### Setters ####
         /**
