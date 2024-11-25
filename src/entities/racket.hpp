@@ -11,11 +11,6 @@
 
 #include "point.hpp"
 
-#define RACKET_HEIGHT 15 // height of the racket on the window
-#define DEFAULT_RACKET_WIDTH 100
-#define LIMIT_HEIGHT 565 // 565 is an arbitrary number chosen so that the racket isn't to close to the border of the Window
-#define WINDOW_WIDTH 500
-
 /**
  * @class Racket
  * @brief Represents the racket used by the player
@@ -27,17 +22,25 @@ class Racket {
     private:
         Point center_; // Coordinates of the middle of the racket
         float width_; // width of the racket
-    
+        const float height_; // height of the racket
+
     public:
-        // ### Constructors ###
+        // ### Constructor ###
         /**
          * @brief Constructor for the Racket class
          * @param x Initial x coordinate of the racket
          */
-        Racket(Point pt);
+        Racket(Point pt, float w, float h);
+
+
+        // ### Destructor ###
+        /**
+         * @brief Destructor for the Racket class
+         */
+        ~Racket();
+
 
         // #### Getters ####
-
         /**
          * @brief Get the x coordinate of the racket
          * @return The x coordinate of the racket
@@ -50,17 +53,16 @@ class Racket {
          */
         float getWidth() const noexcept;
 
-        // #### Setters ####
 
+        // #### Setters ####
         /**
          * @brief Set the x coordinate of the racket
          * @param x The new x coordinate of the racket
          */
         void setCenter(Point pt) noexcept;
 
+
         // ### Methods ###
-
-
         /**
          * @brief Returns the angle of the ball when a collision occurs
          * @param x Position of the ball compared to the start of the racket

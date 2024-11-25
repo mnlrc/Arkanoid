@@ -8,7 +8,9 @@
 #include <iostream>
 #include "racket.hpp"
 
-Racket::Racket(Point pt) : center_(pt), width_(DEFAULT_RACKET_WIDTH) {}
+Racket::Racket(Point pt, float w, float h): center_(pt), width_(w), height_(h) {}
+
+Racket::~Racket() = default;
 
 Point Racket::getCenter() const noexcept { return center_; }
 
