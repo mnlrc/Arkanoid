@@ -9,37 +9,47 @@ void Game::setupGame(){
 }
 
 
-void Game::cleanUpGame(){
-    al_destroy_event_queue(queue_);
-    al_destroy_display(gameView_.getDisplay());
-    al_destroy_timer(timer_);
-}
-
-
-void Game::manageKey(ALLEGRO_EVENT event){
+void Game::manageKeyDown(ALLEGRO_EVENT event){
     switch (event.keyboard.keycode) {
         case 59: // escape
             std::cout << "Program ended." << std::endl;
             done = true;
             break;
-        case 17: // Q
-            // racket_.move(-15);
+        case KEY_LEFT: // Q
+            inputKeys_["left"] = true;
             break;
-        case 4: // D
-            // racket_.move(15);
+        case KEY_RIGHT: // D
+            inputKeys_["right"] = true;
             break;
         default: {}
     } 
 }
 
+void Game::manageKeyUp(ALLEGRO_EVENT event) {
+    switch (event.keyboard.keycode) {
+        case KEY_LEFT: // Q
+            inputKeys_["left"] = false;
+            break;
+        case KEY_RIGHT: // D
+            inputKeys_["right"] = false;
+            break;
+        default: {}
+    }
+}
+
 void Game::update() {
     // gérer le déplacement de la balle + collisions etc
-    gameView_.draw(racket_, balls_, bricks_);
+    if (inputKeys_["right"]) {
+        control_.move(racket_, inputKeys_["right"]);
+    }
+    else if (inputKeys_["left"]) {
+        control_.move(racket_, !inputKeys_["left"]);
+    }
+    gameView_.drawAll(racket_, balls_, bricks_);
 }
 
 
 void Game::runGame(){
-    setupGame();
     while (!done) {
     al_wait_for_event(queue_, &event_);
     switch (event_.type) {
@@ -49,19 +59,22 @@ void Game::runGame(){
         case ALLEGRO_EVENT_TIMER:
             update();// TODO
             break;
-        case ALLEGRO_EVENT_KEY_CHAR: // TODO
-            manageKey(event_);
+        case ALLEGRO_EVENT_KEY_DOWN: // TODO
+            manageKeyDown(event_);
+            break;
+        case ALLEGRO_EVENT_KEY_UP:
+            manageKeyUp(event_);
+            break;
         default: {
       }
     }
   }
-    cleanUpGame();
 }
 
 
-Game::Game(): gameView_(), racket_(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, WINDOW_WIDTH / 5, WINDOW_HEIGHT / 25) {
+Game::Game(View gameview): gameView_(gameview), racket_(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, WINDOW_WIDTH / 5, WINDOW_HEIGHT / 25) {
     
-    // Init bricks
+    // Init bricks -> TODO/TOCOMPLETE
     float brickWidth = (WINDOW_WIDTH - 10) / BRICKS_COLS;
     float brickHeight = (WINDOW_HEIGHT / 3) / BRICKS_ROWS;
     float yPos = 0.25 *  WINDOW_HEIGHT; float xPos = 5;
@@ -78,7 +91,6 @@ Game::Game(): gameView_(), racket_(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, 
     // Init balls
     balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 80}, 12));
     
-    init_test(al_init(), "allegro");
     timer_ = al_create_timer(1.0/FREQUENCY);
     queue_ = al_create_event_queue();
     
@@ -87,7 +99,13 @@ Game::Game(): gameView_(), racket_(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, 
     init_test(queue_, "queue");
     init_test(al_init_primitives_addon(), "primitives");
     init_test(al_install_keyboard(), "keyboard");
+
+    setupGame();
 }
 
 
-Game::~Game() {}
+Game::~Game() {
+    al_destroy_event_queue(queue_);
+    al_destroy_display(gameView_.getDisplay()); // ou appeler le destructeur de View??
+    al_destroy_timer(timer_);
+}

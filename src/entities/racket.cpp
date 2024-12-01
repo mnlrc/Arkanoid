@@ -8,7 +8,7 @@
 #include <iostream>
 #include "racket.hpp"
 
-Racket::Racket(Point pt, float w, float h): center_(pt), width_(w), height_(h) {}
+Racket::Racket(Point pt, float w, float h): center_(pt), width_(w), height_(h), speed_(DEFAULT_RACKET_SPEED) {}
 
 Racket::~Racket() = default;
 
@@ -18,7 +18,9 @@ float Racket::getWidth() const noexcept { return width_; }
 
 float Racket::getHeight() const noexcept { return height_; }
 
-void Racket::setCenter(Point pt) noexcept { center_ = pt; }
+unsigned Racket::getSpeed() const noexcept { return speed_; };
+
+void Racket::setCenter(float dx) noexcept { center_.x_ = dx; }
 
 double Racket::returnAngle(int x) { return (30 + (120 * (1 - x/width_))); }
 

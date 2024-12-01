@@ -11,6 +11,8 @@
 
 #include "point.hpp"
 
+#define DEFAULT_RACKET_SPEED 150
+
 /**
  * @class Racket
  * @brief Represents the racket used by the player
@@ -23,9 +25,10 @@ class Racket {
         Point center_; // Coordinates of the middle of the racket
         float width_; // width of the racket
         const float height_; // height of the racket
+        unsigned speed_; // speed of the racket
 
     public:
-        // ### Constructor ###
+        // #### Constructor ####
         /**
          * @brief Constructor for the Racket class
          * @param x Initial x coordinate of the racket
@@ -33,7 +36,7 @@ class Racket {
         Racket(Point pt, float w, float h);
 
 
-        // ### Destructor ###
+        // #### Destructor ####
         /**
          * @brief Destructor for the Racket class
          */
@@ -59,16 +62,22 @@ class Racket {
          */
         float getHeight() const noexcept;
 
+        /**
+         * @brief Get the speed of the racket
+         * @return The speed of the racket
+         */
+        unsigned getSpeed() const noexcept;
+
 
         // #### Setters ####
         /**
          * @brief Set the x coordinate of the racket
          * @param x The new x coordinate of the racket
          */
-        void setCenter(Point pt) noexcept;
+        void setCenter(float dx) noexcept;
 
 
-        // ### Methods ###
+        // #### Methods ####
         /**
          * @brief Returns the angle of the ball when a collision occurs
          * @param x Position of the ball compared to the start of the racket

@@ -7,7 +7,6 @@
 #include <allegro5/color.h>
 #include <vector>
 
-
 #include "entities/ball.hpp"
 #include "entities/brick.hpp"
 #include "entities/point.hpp"
@@ -15,13 +14,15 @@
 #include "tests/allegro_test.hpp"
 
 
-#define WINDOW_WIDTH 500
-#define WINDOW_HEIGHT 600
+#include "global_variables.hpp"
 
 
 class View {
     private:
         ALLEGRO_DISPLAY* display;
+        void drawRacket(const Racket& racket);
+        void drawBricks(const std::vector<std::vector<Brick>>& bricks);
+        void drawBall(const std::vector<Ball>& balls);
 
     public:
         View();
@@ -29,10 +30,10 @@ class View {
         ALLEGRO_DISPLAY* getDisplay() const noexcept;
         
         // Draw methods
-        void draw(Racket& racket, std::vector<Ball>& balls, std::vector<std::vector<Brick>>& bricks);
-        void drawRacket(Racket& racket);
-        void drawBricks(std::vector<std::vector<Brick>>& bricks);
-        void drawBall(std::vector<Ball>& balls);
+        void drawAll(const Racket& racket, const std::vector<Ball>& balls, const std::vector<std::vector<Brick>>& bricks);
+        void draw(const Racket& racket);
+        void draw(const std::vector<Ball>& balls);
+        void draw(const std::vector<std::vector<Brick>>& bricks);
 };
 
 
