@@ -2,6 +2,7 @@
 #define CONTROL_HPP
 
 #include <vector>
+#include <cmath>
 
 #include "entities/ball.hpp"
 #include "entities/brick.hpp"
@@ -14,7 +15,10 @@ class Control {
     public:
         Control();
         ~Control();
-        void move(Racket& racket, bool direction); //returns bool to if out of bounds
+        void move(Racket& racket, bool direction);
+        void move(std::vector<Ball>& balls, Racket& racket);
+        bool circleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
+
 };
 
 #endif

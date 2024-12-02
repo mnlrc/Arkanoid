@@ -3,23 +3,35 @@
 
 #include "point.hpp"
 
-#define DEFAULT_BALL_SPEED 20
+const bool DEFAULT_BALL_STATE = false;
+const unsigned DEFAULT_BALL_SPEED = 5;
+
 
 
 class Ball{
     private:
         Point center_;
-        const float radius_; // is equal to it's height
-        unsigned speed_;
-        // isMoving when on the racket or no ? 
+        const float radius_;
+        float speedX_;
+        float speedY_;
+        bool isMoving;
     public:
         // #### Constructor ####
-        Ball(Point c, float w);
+        Ball(Point c, float w, unsigned, unsigned);
+        // #### Destructor ####
         ~Ball();
+        // #### Getters ####
         float getRadius() const noexcept;
         Point getCenter() const noexcept;
+        float getSpeedX() const noexcept;
+        float getSpeedY() const noexcept;
+        bool getState() const noexcept;
+
+        // #### Setters ####
         void setCenter(const Point pt) noexcept;
-        void move(float dx, float dy);
+        void setSpeedX(const float) noexcept;
+        void setSpeedY(const float) noexcept;
+        void changeState() noexcept;
 };
 
 #endif

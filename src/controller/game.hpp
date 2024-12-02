@@ -15,6 +15,7 @@
 
 const int KEY_LEFT = ALLEGRO_KEY_Q;
 const int KEY_RIGHT = ALLEGRO_KEY_D;
+const int KEY_SPACE = ALLEGRO_KEY_SPACE;
 
 class Game {
     private:
@@ -32,6 +33,7 @@ class Game {
         
         // #### Others ####
         bool done = false;
+        bool yes = false;
         std::map<std::string, bool> inputKeys_ = {{"left", false}, {"right", false}};
 
         // #### Private methods ####

@@ -21,6 +21,9 @@ void Game::manageKeyDown(ALLEGRO_EVENT event){
         case KEY_RIGHT: // D
             inputKeys_["right"] = true;
             break;
+        case KEY_SPACE:
+            yes = true;
+            break;
         default: {}
     } 
 }
@@ -45,6 +48,7 @@ void Game::update() {
     else if (inputKeys_["left"]) {
         control_.move(racket_, !inputKeys_["left"]);
     }
+    if (yes) control_.move(balls_, racket_);
     gameView_.drawAll(racket_, balls_, bricks_);
 }
 
@@ -89,7 +93,7 @@ Game::Game(View gameview): gameView_(gameview), racket_(Point{WINDOW_WIDTH / 2, 
         xPos = 5;
     }
     // Init balls
-    balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 80}, 12));
+    balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 75}, 12, DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED));
     
     timer_ = al_create_timer(1.0/FREQUENCY);
     queue_ = al_create_event_queue();

@@ -11,7 +11,7 @@
 
 #include "point.hpp"
 
-#define DEFAULT_RACKET_SPEED 150
+#define DEFAULT_RACKET_SPEED 10
 
 /**
  * @class Racket

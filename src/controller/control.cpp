@@ -15,3 +15,66 @@ void Control::move(Racket& racket, bool direction) {
         racket.setCenter(std::max(newX, maxLeft));
     }
 }
+
+void Control::move(std::vector<Ball>& balls, Racket& racket) {
+
+    for (auto& ball: balls) {
+        float TOP = ball.getRadius() + SCORE_HEIGHT;
+        float DOWN = WINDOW_HEIGHT - ball.getRadius();
+        float LEFT = ball.getRadius();
+        float RIGHT = WINDOW_WIDTH - ball.getRadius();
+
+        racket.getCenter();
+        if (ball.getCenter().x_ >= RIGHT) {
+            ball.setSpeedX(ball.getSpeedX() * -1);
+            ball.setCenter({RIGHT, ball.getCenter().y_});
+        }
+
+        if (ball.getCenter().x_ <= LEFT) {
+            ball.setSpeedX(ball.getSpeedX() * -1);
+            ball.setCenter({LEFT, ball.getCenter().y_});
+        }
+
+        if (ball.getCenter().y_ >= DOWN) {
+            ball.setSpeedY(ball.getSpeedY() * - 1);
+            ball.setCenter({ball.getCenter().x_, DOWN});
+        }
+
+        if (ball.getCenter().y_ <= TOP) {
+            ball.setSpeedY(ball.getSpeedY() * - 1);
+            ball.setCenter({ball.getCenter().x_, TOP});
+        }
+        ball.setCenter({ball.getSpeedX() + ball.getCenter().x_, ball.getCenter().y_ + ball.getSpeedY()});
+
+        // if (circleRect(cx, cy, r, rx, ry, racket.getWidth(), racket.getHeight())) {
+        //     std::cout << "moved ball\n";
+        //     ball.setCenter({ball.getCenter().x_ + ball.getSpeed(), ball.getCenter().y_ + ball.getSpeed()});
+        // }
+    }
+}
+
+
+bool Control::circleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
+
+  // temporary variables to set edges for testing
+  float testX = cx;
+  float testY = cy;
+
+  // which edge is closest?
+  if (cx < rx) { testX = rx; }    // test left edge
+  else if (cx > rx+rw) { testX = rx+rw; }  // right edge
+  if (cy < ry) { testY = ry; }      // top edge
+  else if (cy > ry+rh){ testY = ry+rh; }   // bottom edge
+
+  // get distance from closest edges
+  float distX = cx-testX;
+  float distY = cy-testY;
+  float distance = sqrt( (distX*distX) + (distY*distY) );
+
+  // if the distance is less than the radius, collision!
+  if (distance <= radius) {
+    return true;
+
+  }
+  return false;
+}
