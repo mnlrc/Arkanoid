@@ -75,28 +75,6 @@ class Racket {
          * @param x The new x coordinate of the racket
          */
         void setCenter(float dx) noexcept;
-
-
-        // #### Methods ####
-        /**
-         * @brief Returns the angle of the ball when a collision occurs
-         * @param x Position of the ball compared to the start of the racket
-         */
-        double returnAngle(int x);
-
-        /**
-         * @brief Changes the x coordinate of the racket
-         * @param dx Position shift, can be negative
-         */
-        void move(float dx);
-
-        /**
-         * @brief Checks if the racket is still in bounds of the screen
-         * @param dx Position shift, can be negative
-         * @return True if in bounds False else
-         */
-        bool IsInBounds(float dx) const;
-
 };
 
 #endif

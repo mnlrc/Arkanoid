@@ -27,63 +27,68 @@ void Control::move(Racket& racket, bool direction) {
 void Control::move(std::vector<Ball>& balls, Racket& racket) {
 
     for (auto& ball: balls) {
-        const float TOP = ball.getRadius() + SCORE_HEIGHT;
-        const float DOWN = WINDOW_HEIGHT - ball.getRadius();
-        const float LEFT = ball.getRadius();
-        const float RIGHT = WINDOW_WIDTH - ball.getRadius();
+        checkWallCollision(ball);
+        checkRacketCollision(ball, racket);
 
-        racket.getCenter();
-        if (ball.getCenter().x_ >= RIGHT) {
-            ball.setSpeedX(ball.getSpeedX() * -1);
-            ball.setCenter({RIGHT, ball.getCenter().y_});
-        }
-
-        else if (ball.getCenter().x_ <= LEFT) {
-            ball.setSpeedX(ball.getSpeedX() * -1);
-            ball.setCenter({LEFT, ball.getCenter().y_});
-        }
-
-        else if (ball.getCenter().y_ >= DOWN) {
-            ball.setSpeedY(ball.getSpeedY() * - 1);
-            ball.setCenter({ball.getCenter().x_, DOWN});
-        }
-
-        else if (ball.getCenter().y_ <= TOP) {
-            ball.setSpeedY(ball.getSpeedY() * - 1);
-            ball.setCenter({ball.getCenter().x_, TOP});
-        }
-        // gestion de la collision avec la raquette
         ball.setCenter({ball.getCenter().x_ + ball.getSpeedX(), ball.getCenter().y_ + ball.getSpeedY()});
-
-        // if (circleRect(cx, cy, r, rx, ry, racket.getWidth(), racket.getHeight())) {
-        //     std::cout << "moved ball\n";
-        //     ball.setCenter({ball.getCenter().x_ + ball.getSpeed(), ball.getCenter().y_ + ball.getSpeed()});
-        // }
     }
 }
 
+void Control::checkWallCollision(Ball& ball) {
+    const float TOP = ball.getRadius() + SCORE_HEIGHT;
+    const float DOWN = WINDOW_HEIGHT - ball.getRadius();
+    const float LEFT = ball.getRadius();
+    const float RIGHT = WINDOW_WIDTH - ball.getRadius();
 
-bool Control::circleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
+    if (ball.getCenter().x_ >= RIGHT) {
+        ball.setSpeedX(ball.getSpeedX() * -1);
+        ball.setCenter({RIGHT, ball.getCenter().y_});
+    }
 
-  // temporary variables to set edges for testing
-  float testX = cx;
-  float testY = cy;
+    else if (ball.getCenter().x_ <= LEFT) {
+        ball.setSpeedX(ball.getSpeedX() * -1);
+        ball.setCenter({LEFT, ball.getCenter().y_});
+    }
 
-  // which edge is closest?
-  if (cx < rx) { testX = rx; }    // test left edge
-  else if (cx > rx+rw) { testX = rx+rw; }  // right edge
-  if (cy < ry) { testY = ry; }      // top edge
-  else if (cy > ry+rh){ testY = ry+rh; }   // bottom edge
+    else if (ball.getCenter().y_ >= DOWN) {
+        ball.setSpeedY(ball.getSpeedY() * - 1);
+        ball.setCenter({ball.getCenter().x_, DOWN});
+    }
 
-  // get distance from closest edges
-  float distX = cx-testX;
-  float distY = cy-testY;
-  float distance = sqrt( (distX*distX) + (distY*distY) );
+    else if (ball.getCenter().y_ <= TOP) {
+        ball.setSpeedY(ball.getSpeedY() * - 1);
+        ball.setCenter({ball.getCenter().x_, TOP});
+    }
+}
 
-  // if the distance is less than the radius, collision!
-  if (distance <= radius) {
-    return true;
+void Control::checkRacketCollision(Ball& ball, Racket& racket) {
+    // ici il n'y a que la collision au sommet de la raquette qui est gérée
+    // il y des effets secondaires sur les côtés car si la balle est sous la raquette
+    // mais qu'elle percute cette dernière, elle sera "à l'intérieur" et remplira les conditions
+    // ce qui la renvoie vers le haut
+    // à voir s'il faut gérer plus proprement les collisions latérales
+    
+    float topRacket = racket.getCenter().y_ - (racket.getHeight() / 2);
+    float leftRacket = racket.getCenter().x_ - (racket.getWidth() / 2);
+    float rightRacket = racket.getCenter().x_ + (racket.getWidth() / 2);
 
-  }
-  return false;
+    if (// Vertical collision
+        ball.getCenter().y_ + ball.getRadius() >= topRacket &&
+        ball.getCenter().y_ - ball.getRadius() <= topRacket &&
+        // Horizontal collision
+        ball.getCenter().x_ >= leftRacket &&
+        ball.getCenter().x_ <= rightRacket) {
+
+        ball.setCenter({ball.getCenter().x_, topRacket - ball.getRadius()});
+        
+        float ballShift = ball.getCenter().x_ - leftRacket;
+        double angle = returnAngle(ballShift, racket.getWidth());
+        float speed = sqrt(ball.getSpeedX() * ball.getSpeedX() + ball.getSpeedY() * ball.getSpeedY());
+        float xSpeed = cos(angle); float ySpeed = -sin(angle);
+        ball.setSpeedX(xSpeed * speed); ball.setSpeedY(ySpeed * speed);
+    }
+}
+
+double Control::returnAngle(float x, float L) const {
+    return ((30 + 120 * (1 - (x/L))) * (M_PI / 180)); // converting to rads
 }

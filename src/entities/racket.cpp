@@ -21,5 +21,3 @@ float Racket::getHeight() const noexcept { return height_; }
 float Racket::getSpeed() const noexcept { return speed_; }
 
 void Racket::setCenter(float dx) noexcept { center_.x_ = dx; }
-
-double Racket::returnAngle(int x) { return (30 + (120 * (1 - x/width_))); }

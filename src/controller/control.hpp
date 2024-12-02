@@ -25,7 +25,9 @@ class Control {
         ~Control();
         void move(Racket& racket, bool direction);
         void move(std::vector<Ball>& balls, Racket& racket);
-        bool circleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
+        void checkWallCollision(Ball&);
+        void checkRacketCollision(Ball&, Racket&);
+        double returnAngle(float, float) const;
 
 };
 

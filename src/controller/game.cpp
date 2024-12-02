@@ -87,19 +87,19 @@ void Game::runGame(){
 Game::Game(View gameview): gameView_(gameview), racket_(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, WINDOW_WIDTH / 5, WINDOW_HEIGHT / 25) {
     
     // Init bricks -> TODO/TOCOMPLETE
-    float brickWidth = (WINDOW_WIDTH - 10) / BRICKS_COLS;
-    float brickHeight = (WINDOW_HEIGHT / 3) / BRICKS_ROWS;
-    float yPos = 0.25 *  WINDOW_HEIGHT; float xPos = 5;
-    bricks_.resize(BRICKS_ROWS);
+    // float brickWidth = (WINDOW_WIDTH - 10) / BRICKS_COLS;
+    // float brickHeight = (WINDOW_HEIGHT / 3) / BRICKS_ROWS;
+    // float yPos = 0.25 *  WINDOW_HEIGHT; float xPos = 5;
+    // bricks_.resize(BRICKS_ROWS);
 
-    for (size_t i = 0; i < BRICKS_ROWS; i++) {
-        for (size_t j = 0; j < BRICKS_COLS; j++) {
-            bricks_[i].push_back(Brick(brickWidth, brickHeight, Point{xPos, yPos}));
-            xPos += brickWidth;
-        }
-        yPos += brickHeight;
-        xPos = 5;
-    }
+    // for (size_t i = 0; i < BRICKS_ROWS; i++) {
+    //     for (size_t j = 0; j < BRICKS_COLS; j++) {
+    //         bricks_[i].push_back(Brick(brickWidth, brickHeight, Point{xPos, yPos}));
+    //         xPos += brickWidth;
+    //     }
+    //     yPos += brickHeight;
+    //     xPos = 5;
+    // }
     // Init balls
     balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 75}, 10, DEFAULT_BALL_SPEED, -DEFAULT_BALL_SPEED));
     
