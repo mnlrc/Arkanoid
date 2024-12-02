@@ -1,3 +1,11 @@
+/**
+ * @file control.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the Control class
+ * @date 2024
+ *
+ */
+
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 

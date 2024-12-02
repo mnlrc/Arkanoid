@@ -25,7 +25,7 @@ class Racket {
         Point center_; // Coordinates of the middle of the racket
         float width_; // width of the racket
         const float height_; // height of the racket
-        unsigned speed_; // speed of the racket
+        float speed_; // speed of the racket
 
     public:
         // #### Constructor ####
@@ -66,7 +66,7 @@ class Racket {
          * @brief Get the speed of the racket
          * @return The speed of the racket
          */
-        unsigned getSpeed() const noexcept;
+        float getSpeed() const noexcept;
 
 
         // #### Setters ####

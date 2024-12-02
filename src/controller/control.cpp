@@ -1,3 +1,11 @@
+/**
+ * @file control.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the Control class
+ * @date 2024
+ *
+ */
+
 #include "control.hpp"
 
 Control::Control() = default;
@@ -19,10 +27,10 @@ void Control::move(Racket& racket, bool direction) {
 void Control::move(std::vector<Ball>& balls, Racket& racket) {
 
     for (auto& ball: balls) {
-        float TOP = ball.getRadius() + SCORE_HEIGHT;
-        float DOWN = WINDOW_HEIGHT - ball.getRadius();
-        float LEFT = ball.getRadius();
-        float RIGHT = WINDOW_WIDTH - ball.getRadius();
+        const float TOP = ball.getRadius() + SCORE_HEIGHT;
+        const float DOWN = WINDOW_HEIGHT - ball.getRadius();
+        const float LEFT = ball.getRadius();
+        const float RIGHT = WINDOW_WIDTH - ball.getRadius();
 
         racket.getCenter();
         if (ball.getCenter().x_ >= RIGHT) {
@@ -30,21 +38,22 @@ void Control::move(std::vector<Ball>& balls, Racket& racket) {
             ball.setCenter({RIGHT, ball.getCenter().y_});
         }
 
-        if (ball.getCenter().x_ <= LEFT) {
+        else if (ball.getCenter().x_ <= LEFT) {
             ball.setSpeedX(ball.getSpeedX() * -1);
             ball.setCenter({LEFT, ball.getCenter().y_});
         }
 
-        if (ball.getCenter().y_ >= DOWN) {
+        else if (ball.getCenter().y_ >= DOWN) {
             ball.setSpeedY(ball.getSpeedY() * - 1);
             ball.setCenter({ball.getCenter().x_, DOWN});
         }
 
-        if (ball.getCenter().y_ <= TOP) {
+        else if (ball.getCenter().y_ <= TOP) {
             ball.setSpeedY(ball.getSpeedY() * - 1);
             ball.setCenter({ball.getCenter().x_, TOP});
         }
-        ball.setCenter({ball.getSpeedX() + ball.getCenter().x_, ball.getCenter().y_ + ball.getSpeedY()});
+        // gestion de la collision avec la raquette
+        ball.setCenter({ball.getCenter().x_ + ball.getSpeedX(), ball.getCenter().y_ + ball.getSpeedY()});
 
         // if (circleRect(cx, cy, r, rx, ry, racket.getWidth(), racket.getHeight())) {
         //     std::cout << "moved ball\n";

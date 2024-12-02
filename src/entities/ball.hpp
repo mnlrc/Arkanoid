@@ -1,10 +1,18 @@
+/**
+ * @file ball.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the Ball class
+ * @date 2024
+ *
+ */
+
 #ifndef BALL_HPP
 #define BALL_HPP
 
 #include "point.hpp"
 
 const bool DEFAULT_BALL_STATE = false;
-const unsigned DEFAULT_BALL_SPEED = 5;
+const float DEFAULT_BALL_SPEED = 5;
 
 
 
@@ -17,7 +25,7 @@ class Ball{
         bool isMoving;
     public:
         // #### Constructor ####
-        Ball(Point c, float w, unsigned, unsigned);
+        Ball(Point c, float w, float, float);
         // #### Destructor ####
         ~Ball();
         // #### Getters ####

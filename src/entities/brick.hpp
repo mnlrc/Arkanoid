@@ -1,3 +1,11 @@
+/**
+ * @file brick.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the Brick class
+ * @date 2024
+ *
+ */
+
 #ifndef BRICK_HPP
 #define BRICK_HPP
 

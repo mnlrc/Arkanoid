@@ -1,3 +1,11 @@
+/**
+ * @file view.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the View class
+ * @date 2024
+ *
+ */
+
 #ifndef VIEW_HPP
 #define VIEW_HPP
 

@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the main function
+ * @date 2024
+ *
+ */
+
 #include "main.hpp"
 // TODO 
 /**

@@ -1,6 +1,14 @@
+/**
+ * @file ball.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the Ball class
+ * @date 2024
+ *
+ */
+
 #include "ball.hpp"
 
-Ball::Ball(Point c, float r, unsigned sX, unsigned sY): center_(c), radius_(r), speedX_(sX), speedY_(sY), isMoving(DEFAULT_BALL_STATE) {}
+Ball::Ball(Point c, float r, float sX, float sY): center_(c), radius_(r), speedX_(sX), speedY_(sY), isMoving(DEFAULT_BALL_STATE) {}
 
 Ball::~Ball() = default;
 

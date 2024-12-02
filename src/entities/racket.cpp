@@ -18,7 +18,7 @@ float Racket::getWidth() const noexcept { return width_; }
 
 float Racket::getHeight() const noexcept { return height_; }
 
-unsigned Racket::getSpeed() const noexcept { return speed_; }
+float Racket::getSpeed() const noexcept { return speed_; }
 
 void Racket::setCenter(float dx) noexcept { center_.x_ = dx; }
 

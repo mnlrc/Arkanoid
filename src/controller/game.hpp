@@ -1,3 +1,14 @@
+/**
+ * @file game.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the Game class
+ * @date 2024
+ *
+ */
+
+#ifndef GAME_HPP
+#define GAME_HPP
+
 #include <iostream>
 #include <map>
 #include <allegro5/allegro.h>
@@ -52,3 +63,5 @@ class Game {
         void runGame();
         void update();
 };
+
+#endif

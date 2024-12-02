@@ -1,3 +1,11 @@
+/**
+ * @file view.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the View class
+ * @date 2024
+ *
+ */
+
 #include "view.hpp"
 
 View::View() {
