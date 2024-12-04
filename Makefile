@@ -23,6 +23,7 @@ CXXFLAGS += $(shell pkg-config allegro-5 allegro_primitives-5 allegro_font-5 --c
 
 # Flags de lien
 LDFLAGS = $(shell pkg-config allegro-5 allegro_primitives-5 allegro_font-5 --libs)
+LDFLAGS += -fsanitize=address,undefined
 
 # Fichiers source et objets
 SOURCES := $(shell find $(SRCDIR) \( -name "*.$(SFILES)" \) )
