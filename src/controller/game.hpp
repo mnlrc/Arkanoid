@@ -18,6 +18,7 @@
 
 
 #include "view/view.hpp"
+#include "entities/entities.hpp"
 #include "control.hpp"
 
 #define FREQUENCY 60
@@ -29,9 +30,7 @@ class Game {
     private:
         // #### Objects ####
         View gameView_;
-        Racket racket_;
-        std::vector<Ball> balls_;
-        std::vector<std::vector<Brick>> bricks_;
+        Entities objects_;
         Control control_;
         
         // #### Allegro instances ####
