@@ -9,7 +9,7 @@
 #include "score.hpp"
 
 Score::Score() {
-    pos_ = {SCORE_HEIGHT / 2, WINDOW_WIDTH / 4};
+    pos_ = {0, 0};
     score_ = 0;
 }
 

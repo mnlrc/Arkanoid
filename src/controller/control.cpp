@@ -42,7 +42,7 @@ void Control::move(std::vector<Ball>& balls, Racket& racket) {
 }
 
 void Control::checkWallCollision(Ball& ball) {
-    const double TOP = ball.getRadius() + SCORE_HEIGHT;
+    const double TOP = ball.getRadius();
     const double DOWN = WINDOW_HEIGHT - ball.getRadius();
     const double LEFT = ball.getRadius();
     const double RIGHT = WINDOW_WIDTH - ball.getRadius();
@@ -104,46 +104,58 @@ double Control::returnAngle(double x, double L) const {
 
 
 void Control::checkBrickCollision(Ball& ball, std::vector<std::vector<Brick>>& bricks) {
-    if (ball.getCenter().y_ - ball.getRadius() < (WINDOW_HEIGHT / 3 + SCORE_HEIGHT)) { // if ball entered brick zone (little optimization)
-        double cX = ball.getCenter().x_;
-        double cY = ball.getCenter().y_;
-        double distPrec = std::numeric_limits<int>::max();
-        double distNext;
-        const Brick* closestBrick = nullptr;
+    // Don't need to check if the ball is not yet in the delimited brick zone
+    if (ball.getCenter().y_ - ball.getRadius() >= (WINDOW_HEIGHT / 3)) {
+        return;
+    }
 
-        for (auto& brickvect: bricks) {
-            for (auto& brick: brickvect) {
-                distNext = sqrt(pow(cX - brick.getCenter().x_, 2) + pow(cY - brick.getCenter().y_, 2));
-                if (distNext < distPrec) {
-                    closestBrick = &brick;
-                    distPrec = distNext;
+    // Defining ball values for clearer code
+    double cX = ball.getCenter().x_;
+    double cY = ball.getCenter().y_;
+    double r = ball.getRadius();
+
+    // Checking all bricks
+    for (auto& brickRow : bricks) {
+        for (auto& brick : brickRow) {
+            if (brick.isBroken()) {
+                continue;
+            }
+
+            // Defining brick limits for clearer code
+            double LEFT = brick.getCenter().x_ - (brick.getWidth() / 2);
+            double RIGHT = brick.getCenter().x_ + (brick.getWidth() / 2);
+            double TOP = brick.getCenter().y_ - (brick.getHeight() / 2);
+            double DOWN = brick.getCenter().y_ + (brick.getHeight() / 2);
+
+            if ((cX + r > LEFT && cX - r < RIGHT) &&  // Horizontal collision ?
+                (cY + r > TOP && cY - r < DOWN)) {    // Vertical collision ?
+                
+                // Calculating side of collision
+                double overlapX = std::min(cX + r - LEFT, RIGHT - (cX - r));
+                double overlapY = std::min(cY + r - TOP, DOWN - (cY - r));
+
+                if (overlapX < overlapY) { 
+                    ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
+                    if (cX < brick.getCenter().x_) {
+                        ball.setCenter({LEFT - r, cY});
+                    } else {
+                        ball.setCenter({RIGHT + r, cY});
+                    }
+                } else {
+                    ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
+                    if (cY < brick.getCenter().y_) {
+                        ball.setCenter({cX, TOP - r});
+                    } else {
+                        ball.setCenter({cX, DOWN + r});
+                    }
                 }
-            }
-        }
 
-        double LEFT = closestBrick->getCenter().x_ - (closestBrick->getWidth() / 2);
-        double RIGHT = closestBrick->getCenter().x_ + (closestBrick->getWidth() / 2);
-        double TOP = closestBrick->getCenter().y_ - (closestBrick->getHeight() / 2);
-        double DOWN = closestBrick->getCenter().y_ + (closestBrick->getHeight() / 2);
-
-            if (cY >= DOWN) {
-                ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
-                ball.setCenter({cX, DOWN + ball.getRadius()});
-            }
-
-            else if (cY <= TOP) {
-                ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
-                ball.setCenter({cX, TOP - ball.getRadius()});
-            }
-
-            else if (cX >= RIGHT) {
-                ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
-                ball.setCenter({RIGHT + ball.getRadius(), cY});
-            }
-
-            else if (cX <= LEFT) {
-                ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
-                ball.setCenter({LEFT - ball.getRadius() , cY});
+                // Update brick state
+                if (brick.isBreakable()) {
+                    brick.setBroken();
+                }
+                return;
             }
         }
     }
+}

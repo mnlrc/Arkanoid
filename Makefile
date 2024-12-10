@@ -2,7 +2,7 @@ TOPDIR := ./
 SRCDIR := $(TOPDIR)/src/
 OBJDIR := $(TOPDIR)/obj/
 BINDIR := $(TOPDIR)
-NAME   := Arkanoid-game
+NAME   := a # easier to write
 EXE    := $(BINDIR)$(NAME)
 
 # Extensions de fichiers

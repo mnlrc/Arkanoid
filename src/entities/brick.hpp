@@ -17,9 +17,14 @@
 #define DEFAULT_BREAKABLE_STATE true
 
 class Brick: public Rectangle{
+
+    // Possibilité de réutilisation :
+
+    // Vous pouvez décider de "réparer" une brique plus tard en réinitialisant son état (isDestroyed = false), par exemple pour un power-up.
     
     private:
-        bool isBreakable; // for later phases 
+        const bool breakable_; // for later phases 
+        bool broken_ = false;
     
     public:
         // #### Constructors ####
@@ -37,6 +42,13 @@ class Brick: public Rectangle{
 
         // #### Destructor ####
         ~Brick();
+
+        // #### Getters ####
+        bool isBreakable() const noexcept;
+        bool isBroken() const noexcept;
+        
+        // #### Setters ####
+        void setBroken() noexcept;
 };
 
 #endif

@@ -11,11 +11,10 @@
 Game::Game() {
     
     // Init bricks -> TODO/TOCOMPLETE
-    double brick_height = (WINDOW_HEIGHT / 3) / BRICKS_ROWS;
-    double brick_width = WINDOW_WIDTH / BRICKS_COLS;
+    double brick_height = (WINDOW_HEIGHT / 3) / static_cast<double>(BRICKS_ROWS);
+    double brick_width = WINDOW_WIDTH / static_cast<double>(BRICKS_COLS);
 
-    bricks_.resize(BRICKS_ROWS);
-    double y = SCORE_HEIGHT + (brick_height / 2);
+    double y = brick_height / 2;
     for (size_t i = 0; i < BRICKS_ROWS; i++) {
         double x = brick_width / 2;
         std::vector<Brick> v;
