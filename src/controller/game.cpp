@@ -37,6 +37,7 @@ Game::Game() {
     init_test(timer_, "timer");
     init_test(queue_, "queue");
     init_test(al_install_keyboard(), "keyboard");
+    // init_test(al_install_mouse, "mouse");
 
     setupGame();
 }
@@ -45,6 +46,8 @@ Game::Game() {
 Game::~Game() {
     al_destroy_event_queue(queue_);
     al_destroy_timer(timer_);
+    al_uninstall_keyboard();
+    al_uninstall_mouse();
 }
 
 void Game::setupGame() {
@@ -91,32 +94,28 @@ void Game::update() {
         control_.move(balls_, racket_);
     }
     
-    gameView_.drawAll(racket_, balls_, bricks_); // possible d'envoyer tous les objets sans les passe en param ? 
-                                                 // peu pratique pour la modularité ?
-                                                 // méthode séparée pour chaque objet ? 
-                                                 // ou garder cette méthode drawALL ?
-                                                 // ou encore faire un hériter Game de View ???? meilleure option ? ou pire
+    gameView_.drawAll(racket_, balls_, bricks_);
 }
 
 
 void Game::runGame() {
     while (!done) {
-    al_wait_for_event(queue_, &event_);
-    switch (event_.type) {
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            break;
-        case ALLEGRO_EVENT_TIMER:
-            update();// TODO
-            break;
-        case ALLEGRO_EVENT_KEY_DOWN: // TODO
-            manageKeyDown(event_);
-            break;
-        case ALLEGRO_EVENT_KEY_UP:
-            manageKeyUp(event_);
-            break;
-        default: {
-      }
-    }
+        al_wait_for_event(queue_, &event_);
+        switch (event_.type) {
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                break;
+            case ALLEGRO_EVENT_TIMER:
+                update();// TODO
+                break;
+            case ALLEGRO_EVENT_KEY_DOWN: // TODO
+                manageKeyDown(event_);
+                break;
+            case ALLEGRO_EVENT_KEY_UP:
+                manageKeyUp(event_);
+                break;
+            default: {
+            }
+        }
   }
 }

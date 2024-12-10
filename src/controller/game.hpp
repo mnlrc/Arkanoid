@@ -17,8 +17,8 @@
 #include <allegro5/events.h>
 
 
-#include "view/view.hpp"
-#include "entities/entities.hpp"
+#include "../view/view.hpp"
+#include "../entities/score.hpp"
 #include "control.hpp"
 
 #define FREQUENCY 60
@@ -30,7 +30,10 @@ class Game {
     private:
         // #### Objects ####
         View gameView_;
-        Entities objects_;
+        Racket racket_;
+        std::vector<Ball> balls_;
+        std::vector<std::vector<Brick>> bricks_;
+        Score score_;
         Control control_;
         
         // #### Allegro instances ####

@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <cmath>
+#include <limits>
 
 #include "entities/ball.hpp"
 #include "entities/brick.hpp"
