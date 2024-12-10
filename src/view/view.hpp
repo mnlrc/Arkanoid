@@ -27,7 +27,7 @@
 
 class View {
     private:
-        ALLEGRO_DISPLAY* display;
+        ALLEGRO_DISPLAY* display_;
         void drawRacket(const Racket& racket);
         void drawBricks(const std::vector<std::vector<Brick>>& bricks);
         void drawBall(const std::vector<Ball>& balls);

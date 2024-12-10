@@ -8,12 +8,6 @@
 
 #include "brick.hpp"
 
-Brick::Brick(float w, float h, Point pt): width_(w), height_(h), center_(pt) {}
+Brick::Brick(Point pt, double w, double h, bool breakable): Rectangle{pt, w, h}, isBreakable(breakable) {}
 
 Brick::~Brick() = default;
-
-float Brick::getHeight() const noexcept { return height_; }
-
-float Brick::getWidth() const noexcept { return width_; }
-
-Point Brick::getCenter() const noexcept { return center_; }

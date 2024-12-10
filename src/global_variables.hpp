@@ -25,6 +25,6 @@ const ALLEGRO_COLOR COLOR_DARK_GREY   = al_map_rgb(34, 34, 34);
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 600
 #define SCORE_HEIGHT 100
-#define GAME_HEIGHT
+#define GAME_HEIGHT 500
 
 #endif

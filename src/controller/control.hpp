@@ -24,10 +24,12 @@ class Control {
         Control();
         ~Control();
         void move(Racket& racket, bool direction);
+        void move(std::vector<Ball>& balls, Racket& racket, std::vector<std::vector<Brick>>& bricks);
         void move(std::vector<Ball>& balls, Racket& racket);
         void checkWallCollision(Ball&);
         void checkRacketCollision(Ball&, Racket&);
-        double returnAngle(float, float) const;
+        void checkBrickCollision(Ball&, std::vector<std::vector<Brick>>&);
+        double returnAngle(double, double) const;
 
 };
 

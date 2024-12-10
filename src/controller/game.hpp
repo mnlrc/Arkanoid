@@ -24,9 +24,6 @@
 #define BRICKS_COLS 14 // number of brick columns
 #define BRICKS_ROWS 8 // number of brick rows
 
-const int KEY_LEFT = ALLEGRO_KEY_Q;
-const int KEY_RIGHT = ALLEGRO_KEY_D;
-const int KEY_SPACE = ALLEGRO_KEY_SPACE;
 
 class Game {
     private:
@@ -54,7 +51,7 @@ class Game {
 
     public:
         // #### Constructor ####
-        Game(View gameview);
+        Game();
 
         // #### Destructor ####
         ~Game();

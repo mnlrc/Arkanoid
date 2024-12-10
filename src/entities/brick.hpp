@@ -10,22 +10,33 @@
 #define BRICK_HPP
 
 #include "point.hpp"
+#include "rectangle.hpp"
 
 #define BRICK_WIDTH 35
 #define BRICK_HEIGHT 20
+#define DEFAULT_BREAKABLE_STATE true
 
-class Brick{
+class Brick: public Rectangle{
+    
     private:
-        const float width_;
-        const float height_;
-        const Point center_;
         bool isBreakable; // for later phases 
+    
     public:
-        Brick(float w, float h, Point pt);
+        // #### Constructors ####
+        /**
+         * @brief Constructor of the Brick class
+         * @param pt Coordinates of the brick
+         * @param w Width of the brick
+         * @param h Height of the brick
+         * @param breakabale Breakability of the brick
+         */
+        Brick(Point pt, double w, double h, bool breakable);
+
+        // Brick &operator=(const Brick &) = default;
+        // Brick &operator=(Brick &&)      = default;
+
+        // #### Destructor ####
         ~Brick();
-        float getWidth() const noexcept;
-        float getHeight() const noexcept;
-        Point getCenter() const noexcept;
 };
 
 #endif

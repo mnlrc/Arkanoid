@@ -12,33 +12,30 @@
 #include "point.hpp"
 
 const bool DEFAULT_BALL_STATE = false;
-const float DEFAULT_BALL_SPEED = 5;
+const double DEFAULT_BALL_SPEED = 5;
 
 
 
 class Ball{
     private:
         Point center_;
-        const float radius_;
-        float speedX_;
-        float speedY_;
+        const double radius_;
+        Point speed_;
         bool isMoving;
     public:
         // #### Constructor ####
-        Ball(Point c, float w, float, float);
+        Ball(Point c, double w, Point);
         // #### Destructor ####
         ~Ball();
         // #### Getters ####
-        float getRadius() const noexcept;
+        double getRadius() const noexcept;
         Point getCenter() const noexcept;
-        float getSpeedX() const noexcept;
-        float getSpeedY() const noexcept;
+        Point getSpeed() const noexcept;
         bool getState() const noexcept;
 
         // #### Setters ####
         void setCenter(const Point pt) noexcept;
-        void setSpeedX(const float) noexcept;
-        void setSpeedY(const float) noexcept;
+        void setSpeed(const Point) noexcept;
         void changeState() noexcept;
 };
 

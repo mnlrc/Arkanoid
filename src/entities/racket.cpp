@@ -5,19 +5,15 @@
  * @date 2024
  *
  */
-#include <iostream>
+
 #include "racket.hpp"
 
-Racket::Racket(Point pt, float w, float h): center_(pt), width_(w), height_(h), speed_(DEFAULT_RACKET_SPEED) {}
+Racket::Racket(Point pt, double w, double h, double s): Rectangle{pt, w, h}, speed_(s) {}
+
+Racket::Racket(): Rectangle{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50}, WINDOW_WIDTH / 5, WINDOW_HEIGHT / 25}, speed_(DEFAULT_RACKET_SPEED) {}
 
 Racket::~Racket() = default;
 
-Point Racket::getCenter() const noexcept { return center_; }
+double Racket::getSpeed() const noexcept { return speed_; }
 
-float Racket::getWidth() const noexcept { return width_; }
-
-float Racket::getHeight() const noexcept { return height_; }
-
-float Racket::getSpeed() const noexcept { return speed_; }
-
-void Racket::setCenter(float dx) noexcept { center_.x_ = dx; }
+void Racket::setCenter(double dx) noexcept { center_.x_ = dx; }
