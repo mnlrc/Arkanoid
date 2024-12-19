@@ -14,6 +14,9 @@
  * Appliquer au mieux les concepts vus au cours
  * chaque classe a une fonction draw appelée par la fonction draw de game
  * RETIRER LES NOMS DE VARIABLES DANS LES DECLARATIONS, SEULEMENT LAISSER LES TYPES ?
+ * 
+ * IDEES: - hp de briques pour déterminer si elle est cassable
+ *        - compteur de briques cassées pour éviter de galérer le vecteur
  */
 
 
