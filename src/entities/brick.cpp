@@ -8,7 +8,7 @@
 
 #include "brick.hpp"
 
-Brick::Brick(Point pt, double w, double h, bool breakable): Rectangle{pt, w, h}, breakable_(breakable) {}
+Brick::Brick(Point pt, double w, double h, bool breakable) : Rectangle{pt, w, h}, breakable_(breakable) {}
 
 Brick::~Brick() = default;
 

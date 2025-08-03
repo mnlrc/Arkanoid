@@ -11,38 +11,39 @@
 
 #include "point.hpp"
 
-class Rectangle {
+class Rectangle
+{
 
-    protected:
-        Point center_;
-        double width_;
-        double height_;
+protected:
+    Point center_;
+    double width_;
+    double height_;
 
-    public:
-        // ##### Constructor #####
-        Rectangle(Point pt, double w, double h);
+public:
+    // ##### Constructor #####
+    Rectangle(Point pt, double w, double h);
 
-        // ##### Destructor #####
-        ~Rectangle();
-        
-        // #### Getters #####
-        /**
-         * @brief Get the x coordinate of the racket
-         * @return The x coordinate of the racket
-         */
-        Point getCenter() const noexcept;
+    // ##### Destructor #####
+    ~Rectangle();
 
-        /**
-         * @brief Get the width of the racket
-         * @return The witdh of the racket
-         */
-        double getWidth() const noexcept;
+    // #### Getters #####
+    /**
+     * @brief Get the x coordinate of the racket
+     * @return The x coordinate of the racket
+     */
+    Point getCenter() const noexcept;
 
-        /**
-         * @brief Get the height of the racket
-         * @return The height of the racket
-         */
-        double getHeight() const noexcept;
+    /**
+     * @brief Get the width of the racket
+     * @return The witdh of the racket
+     */
+    double getWidth() const noexcept;
+
+    /**
+     * @brief Get the height of the racket
+     * @return The height of the racket
+     */
+    double getHeight() const noexcept;
 };
 
 #endif

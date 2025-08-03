@@ -8,7 +8,7 @@
 
 #include "ball.hpp"
 
-Ball::Ball(Point c, double r, Point s): center_(c), radius_(r), speed_(s), isMoving(DEFAULT_BALL_STATE) {}
+Ball::Ball(Point c, double r, Point s) : center_(c), radius_(r), speed_(s), isMoving(DEFAULT_BALL_STATE) {}
 
 Ball::~Ball() = default;
 

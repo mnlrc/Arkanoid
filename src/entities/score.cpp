@@ -8,12 +8,13 @@
 
 #include "score.hpp"
 
-Score::Score() {
+Score::Score()
+{
     pos_ = {0, 0};
     score_ = 0;
 }
 
-unsigned Score::getScore() const noexcept{ return score_; };
+unsigned Score::getScore() const noexcept { return score_; };
 
 void Score::setScore(unsigned sc) noexcept { score_ = sc; };
 

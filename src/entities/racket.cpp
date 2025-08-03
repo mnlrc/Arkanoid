@@ -8,9 +8,9 @@
 
 #include "racket.hpp"
 
-Racket::Racket(Point pt, double w, double h, double s): Rectangle{pt, w, h}, speed_(s) {}
+Racket::Racket(Point pt, double w, double h, double s) : Rectangle{pt, w, h}, speed_(s) {}
 
-Racket::Racket(): Rectangle{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, WINDOW_WIDTH / 6, WINDOW_HEIGHT / 50}, speed_(DEFAULT_RACKET_SPEED) {}
+Racket::Racket() : Rectangle{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, WINDOW_WIDTH / 6, WINDOW_HEIGHT / 50}, speed_(DEFAULT_RACKET_SPEED) {}
 
 Racket::~Racket() = default;
 

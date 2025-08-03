@@ -21,49 +21,47 @@
  *        to bounce back the ball.
  */
 
-class Racket: public Rectangle {
-    
-    private:
-        double speed_; // speed of the racket
+class Racket : public Rectangle
+{
 
-    public:
-        // #### Constructors ####
-        /**
-         * @brief Constructor of the Racket class
-         * @param pt Coordinates of the racket
-         * @param w Width of the racket
-         * @param h Height of the racket
-         * @param s Speed of the racket
-         */
-        Racket(Point pt, double w, double h, double s);
+private:
+    double speed_; // speed of the racket
 
-        /**
-         * @brief Default constructor of the Racket class
-         */
-        Racket();
+public:
+    // #### Constructors ####
+    /**
+     * @brief Constructor of the Racket class
+     * @param pt Coordinates of the racket
+     * @param w Width of the racket
+     * @param h Height of the racket
+     * @param s Speed of the racket
+     */
+    Racket(Point pt, double w, double h, double s);
 
+    /**
+     * @brief Default constructor of the Racket class
+     */
+    Racket();
 
-        // #### Destructor ####
-        /**
-         * @brief Destructor for the Racket class
-         */
-        ~Racket();
+    // #### Destructor ####
+    /**
+     * @brief Destructor for the Racket class
+     */
+    ~Racket();
 
+    // #### Getters ####
+    /**
+     * @brief Get the speed of the racket
+     * @return The speed of the racket
+     */
+    double getSpeed() const noexcept;
 
-        // #### Getters ####
-        /**
-         * @brief Get the speed of the racket
-         * @return The speed of the racket
-         */
-        double getSpeed() const noexcept;
-
-
-        // #### Setters ####
-        /**
-         * @brief Set the x coordinate of the racket
-         * @param x The new x coordinate of the racket
-         */
-        void setCenter(double dx) noexcept;
+    // #### Setters ####
+    /**
+     * @brief Set the x coordinate of the racket
+     * @param x The new x coordinate of the racket
+     */
+    void setCenter(double dx) noexcept;
 };
 
 #endif

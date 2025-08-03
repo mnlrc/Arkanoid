@@ -12,18 +12,17 @@
 #include "point.hpp"
 #include "global_variables.hpp"
 
+class Score
+{
+private:
+    unsigned score_;
+    Point pos_;
 
-class Score {
-    private:
-        unsigned score_;
-        Point pos_;
-    public:
-        Score();
-        unsigned getScore() const noexcept;
-        void setScore(unsigned sc) noexcept;
-        void incScore();
-
+public:
+    Score();
+    unsigned getScore() const noexcept;
+    void setScore(unsigned sc) noexcept;
+    void incScore();
 };
-
 
 #endif

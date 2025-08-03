@@ -20,18 +20,18 @@
 #include "tests/allegro_test.hpp"
 #include "global_variables.hpp"
 
-class Control {
-    public:
-        Control();
-        ~Control();
-        void move(Racket& racket, bool direction);
-        void move(std::vector<Ball>& balls, Racket& racket, std::vector<std::vector<Brick>>& bricks);
-        void move(std::vector<Ball>& balls, Racket& racket);
-        void checkWallCollision(Ball&);
-        void checkRacketCollision(Ball&, Racket&);
-        void checkBrickCollision(Ball&, std::vector<std::vector<Brick>>&);
-        double returnAngle(double, double) const;
-
+class Control
+{
+public:
+    Control();
+    ~Control();
+    void move(Racket &racket, bool direction);
+    void move(std::vector<Ball> &balls, Racket &racket, std::vector<std::vector<Brick>> &bricks);
+    void move(std::vector<Ball> &balls, Racket &racket);
+    void checkWallCollision(Ball &);
+    void checkRacketCollision(Ball &, Racket &);
+    void checkBrickCollision(Ball &, std::vector<std::vector<Brick>> &);
+    double returnAngle(double, double) const;
 };
 
 #endif

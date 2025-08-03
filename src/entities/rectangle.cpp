@@ -8,7 +8,7 @@
 
 #include "rectangle.hpp"
 
-Rectangle::Rectangle(Point pt, double w, double h): center_(pt), width_(w), height_(h) {}
+Rectangle::Rectangle(Point pt, double w, double h) : center_(pt), width_(w), height_(h) {}
 
 Rectangle::~Rectangle() = default;
 
