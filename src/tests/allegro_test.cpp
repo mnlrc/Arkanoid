@@ -12,7 +12,7 @@ void init_test(bool test, const char *description)
 {
     if (!test)
     {
-        Logger::log(("Couldn't initialize %s", description));
+        Logger::log("Couldn't initialize" + std::string(description));
         exit(1);
     }
 }

@@ -29,7 +29,8 @@ void Game::setupModel(ModelType model)
     {
     case ModelType::MAIN_MENU_MODEL:
         Logger::log("[SUCCESS] Loading Main Menu Model");
-        // TODO
+        controller_.setupMenuModel(MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
+        Logger::log("[SUCCESS] Main Menu Model successfully loaded");
         break;
     case ModelType::GAME_MODEL:
         Logger::log("[SUCCESS] Loading Game Model");
@@ -85,71 +86,73 @@ void Game::setupAllegro()
     al_register_event_source(queue_, al_get_mouse_event_source());
 }
 
-void Game::manageKeyDown(ALLEGRO_EVENT event)
-{
-    int keycode = event.keyboard.keycode;
-    if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
-    {
-        inputKeys_["left"] = true;
-    }
-    else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
-    {
-        inputKeys_["right"] = true;
-    }
-    else if (keycode == ALLEGRO_KEY_SPACE)
-    {
-        yes = true;
-    }
-    else if (keycode == ALLEGRO_KEY_ESCAPE)
-    {
-        std::cout << "Program ended." << std::endl;
-        done = true;
-    }
-}
+// void Game::manageKeyDown(ALLEGRO_EVENT event)
+// {
+// int keycode = event.keyboard.keycode;
+// if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
+// {
+//     inputKeys_["left"] = true;
+// }
+// else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
+// {
+//     inputKeys_["right"] = true;
+// }
+// else if (keycode == ALLEGRO_KEY_SPACE)
+// {
+//     yes = true;
+// }
+// else if (keycode == ALLEGRO_KEY_ESCAPE)
+// {
+//     std::cout << "Program ended." << std::endl;
+//     done = true;
+// }
+// }
 
-void Game::manageKeyUp(ALLEGRO_EVENT event)
-{
-    int keycode = event.keyboard.keycode;
-    if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
-    {
-        inputKeys_["left"] = false;
-    }
-    else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
-    {
-        inputKeys_["right"] = false;
-    }
-}
+// void Game::manageKeyUp(ALLEGRO_EVENT event)
+// {
+//     int keycode = event.keyboard.keycode;
+//     if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
+//     {
+//         inputKeys_["left"] = false;
+//     }
+//     else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
+//     {
+//         inputKeys_["right"] = false;
+//     }
+// }
 
-void Game::update()
-{
-    // gérer le déplacement de la balle + collisions etc
-    // moving racket
-    if (inputKeys_["right"])
-    {
-        control_.move(racket_, inputKeys_["right"]);
-    }
-    else if (inputKeys_["left"])
-    {
-        control_.move(racket_, !inputKeys_["left"]);
-    }
+// void Game::update()
+// {
+// gérer le déplacement de la balle + collisions etc
+// moving racket
+// if (inputKeys_["right"])
+// {
+//     control_.move(racket_, inputKeys_["right"]);
+// }
+// else if (inputKeys_["left"])
+// {
+//     control_.move(racket_, !inputKeys_["left"]);
+// }
 
-    // moving ball
-    if (yes)
-    { // TODO => if (yes) : if balls.isMoving()
-        control_.move(balls_, racket_, bricks_);
-    }
-    else
-    {
-        control_.move(balls_, racket_);
-    }
+// // moving ball
+// if (yes)
+// { // TODO => if (yes) : if balls.isMoving()
+//     control_.move(balls_, racket_, bricks_);
+// }
+// else
+// {
+//     control_.move(balls_, racket_);
+// }
 
-    gameView_.drawAll(racket_, balls_, bricks_);
-}
+// gameView_.drawAll(racket_, balls_, bricks_);
+// }
 
-void Game::runGame()
+void Game::run()
 {
     while (main_loop)
     {
+        runMainMenu();
+
         while (game_loop)
         {
             while (pause_loop)
@@ -158,28 +161,58 @@ void Game::runGame()
         }
     }
 
+    // while (!done)
+    // {
+    //     al_wait_for_event(queue_, &event_);
+    //     switch (event_.type)
+    //     {
+    //     case ALLEGRO_EVENT_DISPLAY_CLOSE:
+    //         done = true;
+    //         break;
+    //     case ALLEGRO_EVENT_TIMER:
+    //         update(); // TODO
+    //         break;
+    //     case ALLEGRO_EVENT_KEY_DOWN: // TODO
+    //         manageKeyDown(event_);
+    //         break;
+    //     case ALLEGRO_EVENT_KEY_UP:
+    //         manageKeyUp(event_);
+    //         break;
+    //     case ALLEGRO_EVENT_MOUSE_AXES:
+    //         break;
+    //     default:
+    //     {
+    //     }
+    //     }
+    // }
+}
+
+void Game::runMainMenu()
+{
+    bool done = false;
     while (!done)
     {
-        al_wait_for_event(queue_, &event_);
-        switch (event_.type)
+        al_wait_for_event(queue_, nullptr);
+        while (al_get_next_event(queue_, &event_))
         {
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            break;
-        case ALLEGRO_EVENT_TIMER:
-            update(); // TODO
-            break;
-        case ALLEGRO_EVENT_KEY_DOWN: // TODO
-            manageKeyDown(event_);
-            break;
-        case ALLEGRO_EVENT_KEY_UP:
-            manageKeyUp(event_);
-            break;
-        case ALLEGRO_EVENT_MOUSE_AXES:
-            break;
-        default:
-        {
-        }
+            switch (event_.type)
+            {
+            case ALLEGRO_EVENT_KEY_DOWN:
+                controller_.handleKeyInput(event_.keyboard.keycode);
+                // TODO: pass the input to the controller that passes it to the model
+                // then update the view
+                break;
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                main_loop = false;
+                break;
+            default:
+                break;
+            }
         }
     }
 }
+
+void Game::runGame() {}
+
+void Game::runPauseMenu() {}

@@ -20,9 +20,10 @@ protected:
     double height_;
 
 public:
-    // ##### Constructor #####
+    // ##### Constructors #####
     Rectangle(Point pt, double w, double h);
 
+    Rectangle() = default;
     // ##### Destructor #####
     ~Rectangle();
 

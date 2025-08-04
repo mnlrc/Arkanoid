@@ -11,11 +11,12 @@
 
 
 int main()
-{
+{   
+    Logger::getInstance(); // init the logger
     Logger::log("Start of the program");
 
     Game game = Game();
-    game.runGame();
+    game.run();
 
     Logger::log("Program ended, returning 0");
     return 0;

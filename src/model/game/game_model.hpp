@@ -1,34 +1,39 @@
-/**
- * @file model.hpp
- * @author Manuel Rocca
- * @brief Header file for the Model class
- * @date 2025
- *
- */
+// /**
+//  * @file model.hpp
+//  * @author Manuel Rocca
+//  * @brief Header file for the GameModel class
+//  * @date 2025
+//  *
+//  */
 
-// #### Internal includes ####
-#include "objects/ball.hpp"
-#include "objects/brick.hpp"
-#include "objects/racket.hpp"
-#include "objects/score.hpp"
+// #ifndef GAME_MODEL_HPP
+// #define GAME_MODEL_HPP
 
-// #### Includes ####
-#include <vector>
+// // #### Internal includes ####
+// #include "objects/ball.hpp"
+// #include "objects/brick.hpp"
+// #include "objects/racket.hpp"
+// #include "objects/score.hpp"
 
-/**
- * @brief Class that centralizes objects of the model
- * for a better management.
- *
- */
-class Model
-{
-private:
-    Ball balls_[3];
-    std::vector<Brick> bricks_;
-    Racket racket_;
-    Score current_score_;
+// // #### Includes ####
+// #include <vector>
 
-public:
-    Model();
-    ~Model();
-};
+// /**
+//  * @brief Class that centralizes objects of the model
+//  * for a better management.
+//  *
+//  */
+// class GameModel
+// {
+// private:
+//     Ball balls_[3];
+//     std::vector<Brick> bricks_;
+//     Racket racket_;
+//     Score current_score_;
+
+// public:
+//     GameModel();
+//     ~GameModel();
+// };
+
+// #endif
