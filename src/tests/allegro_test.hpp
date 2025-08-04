@@ -6,7 +6,7 @@
  *
  */
 
-#include <iostream>
+#include "../log/logger.hpp"
 
 void init_test(bool test, const char *description);
 

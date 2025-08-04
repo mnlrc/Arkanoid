@@ -2,17 +2,14 @@
  * @file view.cpp
  * @author Manuel Rocca
  * @brief Source file for the View class
- * @date 2024
+ * @date 2024z
  *
  */
 
 #include "view.hpp"
 
 View::View() {
-    init_test(al_init(), "allegro");
     display_ = al_create_display(WINDOW_WIDTH, WINDOW_HEIGHT);
-    init_test(display_, "display");
-    init_test(al_init_primitives_addon(), "primitives");
 }
 
 View::~View() { al_destroy_display(display_); };

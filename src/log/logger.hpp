@@ -1,11 +1,11 @@
 /**
  * @file logger.hpp
  * @author Manuel Rocca
- * @brief Header file for the Logger class.
+ * @brief Header file for the Logger class
  * @date 2025
  *
  * @details This file contains the definition of the Logger class, which is a
- * Singleton that saves all the logs in a file arkanoid.log.
+ * Singleton that saves all the logs in a file arkanoid.log
  */
 
 #pragma once
@@ -14,21 +14,22 @@
 #define LOGGER_HPP
 
 // #### C++ Includes ####
-// STD
 #include <fstream>
 #include <memory>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 #include <string>
 
-using namespace std;
-
-class Logger {
+class Logger
+{
 public:
   /**
    * @brief Get the instance of the Logger
    *
    * @return Logger& The instance of the Logger
    */
-  static Logger &getInstance(const string &filename = "");
+  static Logger &getInstance(const std::string &filename = "");
 
   /**
    * @brief Destroy the Logger object
@@ -41,7 +42,7 @@ public:
    *
    * @param message The message to log
    */
-  static void log(const string &message);
+  static void log(const std::string &message);
 
   // Delete the copy constructor and assignment operator
   Logger(const Logger &) = delete;
@@ -54,8 +55,8 @@ private:
    */
   Logger();
 
-  static unique_ptr<Logger> instance_;
-  static ofstream logFile_;
+  static std::unique_ptr<Logger> instance_;
+  static std::ofstream logFile_;
 };
 
 #endif // LOGGER_HPP

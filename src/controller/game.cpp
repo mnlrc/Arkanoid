@@ -10,38 +10,9 @@
 
 Game::Game()
 {
-
-    // Init bricks -> TODO/TOCOMPLETE
-    double brick_height = (WINDOW_HEIGHT / 3) / static_cast<double>(BRICKS_ROWS);
-    double brick_width = WINDOW_WIDTH / static_cast<double>(BRICKS_COLS);
-
-    double y = brick_height / 2;
-    for (size_t i = 0; i < BRICKS_ROWS; i++)
-    {
-        double x = brick_width / 2;
-        std::vector<Brick> v;
-        for (size_t j = 0; j < BRICKS_COLS; j++)
-        {
-            v.push_back(Brick(Point{x, y}, brick_width, brick_height, true));
-            x += brick_width;
-        }
-        y += brick_height;
-        bricks_.push_back(v);
-    }
-
-    // Init balls
-    balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 75}, 10, Point{DEFAULT_BALL_SPEED, -DEFAULT_BALL_SPEED}));
-
-    timer_ = al_create_timer(1.0 / FREQUENCY);
-    queue_ = al_create_event_queue();
-
-    // Tests if everything is correctly initialized
-    init_test(timer_, "timer");
-    init_test(queue_, "queue");
-    init_test(al_install_keyboard(), "keyboard");
-    // init_test(al_install_mouse, "mouse");
-
-    setupGame();
+    init_test(al_init(), "allegro init");
+    setupModel(ModelType::MAIN_MENU_MODEL);
+    setupAllegro();
 }
 
 Game::~Game()
@@ -52,13 +23,66 @@ Game::~Game()
     al_uninstall_mouse();
 }
 
-void Game::setupGame()
+void Game::setupModel(ModelType model)
 {
-    al_register_event_source(queue_, al_get_display_event_source(gameView_.getDisplay()));
+    switch (model)
+    {
+    case ModelType::MAIN_MENU_MODEL:
+        Logger::log("[SUCCESS] Loading Main Menu Model");
+        // TODO
+        break;
+    case ModelType::GAME_MODEL:
+        Logger::log("[SUCCESS] Loading Game Model");
+        // TODO
+        break;
+    case ModelType::PAUSE_MENU_MODEL:
+        Logger::log("[SUCCESS] Loading Pause Menu Model");
+        // TODO
+        break;
+    default:
+        Logger::log("[ERROR] Unknown model type received when loading new one");
+        break;
+    }
+    // Init bricks -> TODO/TOCOMPLETE
+    // double brick_height = (WINDOW_HEIGHT / 3) / static_cast<double>(BRICKS_ROWS);
+    // double brick_width = WINDOW_WIDTH / static_cast<double>(BRICKS_COLS);
+    //
+    // double y = brick_height / 2;
+    // for (size_t i = 0; i < BRICKS_ROWS; i++)
+    // {
+    // double x = brick_width / 2;
+    // std::vector<Brick> v;
+    // for (size_t j = 0; j < BRICKS_COLS; j++)
+    // {
+    // v.push_back(Brick(Point{x, y}, brick_width, brick_height, true));
+    // x += brick_width;
+    // }
+    // y += brick_height;
+    // bricks_.push_back(v);
+    // }
+    //
+    // Init balls
+    // balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 75}, 10, Point{DEFAULT_BALL_SPEED, -DEFAULT_BALL_SPEED}));
+}
+
+void Game::setupAllegro()
+{
+    timer_ = al_create_timer(1.0 / FREQUENCY);
+    queue_ = al_create_event_queue();
+
+    // init tests
+    init_test(timer_, "timer");
+    init_test(queue_, "queue");
+    init_test(view_.getDisplay(), "display");
+    init_test(al_install_keyboard(), "keyboard");
+    init_test(al_install_mouse(), "mouse");
+    init_test(al_init_primitives_addon(), "primitives");
+
+    // link events to queue
+    al_register_event_source(queue_, al_get_display_event_source(view_.getDisplay()));
     al_register_event_source(queue_, al_get_timer_event_source(timer_));
     al_register_event_source(queue_, al_get_keyboard_event_source());
-
-    al_start_timer(timer_);
+    al_register_event_source(queue_, al_get_mouse_event_source());
 }
 
 void Game::manageKeyDown(ALLEGRO_EVENT event)
@@ -124,6 +148,16 @@ void Game::update()
 
 void Game::runGame()
 {
+    while (main_loop)
+    {
+        while (game_loop)
+        {
+            while (pause_loop)
+            {
+            }
+        }
+    }
+
     while (!done)
     {
         al_wait_for_event(queue_, &event_);
@@ -140,6 +174,8 @@ void Game::runGame()
             break;
         case ALLEGRO_EVENT_KEY_UP:
             manageKeyUp(event_);
+            break;
+        case ALLEGRO_EVENT_MOUSE_AXES:
             break;
         default:
         {

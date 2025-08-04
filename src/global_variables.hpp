@@ -11,6 +11,7 @@
 
 #include <allegro5/color.h>
 
+// TODO: à déplacer dans la view, pas besoin en tant que global
 const ALLEGRO_COLOR COLOR_RED = al_map_rgb(255, 0, 0);
 const ALLEGRO_COLOR COLOR_GREY = al_map_rgb(200, 200, 200);
 const ALLEGRO_COLOR COLOR_GREEN = al_map_rgb(0, 255, 0);
@@ -22,7 +23,15 @@ const ALLEGRO_COLOR COLOR_MAGENTA = al_map_rgb(255, 0, 255);
 const ALLEGRO_COLOR COLOR_BLUE = al_map_rgb(0, 0, 255);
 const ALLEGRO_COLOR COLOR_DARK_GREY = al_map_rgb(34, 34, 34);
 
+// TODO, sera variable avec l'encodage des niveaux => différentes tailles de fenêtre
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 600
+
+enum class ModelType : int
+{
+    MAIN_MENU_MODEL = 0,
+    GAME_MODEL,
+    PAUSE_MENU_MODEL,
+};
 
 #endif
