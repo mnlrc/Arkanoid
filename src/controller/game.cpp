@@ -13,6 +13,7 @@ Game::Game()
     init_test(al_init(), "allegro init");
     setupModel(ModelType::MAIN_MENU_MODEL);
     setupAllegro();
+    view_ = std::make_unique<View>(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 Game::~Game()
@@ -29,7 +30,7 @@ void Game::setupModel(ModelType model)
     {
     case ModelType::MAIN_MENU_MODEL:
         Logger::log("[SUCCESS] Loading Main Menu Model");
-        controller_.setupMenuModel(MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
+        controller_->setupMenuModel(WINDOW_WIDTH, WINDOW_HEIGHT);
         Logger::log("[SUCCESS] Main Menu Model successfully loaded");
         break;
     case ModelType::GAME_MODEL:
@@ -74,13 +75,11 @@ void Game::setupAllegro()
     // init tests
     init_test(timer_, "timer");
     init_test(queue_, "queue");
-    init_test(view_.getDisplay(), "display");
     init_test(al_install_keyboard(), "keyboard");
     init_test(al_install_mouse(), "mouse");
-    init_test(al_init_primitives_addon(), "primitives");
 
     // link events to queue
-    al_register_event_source(queue_, al_get_display_event_source(view_.getDisplay()));
+    al_register_event_source(queue_, al_get_display_event_source(view_->getDisplay()));
     al_register_event_source(queue_, al_get_timer_event_source(timer_));
     al_register_event_source(queue_, al_get_keyboard_event_source());
     al_register_event_source(queue_, al_get_mouse_event_source());
@@ -198,7 +197,7 @@ void Game::runMainMenu()
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
-                controller_.handleKeyInput(event_.keyboard.keycode);
+                controller_->handleKeyInput(event_.keyboard.keycode);
                 // TODO: pass the input to the controller that passes it to the model
                 // then update the view
                 break;

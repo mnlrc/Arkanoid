@@ -9,8 +9,8 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#define MAIN_MENU_WIDTH 600
-#define MAIN_MENU_HEIGHT 700
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 700
 
 #define FREQUENCY 60
 #define BRICKS_COLS 14 // number of brick columns
@@ -55,14 +55,8 @@ public:
 
 private:
     // #### Objects ####
-    View view_;
-    Controller controller_;
-
-    // TODO: déplacer dans le controller
-    // Racket racket_;
-    // std::vector<Ball> balls_;
-    // std::vector<std::vector<Brick>> bricks_;
-    // Score score_;
+    std::unique_ptr<View> view_;
+    std::unique_ptr<Controller> controller_;
 
     // #### Allegro instances ####
     ALLEGRO_TIMER *timer_;

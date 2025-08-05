@@ -30,3 +30,11 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
                                button_starting_pos});
     }
 }
+
+Rectangle *MenuModel::getButtons() { return buttons_; }
+
+Text *MenuModel::getTexts() { return texts_; }
+
+const Color MenuModel::getInnerColor() const noexcept { return inner_color_; }
+
+const Color MenuModel::getOuterColor() const noexcept { return outer_color_; }

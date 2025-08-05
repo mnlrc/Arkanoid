@@ -26,6 +26,20 @@ public:
      */
     ~Model() = default;
 
+    /**
+     * @brief Get the width_ attribute
+     *
+     * @return const int
+     */
+    const int getWidth() const noexcept;
+
+    /**
+     * @brief Get the height_ attribute
+     *
+     * @return const int
+     */
+    const int getHeight() const noexcept;
+
 protected:
     const int width_;
     const int height_;

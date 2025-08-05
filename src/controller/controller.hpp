@@ -34,6 +34,18 @@ public:
      */
     void setupMenuModel(const int width, const int height);
 
+    /**
+     * @brief 
+     * 
+     */
+    void setupGameModel();
+
+    /**
+     * @brief 
+     * 
+     */
+    void setupPauseModel();
+
     void handleKeyInput(int keyCode);
 
     void updateView();

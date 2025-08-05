@@ -20,12 +20,13 @@
 #include "../model.hpp"
 #include "../objects/rectangle.hpp"
 #include "../objects/text.hpp"
+#include "../../global_variables.hpp"
 
 const std::string strings[NUMBER_OF_BUTTONS] = {PLAY_BUTTON_TEXT,
                                                 LEVEL_BUTTON_TEXT,
                                                 EXIT_BUTTON_TEXT};
 
-class MenuModel : Model
+class MenuModel : public Model
 {
 public:
     /**
@@ -42,9 +43,39 @@ public:
      */
     ~MenuModel() = default;
 
+    /**
+     * @brief Get the Buttons object
+     *
+     * @return Rectangle*
+     */
+    Rectangle *getButtons();
+
+    /**
+     * @brief Get the Texts object
+     *
+     * @return Text*
+     */
+    Text *getTexts();
+
+    /**
+     * @brief Get the inner_color_ attribute
+     *
+     * @return const Color
+     */
+    const Color getInnerColor() const noexcept;
+
+    /**
+     * @brief Get the outer_color_ attribute
+     * 
+     * @return const Color 
+     */
+    const Color getOuterColor() const noexcept;
+
 private:
     Rectangle buttons_[NUMBER_OF_BUTTONS];
     Text texts_[NUMBER_OF_BUTTONS];
+    Color inner_color_;
+    Color outer_color_;
 };
 
 #endif

@@ -8,67 +8,135 @@
 
 #include "view.hpp"
 
-View::View() {
-    display_ = al_create_display(WINDOW_WIDTH, WINDOW_HEIGHT);
+View::View(const int width, const int height)
+{
+    setupAllegro(width, height);
 }
 
-View::~View() { al_destroy_display(display_); };
+View::~View()
+{
+    if (display_)
+    {
+        al_destroy_display(display_);
+    }
+};
 
-ALLEGRO_DISPLAY* View::getDisplay() const noexcept { return display_; }
+void View::setupAllegro(const int width, const int height)
+{
+    display_ = al_create_display(width, height);
 
-void View::drawAll(const Racket& racket, const std::vector<Ball>& balls, const std::vector<std::vector<Brick>>& bricks) {
-    // Draw the window
-    al_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_DARK_GREY); // background
-    al_draw_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_WHITE, 4.0); // game border
-     
-    drawBall(balls);
-    drawBricks(bricks);
-    drawRacket(racket);
+    init_test(al_init_primitives_addon(), "primitives");
+    init_test(display_, "display");
+}
+
+ALLEGRO_DISPLAY *View::getDisplay() const noexcept { return display_; }
+
+void View::draw(MenuModel &model)
+{
+    const int window_width = model.getWidth();
+    const int window_height = model.getHeight();
+    const Color temp_inner_color = model.getInnerColor();
+    const Color temp_outer_color = model.getOuterColor();
+
+    ALLEGRO_COLOR window_inner_color = colorConvertor(temp_inner_color);
+    ALLEGRO_COLOR window_outer_color = colorConvertor(temp_outer_color);
+
+    al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
+    al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
 
     al_flip_display();
 }
 
-void View::drawBall(const std::vector<Ball>& balls) {
-    for (auto& ball: balls){
-        al_draw_filled_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(0, 0, 0));
-        al_draw_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(255, 255, 255), 2.0);
+// void View::drawAll(const Racket &racket, const std::vector<Ball> &balls, const std::vector<std::vector<Brick>> &bricks)
+// {
+//     // Draw the window
+//     al_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_DARK_GREY); // background
+//     al_draw_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_WHITE, 4.0);       // game border
+
+//     drawBall(balls);
+//     drawBricks(bricks);
+//     drawRacket(racket);
+
+//     al_flip_display();
+// }
+
+// void View::drawBall(const std::vector<Ball> &balls)
+// {
+//     for (auto &ball : balls)
+//     {
+//         al_draw_filled_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(0, 0, 0));
+//         al_draw_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(255, 255, 255), 2.0);
+//     }
+// };
+
+// void View::drawBricks(const std::vector<std::vector<Brick>> &bricks)
+// {
+//     for (auto &bricks_row : bricks)
+//     {
+//         for (auto &brick : bricks_row)
+//         {
+//             if (!brick.isBroken())
+//             {
+//                 float x1 = brick.getCenter().x_ - (brick.getWidth() / 2);
+//                 float x2 = brick.getCenter().x_ + (brick.getWidth() / 2);
+//                 float y1 = brick.getCenter().y_ - (brick.getHeight() / 2);
+//                 float y2 = brick.getCenter().y_ + (brick.getHeight() / 2);
+//                 al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
+//                 al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
+//             }
+//         }
+//     }
+// };
+
+// void View::drawRacket(const Racket &racket)
+// {
+//     float x1 = racket.getCenter().x_ - (racket.getWidth() / 2);
+//     float x2 = racket.getCenter().x_ + (racket.getWidth() / 2);
+//     float y1 = racket.getCenter().y_ - (racket.getHeight() / 2);
+//     float y2 = racket.getCenter().y_ + (racket.getHeight() / 2);
+//     al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
+//     al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
+// };
+
+// // Optional modularity
+// void View::draw(const Racket &racket)
+// {
+//     drawRacket(racket);
+// }
+
+// void View::draw(const std::vector<Ball> &balls)
+// {
+//     drawBall(balls);
+// }
+
+// void View::draw(const std::vector<std::vector<Brick>> &bricks)
+// {
+//     drawBricks(bricks);
+// }
+
+ALLEGRO_COLOR View::colorConvertor(Color color)
+{
+    ALLEGRO_COLOR ret;
+    switch (color)
+    {
+    case Color::WHITE:
+        ret = COLOR_WHITE;
+        break;
+    case Color::BLACK:
+        ret = COLOR_BLACK;
+        break;
+    case Color::GREY:
+        ret = COLOR_GREY;
+        break;
+    case Color::RED:
+        ret = COLOR_RED;
+        break;
+    case Color::YELLOW:
+        ret = COLOR_YELLOW;
+        break;
+    default:
+        Logger::log("[ERROR] Unknown color");
+        break;
     }
-};
-
-void View::drawBricks(const std::vector<std::vector<Brick>>& bricks) {
-    for (auto& bricks_row: bricks) {
-        for (auto& brick: bricks_row) {
-            if (!brick.isBroken()) {
-                float x1 = brick.getCenter().x_ - (brick.getWidth() / 2);
-                float x2 = brick.getCenter().x_ + (brick.getWidth() / 2);
-                float y1 = brick.getCenter().y_ - (brick.getHeight() / 2);
-                float y2 = brick.getCenter().y_ + (brick.getHeight() / 2);
-                al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-                al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
-            }
-        }
-    }
-};
-
-void View::drawRacket(const Racket& racket) { 
-    float x1 = racket.getCenter().x_ - (racket.getWidth() / 2);
-    float x2 = racket.getCenter().x_ + (racket.getWidth() / 2);
-    float y1 = racket.getCenter().y_ - (racket.getHeight() / 2);
-    float y2 = racket.getCenter().y_ + (racket.getHeight() / 2);
-    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-    al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
-};
-
-
-// Optional modularity
-void View::draw(const Racket& racket) {
-    drawRacket(racket);
-}
-
-void View::draw(const std::vector<Ball>& balls) {
-    drawBall(balls);
-}
-
-void View::draw(const std::vector<std::vector<Brick>>& bricks) {
-    drawBricks(bricks);
+    return ret;
 }
