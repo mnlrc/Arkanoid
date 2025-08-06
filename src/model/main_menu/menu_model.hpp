@@ -21,6 +21,7 @@
 #include "../objects/rectangle.hpp"
 #include "../objects/text.hpp"
 #include "../../global_variables.hpp"
+#include "../../log/logger.hpp"
 
 const std::string strings[NUMBER_OF_BUTTONS] = {PLAY_BUTTON_TEXT,
                                                 LEVEL_BUTTON_TEXT,

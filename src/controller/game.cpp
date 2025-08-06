@@ -11,9 +11,12 @@
 Game::Game()
 {
     init_test(al_init(), "allegro init");
+    controller_ = std::make_unique<Controller>();
     setupModel(ModelType::MAIN_MENU_MODEL);
-    setupAllegro();
+    Logger::log("[INFO] Setting up Allegro");
     view_ = std::make_unique<View>(WINDOW_WIDTH, WINDOW_HEIGHT);
+    setupAllegro();
+    Logger::log("[INFO] Allegro successfully set up");
 }
 
 Game::~Game()
@@ -29,16 +32,16 @@ void Game::setupModel(ModelType model)
     switch (model)
     {
     case ModelType::MAIN_MENU_MODEL:
-        Logger::log("[SUCCESS] Loading Main Menu Model");
+        Logger::log("[INFO] Loading Main Menu Model");
         controller_->setupMenuModel(WINDOW_WIDTH, WINDOW_HEIGHT);
-        Logger::log("[SUCCESS] Main Menu Model successfully loaded");
+        Logger::log("[INFO] Main Menu Model successfully loaded");
         break;
     case ModelType::GAME_MODEL:
-        Logger::log("[SUCCESS] Loading Game Model");
+        Logger::log("[INFO] Loading Game Model");
         // TODO
         break;
     case ModelType::PAUSE_MENU_MODEL:
-        Logger::log("[SUCCESS] Loading Pause Menu Model");
+        Logger::log("[INFO] Loading Pause Menu Model");
         // TODO
         break;
     default:
@@ -69,15 +72,16 @@ void Game::setupModel(ModelType model)
 
 void Game::setupAllegro()
 {
+    Logger::log("allegro1");
     timer_ = al_create_timer(1.0 / FREQUENCY);
     queue_ = al_create_event_queue();
-
+    Logger::log("allegro2");
     // init tests
     init_test(timer_, "timer");
     init_test(queue_, "queue");
     init_test(al_install_keyboard(), "keyboard");
     init_test(al_install_mouse(), "mouse");
-
+    Logger::log("allegro3");
     // link events to queue
     al_register_event_source(queue_, al_get_display_event_source(view_->getDisplay()));
     al_register_event_source(queue_, al_get_timer_event_source(timer_));

@@ -24,7 +24,7 @@ public:
      * @brief Destroy the Model object
      *
      */
-    ~Model() = default;
+    virtual ~Model() = default;
 
     /**
      * @brief Get the width_ attribute
