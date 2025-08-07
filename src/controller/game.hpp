@@ -9,9 +9,6 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 700
-
 #define FREQUENCY 60
 #define BRICKS_COLS 14 // number of brick columns
 #define BRICKS_ROWS 8  // number of brick rows
@@ -24,7 +21,6 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/events.h>
 
-#include "../view/view.hpp"
 #include "controller.hpp"
 
 /**
@@ -55,7 +51,6 @@ public:
 
 private:
     // #### Objects ####
-    std::unique_ptr<View> view_;
     std::unique_ptr<Controller> controller_;
 
     // #### Allegro instances ####

@@ -12,6 +12,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/color.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_font.h>
 #include <vector>
 
 #include "model/objects/ball.hpp"
@@ -79,14 +81,15 @@ public:
      *
      * @param model
      */
-    void draw(MenuModel &model);
+    void draw(const std::unique_ptr<MenuModel>& model);
     // void drawAll(const Racket &racket, const std::vector<Ball> &balls, const std::vector<std::vector<Brick>> &bricks);
     // void draw(const Racket &racket);
     // void draw(const std::vector<Ball> &balls);
     // void draw(const std::vector<std::vector<Brick>> &bricks);
 
 private:
-    ALLEGRO_DISPLAY *display_ = nullptr;
+    ALLEGRO_DISPLAY *display_;
+    ALLEGRO_FONT *font_;
     // void drawRacket(const Racket &racket);
     // void drawBricks(const std::vector<std::vector<Brick>> &bricks);
     // void drawBall(const std::vector<Ball> &balls);

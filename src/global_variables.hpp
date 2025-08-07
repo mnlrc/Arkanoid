@@ -9,6 +9,9 @@
 #ifndef GLOBAL_VARIABLES_HPP
 #define GLOBAL_VARIABLES_HPP
 
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 700
+
 enum class ModelType : int
 {
     MAIN_MENU_MODEL = 0,

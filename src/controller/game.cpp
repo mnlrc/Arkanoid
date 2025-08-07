@@ -13,8 +13,8 @@ Game::Game()
     init_test(al_init(), "allegro init");
     controller_ = std::make_unique<Controller>();
     setupModel(ModelType::MAIN_MENU_MODEL);
-    Logger::log("[INFO] Setting up Allegro");
-    view_ = std::make_unique<View>(WINDOW_WIDTH, WINDOW_HEIGHT);
+    Logger::log("[INFO] Setting up Allegro and View");
+    controller_->initView();
     setupAllegro();
     Logger::log("[INFO] Allegro successfully set up");
 }
@@ -72,18 +72,17 @@ void Game::setupModel(ModelType model)
 
 void Game::setupAllegro()
 {
-    Logger::log("allegro1");
     timer_ = al_create_timer(1.0 / FREQUENCY);
     queue_ = al_create_event_queue();
-    Logger::log("allegro2");
+
     // init tests
     init_test(timer_, "timer");
     init_test(queue_, "queue");
     init_test(al_install_keyboard(), "keyboard");
     init_test(al_install_mouse(), "mouse");
-    Logger::log("allegro3");
+
     // link events to queue
-    al_register_event_source(queue_, al_get_display_event_source(view_->getDisplay()));
+    al_register_event_source(queue_, al_get_display_event_source(controller_->getDisplay()));
     al_register_event_source(queue_, al_get_timer_event_source(timer_));
     al_register_event_source(queue_, al_get_keyboard_event_source());
     al_register_event_source(queue_, al_get_mouse_event_source());
@@ -152,14 +151,17 @@ void Game::setupAllegro()
 
 void Game::run()
 {
+    Logger::log("[INFO] Game running, entering main loop");
     while (main_loop)
     {
         runMainMenu();
 
         while (game_loop)
         {
+            Logger::log("[INFO] Starting game, entering game loop");
             while (pause_loop)
             {
+                Logger::log("[INFO] Opening pause menu, entering pause loop");
             }
         }
     }
@@ -193,25 +195,46 @@ void Game::run()
 void Game::runMainMenu()
 {
     bool done = false;
+    bool draw = false;
+    al_start_timer(timer_);
     while (!done)
     {
         al_wait_for_event(queue_, nullptr);
         while (al_get_next_event(queue_, &event_))
         {
+            Logger::log("[INFO] Handling event");
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
+                Logger::log("[INFO] Event type: ALLEGRO_EVENT_KEY_DOWN");
                 controller_->handleKeyInput(event_.keyboard.keycode);
                 // TODO: pass the input to the controller that passes it to the model
                 // then update the view
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                Logger::log("[INFO] Event type: ALLEGRO_EVENT_DISPLAY_CLOSE");
                 done = true;
                 main_loop = false;
                 break;
+            case ALLEGRO_KEY_ESCAPE:
+                Logger::log("[INFO] Event type: ALLEGRO_KEY_ESCAPE");
+                done = true;
+                main_loop = false;
+                break;
+            case ALLEGRO_EVENT_TIMER:
+                Logger::log("[INFO] Event type: ALLEGRO_EVENT_TIMER");
+                draw = true;
+                al_stop_timer(timer_);
             default:
                 break;
             }
+        }
+        if (draw)
+        {
+            draw = false;
+            al_start_timer(timer_);
+            // al_clear_to_color(al_map_rgb(255, 255, 255));
+            controller_->updateView();
         }
     }
 }

@@ -11,23 +11,23 @@
 MenuModel::MenuModel(const int width, const int height) : Model{width, height}
 {
     Point model_middle = Point{static_cast<double>(width_ / 2), static_cast<double>(height_ / 2)};
-    double shift_percentage = 25 / 100;      // 25%
+    double shift_percentage = 0.2;           // 20%
+    double width_percentage = 0.8;           // 80%
     double button_height = height_ * 1 / 10; // 10% of the height
     double button_shift = height_ * shift_percentage;
-
     double button_starting_pos = model_middle.y_ + button_shift;
+
     for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
     {
-        buttons_[i] = Rectangle(Point{static_cast<double>(width_ / 2),
-                                      button_starting_pos},
-                                width_,
+        Point center{static_cast<double>(width_ / 2), button_starting_pos};
+        buttons_[i] = Rectangle(center,
+                                width_ * width_percentage,
                                 button_height);
-        button_starting_pos = button_starting_pos - button_shift;
-
         texts_[i] = Text(strings[i],
                          Color::WHITE,
-                         Point{static_cast<double>(width_ / 2),
-                               button_starting_pos});
+                         center);
+
+        button_starting_pos -= button_shift;
     }
 }
 

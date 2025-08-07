@@ -75,8 +75,8 @@ public:
 private:
     Rectangle buttons_[NUMBER_OF_BUTTONS];
     Text texts_[NUMBER_OF_BUTTONS];
-    Color inner_color_;
-    Color outer_color_;
+    Color inner_color_ = Color::WHITE;
+    Color outer_color_ = Color::BLACK;
 };
 
 #endif

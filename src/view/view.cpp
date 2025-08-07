@@ -26,23 +26,49 @@ void View::setupAllegro(const int width, const int height)
     display_ = al_create_display(width, height);
 
     init_test(al_init_primitives_addon(), "primitives");
+    // init_test(al_init_ttf_addon(), "TTF addon");
     init_test(display_, "display");
 }
 
 ALLEGRO_DISPLAY *View::getDisplay() const noexcept { return display_; }
 
-void View::draw(MenuModel &model)
+void View::draw(const std::unique_ptr<MenuModel> &model)
 {
-    const int window_width = model.getWidth();
-    const int window_height = model.getHeight();
-    const Color temp_inner_color = model.getInnerColor();
-    const Color temp_outer_color = model.getOuterColor();
+    // drawing main window
+    const int window_width = model->getWidth();
+    const int window_height = model->getHeight();
+    const Color temp_inner_color = model->getInnerColor();
+    const Color temp_outer_color = model->getOuterColor();
 
     ALLEGRO_COLOR window_inner_color = colorConvertor(temp_inner_color);
     ALLEGRO_COLOR window_outer_color = colorConvertor(temp_outer_color);
 
     al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
     al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
+
+    // drawing it's contents
+    const Rectangle *buttons_ = model->getButtons();
+    const Text *texts_ = model->getTexts();
+    for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
+    {
+        Rectangle temp_rec = buttons_[i];
+
+        Point rec_center = temp_rec.getCenter();
+        double rec_width = temp_rec.getWidth();
+        double rec_height = temp_rec.getHeight();
+
+        // upper left
+        double x1 = rec_center.x_ - (rec_width / 2);
+        double y1 = rec_center.y_ - (rec_height / 2);
+
+        // lower right
+        double x2 = rec_center.x_ + (rec_width / 2);
+        double y2 = rec_center.y_ + (rec_height / 2);
+
+        al_draw_filled_rectangle(x1, y1, x2, y2, COLOR_BLACK);
+
+        Text temp_text = texts_[i];
+    }
 
     al_flip_display();
 }

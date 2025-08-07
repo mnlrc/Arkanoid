@@ -10,6 +10,7 @@
 #include "../model/main_menu/menu_model.hpp"
 #include "../model/game/game_model.hpp"
 #include "../model/pause_menu/pause_model.hpp"
+#include "../view/view.hpp"
 
 class Controller
 {
@@ -29,28 +30,52 @@ public:
     /**
      * @brief
      *
+     */
+    void initView();
+
+    /**
+     * @brief
+     *
      * @param width
      * @param height
      */
     void setupMenuModel(const int width, const int height);
 
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      */
     void setupGameModel();
 
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      */
     void setupPauseModel();
 
+    /**
+     * @brief
+     *
+     * @param keyCode
+     */
     void handleKeyInput(int keyCode);
 
+    /**
+     * @brief
+     *
+     */
     void updateView();
 
+    /**
+     * @brief Get the View object
+     *
+     * @return View
+     */
+    ALLEGRO_DISPLAY *getDisplay() const noexcept;
+
 private:
+    std::unique_ptr<View> view_;
+
     std::unique_ptr<MenuModel> menu_model;
     // std::unique_ptr<GameModel> game_model;
     // std::unique_ptr<PauseModel> pause_model;
