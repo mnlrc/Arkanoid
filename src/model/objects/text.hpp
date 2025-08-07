@@ -6,6 +6,9 @@
  *
  */
 
+#ifndef TEXT_HPP
+#define TEXT_HPP
+
 #include <string>
 
 #include "point.hpp"
@@ -37,22 +40,22 @@ public:
 
     /**
      * @brief Get the Text object
-     * 
-     * @return std::string 
+     *
+     * @return std::string
      */
     std::string getText() const noexcept;
 
     /**
      * @brief Get the Color object
-     * 
-     * @return Color 
+     *
+     * @return Color
      */
     Color getColor() const noexcept;
 
     /**
      * @brief Get the Center object
-     * 
-     * @return Point 
+     *
+     * @return Point
      */
     Point getCenter() const noexcept;
 
@@ -61,3 +64,5 @@ private:
     Color color_;
     Point center_;
 };
+
+#endif

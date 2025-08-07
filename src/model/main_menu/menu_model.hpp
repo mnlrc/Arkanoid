@@ -10,22 +10,31 @@
 #define MENU_MODEL_HPP
 
 #define NUMBER_OF_BUTTONS 3
-#define PLAY_BUTTON_TEXT "Play - Enter"
-#define LEVEL_BUTTON_TEXT "Select a level - <,>"
-#define EXIT_BUTTON_TEXT "Quit Game - Escape"
 
 #include <cmath>
 #include <string>
+#include <unordered_map>
+#include <map>
 
 #include "../model.hpp"
 #include "../objects/rectangle.hpp"
+#include "../objects/button.hpp"
 #include "../objects/text.hpp"
 #include "../../global_variables.hpp"
 #include "../../log/logger.hpp"
 
-const std::string strings[NUMBER_OF_BUTTONS] = {PLAY_BUTTON_TEXT,
-                                                LEVEL_BUTTON_TEXT,
-                                                EXIT_BUTTON_TEXT};
+const std::string PLAY_BUTTON_TEXT = "Play - Enter";
+const std::string EXIT_BUTTON_TEXT = "Quit Game - Escape";
+const std::string LEVEL_1 = "<-      Level 1      ->";
+const std::string LEVEL_2 = "<-      Level 2      ->";
+const std::string LEVEL_3 = "<-      Level 3      ->";
+const std::string LEVEL_4 = "<-      Level 4      ->";
+const std::string LEVEL_5 = "<-      Level 5      ->";
+const std::vector<std::string> LEVEL_BUTTON_TEXT = {LEVEL_1,
+                                                    LEVEL_2,
+                                                    LEVEL_3,
+                                                    LEVEL_4,
+                                                    LEVEL_5};
 
 class MenuModel : public Model
 {
@@ -49,14 +58,7 @@ public:
      *
      * @return Rectangle*
      */
-    Rectangle *getButtons();
-
-    /**
-     * @brief Get the Texts object
-     *
-     * @return Text*
-     */
-    Text *getTexts();
+    std::vector<Button> getButtons();
 
     /**
      * @brief Get the inner_color_ attribute
@@ -67,14 +69,20 @@ public:
 
     /**
      * @brief Get the outer_color_ attribute
-     * 
-     * @return const Color 
+     *
+     * @return const Color
      */
     const Color getOuterColor() const noexcept;
 
+    /**
+     * @brief 
+     * 
+     * @param next 
+     */
+    void cycleText(bool next);
+
 private:
-    Rectangle buttons_[NUMBER_OF_BUTTONS];
-    Text texts_[NUMBER_OF_BUTTONS];
+    std::vector<Button> buttons_;
     Color inner_color_ = Color::GREY;
     Color outer_color_ = Color::BLACK;
 };

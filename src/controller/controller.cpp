@@ -23,9 +23,15 @@ void Controller::setupPauseModel() {}
 
 void Controller::handleKeyInput(int keyCode)
 {
-    if (keyCode)
-    {
-        return;
+    switch(keyCode) {
+        case ALLEGRO_KEY_ENTER:
+            break;
+        case ALLEGRO_KEY_LEFT:
+            menu_model->cycleText(false);
+            break;
+        case ALLEGRO_KEY_RIGHT:
+            menu_model->cycleText(true);
+            break;
     }
 }
 

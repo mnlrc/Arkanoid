@@ -49,11 +49,11 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
     al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
 
     // drawing it's contents
-    const Rectangle *buttons_ = model->getButtons();
-    const Text *texts_ = model->getTexts();
+    std::vector<Button> buttons = model->getButtons();
+
     for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
     {
-        Rectangle temp_rec = buttons_[i];
+        Rectangle temp_rec = buttons[i].getRectangle();
 
         Point rec_center = temp_rec.getCenter();
         double rec_width = temp_rec.getWidth();
@@ -69,7 +69,7 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
 
         al_draw_filled_rectangle(x1, y1, x2, y2, COLOR_BLACK);
 
-        Text temp_text = texts_[i];
+        Text temp_text = buttons[i].getSelectedText();
 
         Point text_center = temp_text.getCenter();
         std::string temp_string = temp_text.getText();
