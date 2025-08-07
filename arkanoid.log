@@ -1,0 +1,919 @@
+[INFO] Start of the program
+[INFO] Loading Main Menu Model
+[INFO] Main Menu Model successfully loaded
+[INFO] Setting up Allegro and View
+[INFO] Allegro successfully set up
+[INFO] Game running, entering main loop
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_KEY_DOWN
+[INFO] Event type: ALLEGRO_KEY_ESCAPE
+[INFO] Handling event
+[INFO] Program ended, returning 0
+[INFO] Start of the program
+[INFO] Loading Main Menu Model
+[INFO] Main Menu Model successfully loaded
+[INFO] Setting up Allegro and View
+[INFO] Allegro successfully set up
+[INFO] Game running, entering main loop
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_TIMER
+[INFO] Handling event
+[INFO] Event type: ALLEGRO_EVENT_KEY_DOWN
+[INFO] Event type: ALLEGRO_KEY_ESCAPE
+[INFO] Handling event
+[INFO] Program ended, returning 0

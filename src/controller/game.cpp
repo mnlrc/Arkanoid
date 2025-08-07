@@ -207,17 +207,21 @@ void Game::runMainMenu()
             {
             case ALLEGRO_EVENT_KEY_DOWN:
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_KEY_DOWN");
-                controller_->handleKeyInput(event_.keyboard.keycode);
+                if (event_.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                {
+                    Logger::log("[INFO] Event type: ALLEGRO_KEY_ESCAPE");
+                    done = true;
+                    main_loop = false;
+                }
+                else
+                {
+                    controller_->handleKeyInput(event_.keyboard.keycode);
+                }
                 // TODO: pass the input to the controller that passes it to the model
                 // then update the view
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_DISPLAY_CLOSE");
-                done = true;
-                main_loop = false;
-                break;
-            case ALLEGRO_KEY_ESCAPE:
-                Logger::log("[INFO] Event type: ALLEGRO_KEY_ESCAPE");
                 done = true;
                 main_loop = false;
                 break;

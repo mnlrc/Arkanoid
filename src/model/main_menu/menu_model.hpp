@@ -10,9 +10,9 @@
 #define MENU_MODEL_HPP
 
 #define NUMBER_OF_BUTTONS 3
-#define PLAY_BUTTON_TEXT "Play"
-#define LEVEL_BUTTON_TEXT "Select a level"
-#define EXIT_BUTTON_TEXT "Quit Game"
+#define PLAY_BUTTON_TEXT "Play - Enter"
+#define LEVEL_BUTTON_TEXT "Select a level - <,>"
+#define EXIT_BUTTON_TEXT "Quit Game - Escape"
 
 #include <cmath>
 #include <string>
