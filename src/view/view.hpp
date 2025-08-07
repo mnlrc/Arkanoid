@@ -90,6 +90,7 @@ public:
 private:
     ALLEGRO_DISPLAY *display_;
     ALLEGRO_FONT *font_;
+    const int FONT_SIZE = 20;
     // void drawRacket(const Racket &racket);
     // void drawBricks(const std::vector<std::vector<Brick>> &bricks);
     // void drawBall(const std::vector<Ball> &balls);

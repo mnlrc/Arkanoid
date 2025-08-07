@@ -15,7 +15,7 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
     double width_percentage = 0.8;           // 80%
     double button_height = height_ * 1 / 10; // 10% of the height
     double button_shift = height_ * shift_percentage;
-    double button_starting_pos = model_middle.y_ + button_shift;
+    double button_starting_pos = model_middle.y_ - button_shift;
 
     for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
     {
@@ -27,7 +27,7 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
                          Color::WHITE,
                          center);
 
-        button_starting_pos -= button_shift;
+        button_starting_pos += button_shift;
     }
 }
 

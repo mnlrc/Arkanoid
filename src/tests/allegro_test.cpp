@@ -12,8 +12,8 @@ void init_test(bool test, const char *description)
 {
     if (!test)
     {
-        Logger::log("Couldn't initialize" + std::string(description));
-        exit(1);
+        Logger::log("[ERROR] Couldn't initialize " + std::string(description));
+        // exit(1);
     }
 }
 

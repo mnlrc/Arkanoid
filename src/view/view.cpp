@@ -26,7 +26,9 @@ void View::setupAllegro(const int width, const int height)
     display_ = al_create_display(width, height);
 
     init_test(al_init_primitives_addon(), "primitives");
-    // init_test(al_init_ttf_addon(), "TTF addon");
+    init_test(al_init_ttf_addon(), "TTF addon");
+    font_ = al_load_ttf_font("font.ttf", FONT_SIZE, 0);
+    init_test(font_, "font");
     init_test(display_, "display");
 }
 
@@ -68,6 +70,15 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
         al_draw_filled_rectangle(x1, y1, x2, y2, COLOR_BLACK);
 
         Text temp_text = texts_[i];
+
+        Point text_center = temp_text.getCenter();
+        std::string temp_string = temp_text.getText();
+        Color temp_color = temp_text.getColor();
+
+        const char* text = temp_string.c_str();
+        ALLEGRO_COLOR text_color = colorConvertor(temp_color);
+
+        al_draw_text(font_, text_color, text_center.x_, text_center.y_, ALLEGRO_ALIGN_CENTRE, text);
     }
 
     al_flip_display();

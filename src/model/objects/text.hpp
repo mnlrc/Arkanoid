@@ -35,6 +35,27 @@ public:
      */
     ~Text() = default;
 
+    /**
+     * @brief Get the Text object
+     * 
+     * @return std::string 
+     */
+    std::string getText() const noexcept;
+
+    /**
+     * @brief Get the Color object
+     * 
+     * @return Color 
+     */
+    Color getColor() const noexcept;
+
+    /**
+     * @brief Get the Center object
+     * 
+     * @return Point 
+     */
+    Point getCenter() const noexcept;
+
 private:
     std::string text_;
     Color color_;
