@@ -40,7 +40,7 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
             break;
         }
 
-        buttons_.emplace_back(Button(button_texts, center, button_width, button_height));
+        buttons_.emplace_back(button_texts, center, button_width, button_height);
         button_starting_pos += button_shift;
     }
 }

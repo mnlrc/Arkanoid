@@ -38,7 +38,7 @@ void Game::setupModel(ModelType model)
         break;
     case ModelType::GAME_MODEL:
         Logger::log("[INFO] Loading Game Model");
-        // TODO
+        controller_->setupGameModel();
         break;
     case ModelType::PAUSE_MENU_MODEL:
         Logger::log("[INFO] Loading Pause Menu Model");
@@ -151,17 +151,20 @@ void Game::setupAllegro()
 
 void Game::run()
 {
-    Logger::log("[INFO] Game running, entering main loop");
     while (main_loop)
     {
+        Logger::log("[INFO] Entering main loop, loading Main Menu");
         runMainMenu();
 
         while (game_loop)
         {
             Logger::log("[INFO] Starting game, entering game loop");
+            runGame();
+
             while (pause_loop)
             {
                 Logger::log("[INFO] Opening pause menu, entering pause loop");
+                runPauseMenu();
             }
         }
     }
@@ -196,6 +199,7 @@ void Game::runMainMenu()
 {
     bool done = false;
     bool draw = false;
+    al_flush_event_queue(queue_);
     al_start_timer(timer_);
     while (!done)
     {
@@ -213,12 +217,16 @@ void Game::runMainMenu()
                     done = true;
                     main_loop = false;
                 }
+                else if (event_.keyboard.keycode == ALLEGRO_KEY_ENTER)
+                {
+                    Logger::log("[INFO] Event type: ALLEGRO_KEY_ENTER");
+                    done = true;
+                    game_loop = true;
+                }
                 else
                 {
                     controller_->handleKeyInput(event_.keyboard.keycode);
                 }
-                // TODO: pass the input to the controller that passes it to the model
-                // then update the view
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_DISPLAY_CLOSE");
@@ -230,6 +238,7 @@ void Game::runMainMenu()
                 draw = true;
                 al_stop_timer(timer_);
             default:
+                Logger::log("[ERROR] Unhandled input");
                 break;
             }
         }
@@ -237,12 +246,38 @@ void Game::runMainMenu()
         {
             draw = false;
             al_start_timer(timer_);
-            // al_clear_to_color(al_map_rgb(255, 255, 255));
             controller_->updateView();
         }
     }
 }
 
-void Game::runGame() {}
+void Game::runGame()
+{
+    bool done = false;
+    bool draw = false;
+    al_flush_event_queue(queue_);
+    al_start_timer(timer_);
+    while (!done)
+    {
+        al_wait_for_event(queue_, nullptr);
+        while (al_get_next_event(queue_, &event_))
+        {
+            Logger::log("[INFO] Handling in game event");
+            switch (event_.type)
+            {
+            case ALLEGRO_EVENT_KEY_DOWN:
+                break;
+            default:
+                Logger::log("[ERROR] Unhandled input");
+            }
+        }
+        if (draw)
+        {
+            draw = false;
+            al_start_timer(timer_);
+            controller_->updateView();
+        }
+    }
+}
 
 void Game::runPauseMenu() {}

@@ -7,7 +7,8 @@
 
 #include "controller.hpp"
 
-void Controller::initView() {
+void Controller::initView()
+{
     view_ = std::make_unique<View>(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
@@ -17,21 +18,23 @@ void Controller::setupMenuModel(const int width, const int height)
     current_model = ModelType::MAIN_MENU_MODEL;
 }
 
-void Controller::setupGameModel() {}
-
-void Controller::setupPauseModel() {}
+void Controller::setupGameModel() {
+    
+}
 
 void Controller::handleKeyInput(int keyCode)
 {
-    switch(keyCode) {
-        case ALLEGRO_KEY_ENTER:
-            break;
-        case ALLEGRO_KEY_LEFT:
-            menu_model->cycleText(false);
-            break;
-        case ALLEGRO_KEY_RIGHT:
-            menu_model->cycleText(true);
-            break;
+    switch (keyCode)
+    {
+    case ALLEGRO_KEY_LEFT:
+        menu_model->cycleText(false);
+        break;
+    case ALLEGRO_KEY_RIGHT:
+        menu_model->cycleText(true);
+        break;
+    default:
+        Logger::log("[ERROR] Invalid input");
+        break;
     }
 }
 

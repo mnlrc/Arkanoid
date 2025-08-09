@@ -18,13 +18,14 @@ class Ball
 {
 private:
     Point center_;
-    const double radius_;
+    double radius_;
     Point speed_;
     bool isMoving;
 
 public:
     // #### Constructor ####
     Ball(Point c, double w, Point);
+    Ball() = default;
     // #### Destructor ####
     ~Ball();
     // #### Getters ####

@@ -1,0 +1,13 @@
+ARKANOID-LEVEL
+0.25
+Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_
+M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_
+B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_
+R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_
+G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_
+C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_
+O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_
+W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_ W-_
+
+GREY
+BLACK
