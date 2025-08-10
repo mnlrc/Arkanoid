@@ -17,12 +17,13 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <memory>
 
 struct LevelData
 {
-    Racket racket;
-    Ball ball;
-    std::vector<Brick> bricks;
+    std::unique_ptr<Racket> racket;
+    std::unique_ptr<Ball> ball;
+    std::vector<std::unique_ptr<Brick>> bricks;
     Color background_color;
     Color line_color;
 };
@@ -55,7 +56,7 @@ private:
      * @param file
      * @return std::vector<Brick>
      */
-    static std::vector<Brick> loadBricks(std::ifstream &file);
+    static std::vector<std::unique_ptr<Brick>> loadBricks(std::ifstream &file);
 
     /**
      * @brief
@@ -63,7 +64,7 @@ private:
      * @param c
      * @return Color
      */
-    Color color_from_char(const char &c);
+    static Color color_from_char(const char &c);
 
     /**
      * @brief
@@ -71,7 +72,7 @@ private:
      * @param str
      * @return Color
      */
-    Color color_from_string(const std::string &str);
+    static Color color_from_string(const std::string &str);
 };
 
 #endif

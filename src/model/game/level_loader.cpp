@@ -1,3 +1,10 @@
+/**
+ * @file level_loader.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the LevelLoader class
+ * @date 2025
+ *
+ */
 
 #include "level_loader.hpp"
 
@@ -25,16 +32,18 @@ LevelData LevelLoader::loadLevel(const std::string &path)
                 racket_width = 0.25; // setting racket size to an arbitrary value TODO magic numbers
             }
             // TODO: remove magic numbers
-            Racket temp_racket = Racket(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, // TODO: temp
-                                        WINDOW_WIDTH * racket_width,
-                                        WINDOW_HEIGHT * 0.15,
-                                        10);
-            Ball temp_ball = Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 55}, 25, Point{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED});
-            std::vector<Brick> temp_bricks = loadBricks(file);
-            //
-            level_data.racket = temp_racket;
-            level_data.ball = temp_ball;
-            level_data.bricks = temp_bricks;
+            std::unique_ptr<Racket> temp_racket = std::make_unique<Racket>(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, // TODO: temp
+                                                                           WINDOW_WIDTH * racket_width,
+                                                                           WINDOW_HEIGHT * 0.15,
+                                                                           10);
+            std::unique_ptr<Ball> temp_ball = std::make_unique<Ball>(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 55},
+                                                                     25,
+                                                                     Point{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED});
+            std::vector<std::unique_ptr<Brick>> temp_bricks = loadBricks(file);
+
+            level_data.racket = std::move(temp_racket);
+            level_data.ball = std::move(temp_ball);
+            level_data.bricks = std::move(temp_bricks);
         }
         else
         {
@@ -55,9 +64,9 @@ bool LevelLoader::checkTag(const std::string &level_tag)
     return level_tag == "ARKANOID-LEVEL";
 }
 
-std::vector<Brick> LevelLoader::loadBricks(std::ifstream &file)
+std::vector<std::unique_ptr<Brick>> LevelLoader::loadBricks(std::ifstream &file)
 {
-    std::vector<Brick> bricks;
+    std::vector<std::unique_ptr<Brick>> bricks;
     double brick_width = WINDOW_WIDTH / 14;
     double brick_height = (WINDOW_HEIGHT * 0.5) / 10;
     double x_pos = brick_width / 2;
@@ -73,13 +82,13 @@ std::vector<Brick> LevelLoader::loadBricks(std::ifstream &file)
 
         for (size_t i = 0; i < line.length(); i += 4)
         {
-            char color = line[i]; // TODO: add color
-            char dash = line[i + 1];
-            char power_up = line[i + 2]; // TODO: add powerup
-            if (color != '_')
-            {
-                bricks.emplace_back(Point{x_pos, y_pos}, brick_width, brick_height, true);
-            }
+            // char color = line[i]; // TODO: add color
+            // char dash = line[i + 1];
+            // char power_up = line[i + 2]; // TODO: add powerup
+            // if (color != '_')
+            // {
+            bricks.emplace_back(std::make_unique<Brick>(Point{x_pos, y_pos}, brick_width, brick_height, true));
+            // }
             x_pos += brick_width;
         }
         x_pos = brick_width;
@@ -121,6 +130,7 @@ Color LevelLoader::color_from_char(const char &c)
         return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
         break;
     }
+    return Color::BLACK; // temp
 }
 
 Color LevelLoader::color_from_string(const std::string &str)
