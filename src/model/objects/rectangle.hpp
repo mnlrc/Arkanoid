@@ -13,19 +13,13 @@
 
 class Rectangle
 {
-
-protected:
-    Point center_;
-    double width_;
-    double height_;
-
 public:
     // ##### Constructors #####
     Rectangle(Point pt, double w, double h);
 
     Rectangle() = default;
     // ##### Destructor #####
-    ~Rectangle();
+    ~Rectangle() = default;
 
     // #### Getters #####
     /**
@@ -45,6 +39,17 @@ public:
      * @return The height of the racket
      */
     double getHeight() const noexcept;
+
+    void set_center(Point &new_center) noexcept;
+
+    void set_width(double &new_width) noexcept;
+
+    void set_height(double &new_height) noexcept;
+
+protected:
+    Point center_;
+    double width_;
+    double height_;
 };
 
 #endif

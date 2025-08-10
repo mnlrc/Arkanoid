@@ -23,45 +23,22 @@
 
 class Racket : public Rectangle
 {
-
-private:
-    double speed_; // speed of the racket
-
 public:
-    // #### Constructors ####
-    /**
-     * @brief Constructor of the Racket class
-     * @param pt Coordinates of the racket
-     * @param w Width of the racket
-     * @param h Height of the racket
-     * @param s Speed of the racket
-     */
-    Racket(Point pt, double w, double h, double s);
-
     /**
      * @brief Default constructor of the Racket class
      */
-    Racket();
+    Racket(double &racket_width_percentage);
 
     // #### Destructor ####
     /**
      * @brief Destructor for the Racket class
      */
-    ~Racket();
+    ~Racket() = default;
+    
+    double get_width_percentage() const noexcept;
 
-    // #### Getters ####
-    /**
-     * @brief Get the speed of the racket
-     * @return The speed of the racket
-     */
-    double getSpeed() const noexcept;
-
-    // #### Setters ####
-    /**
-     * @brief Set the x coordinate of the racket
-     * @param x The new x coordinate of the racket
-     */
-    void setCenter(double dx) noexcept;
+private:
+    double racket_width_percentage_; // percentage of the windows width
 };
 
 #endif

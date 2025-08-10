@@ -8,11 +8,26 @@
 
 #include "brick.hpp"
 
-Brick::Brick(Point pt, double w, double h, bool breakable) : Rectangle{pt, w, h}, breakable_(breakable) {}
-
-Brick::~Brick() = default;
-
-bool Brick::isBreakable() const noexcept { return breakable_; };
+Brick::Brick(Color &color, Power_Up &power_up) : power_up_(power_up), color_(color), points_(COLOR_SCORE.at(color))
+{
+    if (color == Color::NONE)
+        broken_ = true;
+    if (color == Color::GOLD)
+    {
+        hp_ = GOLD_HP;
+        outer_color_ = Color::DARK_GOLD;
+    }
+    if (color == Color::SILVER)
+    {
+        hp_ = SILVER_HP;
+        outer_color_ = Color::BLACK;
+    }
+    else
+    {
+        hp_ = DEFAULT_HP;
+        outer_color_ = color;
+    }
+}
 
 bool Brick::isBroken() const noexcept { return broken_; };
 

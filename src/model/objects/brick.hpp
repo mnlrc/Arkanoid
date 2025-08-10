@@ -11,45 +11,48 @@
 
 #include "point.hpp"
 #include "rectangle.hpp"
+#include "../../global_variables.hpp"
 
-#define BRICK_WIDTH 35
-#define BRICK_HEIGHT 20
-#define DEFAULT_BREAKABLE_STATE true
+#include <unordered_map>
+#include <limits>
+
+const std::unordered_map<Color, const int> COLOR_SCORE = {{Color::WHITE, 50},
+                                                          {Color::ORANGE, 60},
+                                                          {Color::CYAN, 70},
+                                                          {Color::GREEN, 80},
+                                                          {Color::RED, 90},
+                                                          {Color::BLUE, 100},
+                                                          {Color::MAGENTA, 110},
+                                                          {Color::YELLOW, 120},
+                                                          {Color::SILVER, 200},
+                                                          {Color::GOLD, std::numeric_limits<int>::max()}};
+
+const int DEFAULT_HP = 1;
+const int SILVER_HP = 2;
+const int GOLD_HP = std::numeric_limits<int>::max();
 
 class Brick : public Rectangle
 {
-
-    // Possibilité de réutilisation :
-
-    // Vous pouvez décider de "réparer" une brique plus tard en réinitialisant son état (isDestroyed = false), par exemple pour un power-up.
-
-private:
-    const bool breakable_; // for later phases
-    bool broken_ = false;
-
 public:
     // #### Constructors ####
-    /**
-     * @brief Constructor of the Brick class
-     * @param pt Coordinates of the brick
-     * @param w Width of the brick
-     * @param h Height of the brick
-     * @param breakabale Breakability of the brick
-     */
-    Brick(Point pt, double w, double h, bool breakable);
-
-    // Brick &operator=(const Brick &) = default;
-    // Brick &operator=(Brick &&)      = default;
+    Brick(Color &color, Power_Up &power_up);
 
     // #### Destructor ####
-    ~Brick();
+    ~Brick() = default;
 
     // #### Getters ####
-    bool isBreakable() const noexcept;
     bool isBroken() const noexcept;
 
     // #### Setters ####
     void setBroken() noexcept;
+
+private:
+    bool broken_ = false;
+    Power_Up power_up_;
+    Color color_;
+    Color outer_color_;
+    const int points_;
+    int hp_;
 };
 
 #endif

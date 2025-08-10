@@ -36,19 +36,8 @@ ALLEGRO_DISPLAY *View::getDisplay() const noexcept { return display_; }
 
 void View::draw(const std::unique_ptr<MenuModel> &model)
 {
-    // drawing main window
-    const int window_width = model->getWidth();
-    const int window_height = model->getHeight();
-    const Color temp_inner_color = model->getInnerColor();
-    const Color temp_outer_color = model->getOuterColor();
+    draw_window(*model);
 
-    ALLEGRO_COLOR window_inner_color = colorConvertor(temp_inner_color);
-    ALLEGRO_COLOR window_outer_color = colorConvertor(temp_outer_color);
-
-    al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
-    al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
-
-    // drawing it's contents
     std::vector<Button> buttons = model->getButtons();
 
     for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
@@ -75,7 +64,7 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
         std::string temp_string = temp_text.getText();
         Color temp_color = temp_text.getColor();
 
-        const char* text = temp_string.c_str();
+        const char *text = temp_string.c_str();
         ALLEGRO_COLOR text_color = colorConvertor(temp_color);
 
         al_draw_text(font_, text_color, text_center.x_, text_center.y_, ALLEGRO_ALIGN_CENTRE, text);
@@ -84,72 +73,44 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
     al_flip_display();
 }
 
-// void View::drawAll(const Racket &racket, const std::vector<Ball> &balls, const std::vector<std::vector<Brick>> &bricks)
-// {
-//     // Draw the window
-//     al_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_DARK_GREY); // background
-//     al_draw_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, COLOR_WHITE, 4.0);       // game border
+void View::draw(const std::unique_ptr<GameModel> &game_model)
+{
+    draw_window(*game_model);
 
-//     drawBall(balls);
-//     drawBricks(bricks);
-//     drawRacket(racket);
+    std::shared_ptr<Racket> temp_racket = game_model->get_racket();
+    float x1 = temp_racket->getCenter().x_ - (temp_racket->getWidth() / 2);
+    float x2 = temp_racket->getCenter().x_ + (temp_racket->getWidth() / 2);
+    float y1 = temp_racket->getCenter().y_ - (temp_racket->getHeight() / 2);
+    float y2 = temp_racket->getCenter().y_ + (temp_racket->getHeight() / 2);
+    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
+    al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
 
-//     al_flip_display();
-// }
+    std::vector<std::shared_ptr<Ball>> temp_balls = game_model->get_balls();
+    for (auto &ball : temp_balls)
+    {
+        al_draw_filled_circle(ball->getCenter().x_, ball->getCenter().y_, ball->getRadius(), al_map_rgb(0, 0, 0));
+        al_draw_circle(ball->getCenter().x_, ball->getCenter().y_, ball->getRadius(), al_map_rgb(255, 255, 255), 2.0);
+    }
 
-// void View::drawBall(const std::vector<Ball> &balls)
-// {
-//     for (auto &ball : balls)
-//     {
-//         al_draw_filled_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(0, 0, 0));
-//         al_draw_circle(ball.getCenter().x_, ball.getCenter().y_, ball.getRadius(), al_map_rgb(255, 255, 255), 2.0);
-//     }
-// };
+    std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = game_model->get_bricks();
 
-// void View::drawBricks(const std::vector<std::vector<Brick>> &bricks)
-// {
-//     for (auto &bricks_row : bricks)
-//     {
-//         for (auto &brick : bricks_row)
-//         {
-//             if (!brick.isBroken())
-//             {
-//                 float x1 = brick.getCenter().x_ - (brick.getWidth() / 2);
-//                 float x2 = brick.getCenter().x_ + (brick.getWidth() / 2);
-//                 float y1 = brick.getCenter().y_ - (brick.getHeight() / 2);
-//                 float y2 = brick.getCenter().y_ + (brick.getHeight() / 2);
-//                 al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-//                 al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
-//             }
-//         }
-//     }
-// };
-
-// void View::drawRacket(const Racket &racket)
-// {
-//     float x1 = racket.getCenter().x_ - (racket.getWidth() / 2);
-//     float x2 = racket.getCenter().x_ + (racket.getWidth() / 2);
-//     float y1 = racket.getCenter().y_ - (racket.getHeight() / 2);
-//     float y2 = racket.getCenter().y_ + (racket.getHeight() / 2);
-//     al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-//     al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
-// };
-
-// // Optional modularity
-// void View::draw(const Racket &racket)
-// {
-//     drawRacket(racket);
-// }
-
-// void View::draw(const std::vector<Ball> &balls)
-// {
-//     drawBall(balls);
-// }
-
-// void View::draw(const std::vector<std::vector<Brick>> &bricks)
-// {
-//     drawBricks(bricks);
-// }
+    for (auto &bricks_row : temp_bricks)
+    {
+        for (auto &brick : bricks_row)
+        {
+            if (!brick->isBroken())
+            {
+                float x1 = brick->getCenter().x_ - (brick->getWidth() / 2);
+                float x2 = brick->getCenter().x_ + (brick->getWidth() / 2);
+                float y1 = brick->getCenter().y_ - (brick->getHeight() / 2);
+                float y2 = brick->getCenter().y_ + (brick->getHeight() / 2);
+                al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
+                al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
+            }
+        }
+    }
+    al_flip_display();
+}
 
 ALLEGRO_COLOR View::colorConvertor(Color color)
 {
@@ -176,4 +137,19 @@ ALLEGRO_COLOR View::colorConvertor(Color color)
         break;
     }
     return ret;
+}
+
+void View::draw_window(const Model &model)
+{
+    // drawing main window
+    const int window_width = model.getWidth();
+    const int window_height = model.getHeight();
+    const Color temp_inner_color = model.getInnerColor();
+    const Color temp_outer_color = model.getOuterColor();
+
+    ALLEGRO_COLOR window_inner_color = colorConvertor(temp_inner_color);
+    ALLEGRO_COLOR window_outer_color = colorConvertor(temp_outer_color);
+
+    al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
+    al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
 }

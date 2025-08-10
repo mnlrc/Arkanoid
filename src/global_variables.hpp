@@ -26,7 +26,27 @@ enum class Color : int
     GREY,
     RED,
     YELLOW,
+    SILVER,
+    ORANGE,
+    CYAN,
+    GREEN,
+    MAGENTA,
+    BLUE,
+    GOLD,
+    DARK_GOLD,
+    NONE, // represents an empty brick
     // ...
+};
+
+enum class Power_Up : int
+{
+    LASER = 0, // shoot lasers from the racket
+    ENLARGE, // enlarge the rackets width
+    CATCH, // catch ball when it hits the racket
+    SLOW, // slow the balls travel speed
+    STOP, // ball multiplier
+    PLAYER, // add life
+    NONE,
 };
 
 #endif

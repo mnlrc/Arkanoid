@@ -9,6 +9,8 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+#include "../global_variables.hpp"
+
 class Model
 {
 public:
@@ -40,9 +42,25 @@ public:
      */
     const int getHeight() const noexcept;
 
+    /**
+     * @brief Get the inner_color_ attribute
+     *
+     * @return const Color
+     */
+    const Color getInnerColor() const noexcept;
+
+    /**
+     * @brief Get the outer_color_ attribute
+     *
+     * @return const Color
+     */
+    const Color getOuterColor() const noexcept;
+
 protected:
     const int width_;
     const int height_;
+    Color inner_color_ = Color::GREY;
+    Color outer_color_ = Color::BLACK;
 };
 
 #endif

@@ -22,6 +22,7 @@
 #include "model/objects/racket.hpp"
 
 #include "model/main_menu/menu_model.hpp"
+#include "model/game/game_model.hpp"
 #include "model/model.hpp"
 #include "tests/allegro_test.hpp"
 #include "../log/logger.hpp"
@@ -81,11 +82,14 @@ public:
      *
      * @param model
      */
-    void draw(const std::unique_ptr<MenuModel>& model);
-    // void drawAll(const Racket &racket, const std::vector<Ball> &balls, const std::vector<std::vector<Brick>> &bricks);
-    // void draw(const Racket &racket);
-    // void draw(const std::vector<Ball> &balls);
-    // void draw(const std::vector<std::vector<Brick>> &bricks);
+    void draw(const std::unique_ptr<MenuModel> &model);
+
+    /**
+     * @brief 
+     * 
+     * @param game_model 
+     */
+    void draw(const std::unique_ptr<GameModel> &game_model);
 
 private:
     ALLEGRO_DISPLAY *display_;
@@ -96,12 +100,14 @@ private:
     // void drawBall(const std::vector<Ball> &balls);
 
     /**
-     * @brief 
-     * 
-     * @param color 
-     * @return ALLEGRO_COLOR 
+     * @brief
+     *
+     * @param color
+     * @return ALLEGRO_COLOR
      */
     ALLEGRO_COLOR colorConvertor(Color color);
+
+    void draw_window(const Model &model);
 };
 
 #endif

@@ -48,26 +48,6 @@ void Game::setupModel(ModelType model)
         Logger::log("[ERROR] Unknown model type received when loading new one");
         break;
     }
-    // Init bricks -> TODO/TOCOMPLETE
-    // double brick_height = (WINDOW_HEIGHT / 3) / static_cast<double>(BRICKS_ROWS);
-    // double brick_width = WINDOW_WIDTH / static_cast<double>(BRICKS_COLS);
-    //
-    // double y = brick_height / 2;
-    // for (size_t i = 0; i < BRICKS_ROWS; i++)
-    // {
-    // double x = brick_width / 2;
-    // std::vector<Brick> v;
-    // for (size_t j = 0; j < BRICKS_COLS; j++)
-    // {
-    // v.push_back(Brick(Point{x, y}, brick_width, brick_height, true));
-    // x += brick_width;
-    // }
-    // y += brick_height;
-    // bricks_.push_back(v);
-    // }
-    //
-    // Init balls
-    // balls_.push_back(Ball(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 75}, 10, Point{DEFAULT_BALL_SPEED, -DEFAULT_BALL_SPEED}));
 }
 
 void Game::setupAllegro()
@@ -88,67 +68,6 @@ void Game::setupAllegro()
     al_register_event_source(queue_, al_get_mouse_event_source());
 }
 
-// void Game::manageKeyDown(ALLEGRO_EVENT event)
-// {
-// int keycode = event.keyboard.keycode;
-// if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
-// {
-//     inputKeys_["left"] = true;
-// }
-// else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
-// {
-//     inputKeys_["right"] = true;
-// }
-// else if (keycode == ALLEGRO_KEY_SPACE)
-// {
-//     yes = true;
-// }
-// else if (keycode == ALLEGRO_KEY_ESCAPE)
-// {
-//     std::cout << "Program ended." << std::endl;
-//     done = true;
-// }
-// }
-
-// void Game::manageKeyUp(ALLEGRO_EVENT event)
-// {
-//     int keycode = event.keyboard.keycode;
-//     if (keycode == ALLEGRO_KEY_Q or keycode == ALLEGRO_KEY_A)
-//     {
-//         inputKeys_["left"] = false;
-//     }
-//     else if (keycode == ALLEGRO_KEY_D or keycode == ALLEGRO_KEY_P)
-//     {
-//         inputKeys_["right"] = false;
-//     }
-// }
-
-// void Game::update()
-// {
-// gérer le déplacement de la balle + collisions etc
-// moving racket
-// if (inputKeys_["right"])
-// {
-//     control_.move(racket_, inputKeys_["right"]);
-// }
-// else if (inputKeys_["left"])
-// {
-//     control_.move(racket_, !inputKeys_["left"]);
-// }
-
-// // moving ball
-// if (yes)
-// { // TODO => if (yes) : if balls.isMoving()
-//     control_.move(balls_, racket_, bricks_);
-// }
-// else
-// {
-//     control_.move(balls_, racket_);
-// }
-
-// gameView_.drawAll(racket_, balls_, bricks_);
-// }
-
 void Game::run()
 {
     while (main_loop)
@@ -168,31 +87,6 @@ void Game::run()
             }
         }
     }
-
-    // while (!done)
-    // {
-    //     al_wait_for_event(queue_, &event_);
-    //     switch (event_.type)
-    //     {
-    //     case ALLEGRO_EVENT_DISPLAY_CLOSE:
-    //         done = true;
-    //         break;
-    //     case ALLEGRO_EVENT_TIMER:
-    //         update(); // TODO
-    //         break;
-    //     case ALLEGRO_EVENT_KEY_DOWN: // TODO
-    //         manageKeyDown(event_);
-    //         break;
-    //     case ALLEGRO_EVENT_KEY_UP:
-    //         manageKeyUp(event_);
-    //         break;
-    //     case ALLEGRO_EVENT_MOUSE_AXES:
-    //         break;
-    //     default:
-    //     {
-    //     }
-    //     }
-    // }
 }
 
 void Game::runMainMenu()
@@ -237,6 +131,7 @@ void Game::runMainMenu()
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_TIMER");
                 draw = true;
                 al_stop_timer(timer_);
+                break;
             default:
                 Logger::log("[ERROR] Unhandled input");
                 break;
@@ -255,6 +150,7 @@ void Game::runGame()
 {
     bool done = false;
     bool draw = false;
+    controller_->setupGameModel();
     al_flush_event_queue(queue_);
     al_start_timer(timer_);
     while (!done)
@@ -266,6 +162,16 @@ void Game::runGame()
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
+                if (event_.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+                {
+                    done = true;
+                    game_loop = false;
+                    controller_->swap_model();
+                }
+                break;
+            case ALLEGRO_EVENT_TIMER:
+                draw = true;
+                al_stop_timer(timer_);
                 break;
             default:
                 Logger::log("[ERROR] Unhandled input");

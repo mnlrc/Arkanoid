@@ -1,5 +1,5 @@
 ARKANOID-LEVEL
-0.25
+0.5
 Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_
 M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_
 B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_

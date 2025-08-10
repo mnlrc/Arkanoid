@@ -73,11 +73,13 @@ public:
      */
     ALLEGRO_DISPLAY *getDisplay() const noexcept;
 
+    void swap_model();
+
 private:
     std::unique_ptr<View> view_;
 
     std::unique_ptr<MenuModel> menu_model;
-    // std::unique_ptr<GameModel> game_model;
+    std::unique_ptr<GameModel> game_model;
     // std::unique_ptr<PauseModel> pause_model;
 
     ModelType current_model;

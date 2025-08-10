@@ -18,14 +18,28 @@
 #include <vector>
 #include <fstream>
 #include <memory>
+#include <unordered_map>
+
+const std::unordered_map<int, const std::string> LEVEL_MAP = {{1, "levels/level-1.txt"},
+                                                              {2, "levels/level-2.txt"},
+                                                              {3, "levels/level-3.txt"},
+                                                              {4, "levels/level-4.txt"},
+                                                              {5, "levels/level-5.txt"}};
 
 struct LevelData
 {
-    std::unique_ptr<Racket> racket;
-    std::unique_ptr<Ball> ball;
-    std::vector<std::unique_ptr<Brick>> bricks;
+    std::shared_ptr<Racket> racket;
+    std::vector<std::vector<std::shared_ptr<Brick>>> bricks;
     Color background_color;
     Color line_color;
+
+    /**
+     * @brief
+     *
+     * @return true
+     * @return false
+     */
+    bool is_empty();
 };
 
 class LevelLoader
@@ -38,7 +52,7 @@ public:
     LevelLoader() = delete;
     ~LevelLoader() = delete;
 
-    static LevelData loadLevel(const std::string &path);
+    static LevelData loadLevel(int level);
 
 private:
     /**
@@ -56,7 +70,7 @@ private:
      * @param file
      * @return std::vector<Brick>
      */
-    static std::vector<std::unique_ptr<Brick>> loadBricks(std::ifstream &file);
+    static std::vector<std::vector<std::shared_ptr<Brick>>> loadBricks(std::ifstream &file);
 
     /**
      * @brief
@@ -73,6 +87,14 @@ private:
      * @return Color
      */
     static Color color_from_string(const std::string &str);
+
+    /**
+     * @brief
+     *
+     * @param c
+     * @return Power_Up
+     */
+    static Power_Up power_up_from_char(const char &c);
 };
 
 #endif

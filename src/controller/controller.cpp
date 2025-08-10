@@ -18,8 +18,11 @@ void Controller::setupMenuModel(const int width, const int height)
     current_model = ModelType::MAIN_MENU_MODEL;
 }
 
-void Controller::setupGameModel() {
-    
+void Controller::setupGameModel()
+{
+    int level = menu_model->get_selected_level();
+    game_model = std::make_unique<GameModel>(level);
+    current_model = ModelType::GAME_MODEL;
 }
 
 void Controller::handleKeyInput(int keyCode)
@@ -46,6 +49,7 @@ void Controller::updateView()
         view_->draw(menu_model);
         break;
     case ModelType::GAME_MODEL:
+        view_->draw(game_model);
         break;
     case ModelType::PAUSE_MENU_MODEL:
         break;
@@ -55,3 +59,16 @@ void Controller::updateView()
 }
 
 ALLEGRO_DISPLAY *Controller::getDisplay() const noexcept { return view_->getDisplay(); }
+
+void Controller::swap_model()
+{
+    if (current_model == ModelType::MAIN_MENU_MODEL)
+    {
+        current_model = ModelType::GAME_MODEL;
+    }
+    if (current_model == ModelType::GAME_MODEL)
+    {
+        current_model = ModelType::MAIN_MENU_MODEL;
+        game_model.release();
+    }
+}

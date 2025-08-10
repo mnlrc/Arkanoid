@@ -16,15 +16,9 @@ const double DEFAULT_BALL_SPEED = 5;
 
 class Ball
 {
-private:
-    Point center_;
-    double radius_;
-    Point speed_;
-    bool isMoving;
-
 public:
     // #### Constructor ####
-    Ball(Point c, double w, Point);
+    Ball(Point c, double w, Point s);
     Ball() = default;
     // #### Destructor ####
     ~Ball();
@@ -38,6 +32,12 @@ public:
     void setCenter(const Point pt) noexcept;
     void setSpeed(const Point) noexcept;
     void changeState() noexcept;
+
+private:
+    Point center_;
+    double radius_;
+    Point speed_;
+    bool isMoving;
 };
 
 #endif

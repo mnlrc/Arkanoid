@@ -8,12 +8,8 @@
 
 #include "racket.hpp"
 
-Racket::Racket(Point pt, double w, double h, double s) : Rectangle{pt, w, h}, speed_(s) {}
+Racket::Racket(double &racket_width_percentage) : racket_width_percentage_(racket_width_percentage) {}
 
-Racket::Racket() : Rectangle{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, WINDOW_WIDTH / 6, WINDOW_HEIGHT / 50}, speed_(DEFAULT_RACKET_SPEED) {}
+// Racket::Racket() : Rectangle{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, WINDOW_WIDTH / 6, WINDOW_HEIGHT / 50}, speed_(DEFAULT_RACKET_SPEED) {}
 
-Racket::~Racket() = default;
-
-double Racket::getSpeed() const noexcept { return speed_; }
-
-void Racket::setCenter(double dx) noexcept { center_.x_ = dx; }
+double Racket::get_width_percentage() const noexcept { return racket_width_percentage_; }

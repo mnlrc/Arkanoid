@@ -47,16 +47,36 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
 
 std::vector<Button> MenuModel::getButtons() { return buttons_; }
 
-const Color MenuModel::getInnerColor() const noexcept { return inner_color_; }
-
-const Color MenuModel::getOuterColor() const noexcept { return outer_color_; }
-
-void MenuModel::cycleText(bool next) {
+void MenuModel::cycleText(bool next)
+{
     size_t level_text_idx = 1;
-    if (next) {
+    if (next)
+    {
         buttons_[level_text_idx].nextText();
     }
-    else if (!next) {
+    else if (!next)
+    {
         buttons_[level_text_idx].previousText();
     }
+}
+
+int MenuModel::get_selected_level()
+{
+    size_t level_text_idx = 1;
+    std::string level_text = buttons_[level_text_idx].getSelectedText().getText();
+    int val = 1; // setting value to 1 to load the first level (as default)
+
+    auto pos = level_text.find_first_of("12345");
+    try
+    {
+        if (std::string::npos != pos)
+        {
+            val = std::stoi(level_text.substr(pos));
+        }
+    }
+    catch (int error)
+    {
+        Logger::log("[ERROR] When extracting level number from string" + std::to_string(error));
+    }
+    return val;
 }

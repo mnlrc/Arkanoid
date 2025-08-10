@@ -61,30 +61,21 @@ public:
     std::vector<Button> getButtons();
 
     /**
-     * @brief Get the inner_color_ attribute
-     *
-     * @return const Color
-     */
-    const Color getInnerColor() const noexcept;
-
-    /**
-     * @brief Get the outer_color_ attribute
-     *
-     * @return const Color
-     */
-    const Color getOuterColor() const noexcept;
-
-    /**
      * @brief 
      * 
      * @param next 
      */
     void cycleText(bool next);
 
+    /**
+     * @brief Get the selected level object
+     * 
+     * @return int 
+     */
+    int get_selected_level();
+
 private:
     std::vector<Button> buttons_;
-    Color inner_color_ = Color::GREY;
-    Color outer_color_ = Color::BLACK;
 };
 
 #endif

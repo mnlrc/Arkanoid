@@ -8,9 +8,20 @@
 
 #include "level_loader.hpp"
 
-LevelData LevelLoader::loadLevel(const std::string &path)
+bool LevelData::is_empty()
+{
+    return !racket && bricks.empty();
+}
+
+LevelData LevelLoader::loadLevel(int level)
 {
     LevelData level_data;
+    if (level <= 0 || level > 5)
+    {
+        Logger::log("[ERROR] Wrong level given to load");
+        return level_data;
+    }
+    std::string path = LEVEL_MAP.at(level);
     std::ifstream file;
     file.open(path);
 
@@ -32,18 +43,19 @@ LevelData LevelLoader::loadLevel(const std::string &path)
                 racket_width = 0.25; // setting racket size to an arbitrary value TODO magic numbers
             }
             // TODO: remove magic numbers
-            std::unique_ptr<Racket> temp_racket = std::make_unique<Racket>(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 20}, // TODO: temp
-                                                                           WINDOW_WIDTH * racket_width,
-                                                                           WINDOW_HEIGHT * 0.15,
-                                                                           10);
-            std::unique_ptr<Ball> temp_ball = std::make_unique<Ball>(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT - 55},
-                                                                     25,
-                                                                     Point{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED});
-            std::vector<std::unique_ptr<Brick>> temp_bricks = loadBricks(file);
+            std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_width);
+            std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = loadBricks(file);
 
-            level_data.racket = std::move(temp_racket);
-            level_data.ball = std::move(temp_ball);
-            level_data.bricks = std::move(temp_bricks);
+            level_data.racket = temp_racket;
+            level_data.bricks = temp_bricks;
+
+            getline(file, line);
+            Color background_color = color_from_string(line);
+            getline(file, line);
+            Color outer_color = color_from_string(line);
+
+            level_data.background_color = background_color;
+            level_data.line_color = outer_color;
         }
         else
         {
@@ -53,6 +65,7 @@ LevelData LevelLoader::loadLevel(const std::string &path)
     else
     {
         Logger::log("[ERROR] Couldn't open file");
+        exit(1);
     }
 
     file.close();
@@ -64,35 +77,30 @@ bool LevelLoader::checkTag(const std::string &level_tag)
     return level_tag == "ARKANOID-LEVEL";
 }
 
-std::vector<std::unique_ptr<Brick>> LevelLoader::loadBricks(std::ifstream &file)
+std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::ifstream &file)
 {
-    std::vector<std::unique_ptr<Brick>> bricks;
-    double brick_width = WINDOW_WIDTH / 14;
-    double brick_height = (WINDOW_HEIGHT * 0.5) / 10;
-    double x_pos = brick_width / 2;
-    double y_pos = brick_height / 2;
-
+    std::vector<std::vector<std::shared_ptr<Brick>>> bricks;
     std::string line;
+    int idx = 0;
     while (getline(file, line))
     {
         if (line.empty())
         {
             break;
         }
-
+        bricks.emplace_back();
+        auto& current_row = bricks.back();
         for (size_t i = 0; i < line.length(); i += 4)
         {
-            // char color = line[i]; // TODO: add color
+            char color = line[i];
             // char dash = line[i + 1];
-            // char power_up = line[i + 2]; // TODO: add powerup
-            // if (color != '_')
-            // {
-            bricks.emplace_back(std::make_unique<Brick>(Point{x_pos, y_pos}, brick_width, brick_height, true));
-            // }
-            x_pos += brick_width;
+            char power_up = line[i + 2];
+
+            Color brick_color = color_from_char(color);
+            Power_Up brick_power_up = power_up_from_char(power_up);
+            current_row.emplace_back(std::make_shared<Brick>(brick_color, brick_power_up));
         }
-        x_pos = brick_width;
-        y_pos += brick_height;
+        idx++;
     }
     return bricks;
 }
@@ -103,32 +111,25 @@ Color LevelLoader::color_from_char(const char &c)
     {
     case 'Y':
         return Color::YELLOW;
-        break;
     case 'M':
-        // return Color::MAGENTA;
-        break;
+        return Color::MAGENTA;
     case 'B':
-        // return Color::BLUE;
-        break;
+        return Color::BLUE;
     case 'R':
         return Color::RED;
-        break;
     case 'G':
-        // return Color::GREEN;
-        break;
+        return Color::GREEN;
     case 'C':
-        // return Color::CYAN;
-        break;
+        return Color::CYAN;
     case 'O':
-        // return Color::ORANGE;
-        break;
+        return Color::ORANGE;
     case 'W':
         return Color::WHITE;
-        break;
+    case '_':
+        return Color::NONE;
     default:
         Logger::log("[ERROR] Unknown color when reading level file");
         return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
-        break;
     }
     return Color::BLACK; // temp
 }
@@ -142,4 +143,25 @@ Color LevelLoader::color_from_string(const std::string &str)
     if (str.compare("WHITE"))
         return Color::WHITE;
     return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
+}
+
+Power_Up LevelLoader::power_up_from_char(const char &c)
+{
+    switch (c)
+    {
+    case 'L':
+        return Power_Up::LASER;
+    case 'E':
+        return Power_Up::ENLARGE;
+    case 'C':
+        return Power_Up::CATCH;
+    case 'S':
+        return Power_Up::SLOW;
+    case 'M': // 'M' referencing multiply because this power up multiplies the number of balls
+        return Power_Up::STOP;
+    case 'P':
+        return Power_Up::PLAYER;
+    default:
+        return Power_Up::NONE;
+    }
 }
