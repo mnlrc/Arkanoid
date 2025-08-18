@@ -40,7 +40,7 @@ public:
      */
     double getHeight() const noexcept;
 
-    void set_center(Point &new_center) noexcept;
+    void set_center(Point new_center) noexcept;
 
     void set_width(double &new_width) noexcept;
 

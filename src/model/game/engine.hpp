@@ -20,6 +20,12 @@
 #include "tests/allegro_test.hpp"
 #include "global_variables.hpp"
 
+enum class Direction : int
+{
+    LEFT = 0,
+    RIGHT,
+};
+
 /**
  * @brief The Engine class manages the collisions and movement.
  *
@@ -27,9 +33,19 @@
 class Engine
 {
 public:
-    Engine();
-    ~Engine();
-    void move(Racket &racket, bool direction);
+    /**
+     * @brief Construct a new Engine object
+     *
+     */
+    Engine() = default;
+
+    /**
+     * @brief Destroy the Engine object
+     *
+     */
+    ~Engine() = default;
+
+    void move(Racket &racket, Direction direction);
     void move(std::vector<Ball> &balls, Racket &racket, std::vector<std::vector<Brick>> &bricks);
     void move(std::vector<Ball> &balls, Racket &racket);
     void checkWallCollision(Ball &);

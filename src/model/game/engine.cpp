@@ -1,30 +1,48 @@
-// /**
-//  * @file engine.cpp
-//  * @author Manuel Rocca
-//  * @brief Source file for the Engine class
-//  * @date 2024
-//  *
-//  */
+/**
+ * @file engine.cpp
+ * @author Manuel Rocca
+ * @brief Source file for the Engine class
+ * @date 2024
+ *
+ */
+//
+#include "engine.hpp"
 
-// #include "engine.hpp"
+void Engine::move(Racket &racket, Direction direction)
+{
+    double y = racket.getCenter().y_;
+    switch (direction)
+    {
+    case Direction::RIGHT:
+    {
+        double maxRight = WINDOW_WIDTH - (racket.getWidth() / 2); // max pos of the racket on the right
+        double newX = racket.getCenter().x_ + racket.get_speed();
+        racket.set_center(Point{std::min(newX, maxRight), y});
+        break;
+    }
 
-// Engine::Engine() = default;
-
-// Engine::~Engine() = default;
+    case Direction::LEFT:
+    {
+        double maxLeft = racket.getWidth() / 2; // min pos of the racket on the left
+        double newX = racket.getCenter().x_ - racket.get_speed();
+        racket.set_center(Point{std::max(newX, maxLeft), y});
+        break;
+    }
+    default:
+        Logger::log("[ERROR] Unknown direction");
+        break;
+    }
+}
 
 // void Engine::move(Racket &racket, bool direction)
 // {
 //     if (direction)
 //     {                                                             // move right
-//         double maxRight = WINDOW_WIDTH - (racket.getWidth() / 2); // max pos of the racket on the right
-//         double newX = racket.getCenter().x_ + racket.getSpeed();
-//         racket.setCenter(std::min(newX, maxRight));
+
 //     }
 //     else
 //     {                                           // move left
-//         double maxLeft = racket.getWidth() / 2; // min pos of the racket on the left
-//         double newX = racket.getCenter().x_ - racket.getSpeed();
-//         racket.setCenter(std::max(newX, maxLeft));
+
 //     }
 // }
 

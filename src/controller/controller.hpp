@@ -9,6 +9,7 @@
 
 #include "../model/main_menu/menu_model.hpp"
 #include "../model/game/game_model.hpp"
+#include "../model/game/engine.hpp"
 #include "../model/pause_menu/pause_model.hpp"
 #include "../view/view.hpp"
 
@@ -88,6 +89,7 @@ public:
 
 private:
     std::unique_ptr<View> view_;
+    std::unique_ptr<Engine> engine_;
 
     std::unique_ptr<MenuModel> menu_model;
     std::unique_ptr<GameModel> game_model;

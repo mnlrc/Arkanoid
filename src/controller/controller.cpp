@@ -94,9 +94,15 @@ Input_response Controller::handle_game_input(int key_code)
 {
     switch (key_code)
     {
+    case ALLEGRO_KEY_A:
+    case ALLEGRO_KEY_Q:
     case ALLEGRO_KEY_LEFT:
+        engine_->move(*game_model->get_racket(), Direction::LEFT);
         return Input_response::NONE;
+    case ALLEGRO_KEY_D:
+    case ALLEGRO_KEY_P:
     case ALLEGRO_KEY_RIGHT:
+        engine_->move(*game_model->get_racket(), Direction::RIGHT);
         return Input_response::NONE;
     case ALLEGRO_KEY_SPACE: // starting the game OR throwing the ball
         return Input_response::NONE;

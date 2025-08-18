@@ -13,8 +13,6 @@
 #include "rectangle.hpp"
 #include "global_variables.hpp"
 
-#define DEFAULT_RACKET_SPEED 10
-
 /**
  * @class Racket
  * @brief Represents the racket used by the player
@@ -37,8 +35,11 @@ public:
     
     double get_width_percentage() const noexcept;
 
+    double get_speed() const noexcept;
+
 private:
     double racket_width_percentage_; // percentage of the windows width
+    double speed_ = 10;
 };
 
 #endif
