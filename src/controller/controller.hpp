@@ -12,6 +12,13 @@
 #include "../model/pause_menu/pause_model.hpp"
 #include "../view/view.hpp"
 
+enum class Input_response : int
+{
+    QUIT = 0,
+    ENTER,
+    NONE,
+};
+
 class Controller
 {
 public:
@@ -58,7 +65,7 @@ public:
      *
      * @param keyCode
      */
-    void handleKeyInput(int keyCode);
+    Input_response handleKeyInput(int keyCode);
 
     /**
      * @brief
@@ -73,6 +80,10 @@ public:
      */
     ALLEGRO_DISPLAY *getDisplay() const noexcept;
 
+    /**
+     * @brief
+     *
+     */
     void swap_model();
 
 private:
@@ -83,4 +94,8 @@ private:
     // std::unique_ptr<PauseModel> pause_model;
 
     ModelType current_model;
+
+    Input_response handle_menu_input(int key_code);
+
+    Input_response handle_game_input(int key_code);
 };

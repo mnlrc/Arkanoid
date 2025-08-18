@@ -105,22 +105,7 @@ void Game::runMainMenu()
             {
             case ALLEGRO_EVENT_KEY_DOWN:
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_KEY_DOWN");
-                if (event_.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                {
-                    Logger::log("[INFO] Event type: ALLEGRO_KEY_ESCAPE");
-                    done = true;
-                    main_loop = false;
-                }
-                else if (event_.keyboard.keycode == ALLEGRO_KEY_ENTER)
-                {
-                    Logger::log("[INFO] Event type: ALLEGRO_KEY_ENTER");
-                    done = true;
-                    game_loop = true;
-                }
-                else
-                {
-                    controller_->handleKeyInput(event_.keyboard.keycode);
-                }
+                handle_input_response(controller_->handleKeyInput(event_.keyboard.keycode), done);
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 Logger::log("[INFO] Event type: ALLEGRO_EVENT_DISPLAY_CLOSE");
@@ -162,12 +147,7 @@ void Game::runGame()
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
-                if (event_.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                {
-                    done = true;
-                    game_loop = false;
-                    controller_->swap_model();
-                }
+                handle_input_response(controller_->handleKeyInput(event_.keyboard.keycode), done);
                 break;
             case ALLEGRO_EVENT_TIMER:
                 draw = true;
@@ -187,3 +167,37 @@ void Game::runGame()
 }
 
 void Game::runPauseMenu() {}
+
+void Game::handle_input_response(Input_response response, bool &done)
+{
+    if (main_loop)
+    {
+        if (game_loop)
+        {
+            switch (response)
+            {
+            case Input_response::QUIT:
+                done = true;
+                game_loop = false;
+                break;
+            default:
+                break;
+            }
+        }
+        else
+        {
+            switch (response)
+            {
+            case Input_response::QUIT:
+                done = true;
+                main_loop = false;
+                break;
+            case Input_response::ENTER:
+                done = true;
+                game_loop = true;
+            default:
+                break;
+            }
+        }
+    }
+}

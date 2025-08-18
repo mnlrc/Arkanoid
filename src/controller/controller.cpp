@@ -25,19 +25,17 @@ void Controller::setupGameModel()
     current_model = ModelType::GAME_MODEL;
 }
 
-void Controller::handleKeyInput(int keyCode)
+Input_response Controller::handleKeyInput(int key_code)
 {
-    switch (keyCode)
+    switch (current_model)
     {
-    case ALLEGRO_KEY_LEFT:
-        menu_model->cycleText(false);
-        break;
-    case ALLEGRO_KEY_RIGHT:
-        menu_model->cycleText(true);
-        break;
+    case ModelType::MAIN_MENU_MODEL:
+        return handle_menu_input(key_code);
+    case ModelType::GAME_MODEL:
+        return handle_game_input(key_code);
     default:
-        Logger::log("[ERROR] Invalid input");
-        break;
+        Logger::log("[ERROR] Unknown Model Type");
+        return Input_response::NONE;
     }
 }
 
@@ -69,6 +67,44 @@ void Controller::swap_model()
     if (current_model == ModelType::GAME_MODEL)
     {
         current_model = ModelType::MAIN_MENU_MODEL;
-        game_model.release();
+    }
+}
+
+Input_response Controller::handle_menu_input(int key_code)
+{
+    switch (key_code)
+    {
+    case ALLEGRO_KEY_ESCAPE:
+        return Input_response::QUIT;
+    case ALLEGRO_KEY_ENTER:
+        return Input_response::ENTER;
+    case ALLEGRO_KEY_LEFT:
+        menu_model->cycleText(false);
+        return Input_response::NONE;
+    case ALLEGRO_KEY_RIGHT:
+        menu_model->cycleText(true);
+        return Input_response::NONE;
+    default:
+        Logger::log("[ERROR] Invalid input");
+        return Input_response::NONE;
+    }
+}
+
+Input_response Controller::handle_game_input(int key_code)
+{
+    switch (key_code)
+    {
+    case ALLEGRO_KEY_LEFT:
+        return Input_response::NONE;
+    case ALLEGRO_KEY_RIGHT:
+        return Input_response::NONE;
+    case ALLEGRO_KEY_SPACE: // starting the game OR throwing the ball
+        return Input_response::NONE;
+    case ALLEGRO_KEY_ESCAPE: // return to previous menu
+        swap_model();
+        return Input_response::QUIT;
+    default:
+        Logger::log("[ERROR] Invalid input");
+        return Input_response::NONE;
     }
 }

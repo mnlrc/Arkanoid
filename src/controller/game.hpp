@@ -98,6 +98,8 @@ private:
      *
      */
     void runPauseMenu();
+
+    void handle_input_response(Input_response response, bool &done);
 };
 
 #endif
