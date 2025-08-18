@@ -12,11 +12,10 @@
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 700
 
-enum class ModelType : int
+enum class Direction : int
 {
-    MAIN_MENU_MODEL = 0,
-    GAME_MODEL,
-    PAUSE_MENU_MODEL,
+    LEFT = 0,
+    RIGHT,
 };
 
 enum class Color : int
@@ -41,11 +40,11 @@ enum class Color : int
 enum class Power_Up : int
 {
     LASER = 0, // shoot lasers from the racket
-    ENLARGE, // enlarge the rackets width
-    CATCH, // catch ball when it hits the racket
-    SLOW, // slow the balls travel speed
-    STOP, // ball multiplier
-    PLAYER, // add life
+    ENLARGE,   // enlarge the rackets width
+    CATCH,     // catch ball when it hits the racket
+    SLOW,      // slow the balls travel speed
+    STOP,      // ball multiplier
+    PLAYER,    // add life
     NONE,
 };
 

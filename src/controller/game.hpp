@@ -21,7 +21,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/events.h>
 
-#include "controller.hpp"
+#include "game_controller.hpp"
+#include "menu_controller.hpp"
 
 /**
  * @brief Sets the game up and manages the main loop of the game with allegro
@@ -51,7 +52,8 @@ public:
 
 private:
     // #### Objects ####
-    std::unique_ptr<Controller> controller_;
+    std::unique_ptr<GameController> game_controller_;
+    std::unique_ptr<MenuController> menu_controller_;
 
     // #### Allegro instances ####
     ALLEGRO_TIMER *timer_;
@@ -61,45 +63,27 @@ private:
     // #### Others ####
     bool main_loop = true;
     bool game_loop = false;
-    bool pause_loop = false;
-    // std::map<std::string, bool> inputKeys_ = {{"left", false}, {"right", false}};
 
     // #### Private methods ####
-    // void manageKeyDown(ALLEGRO_EVENT);
-    // void manageKeyUp(ALLEGRO_EVENT);
-
     /**
      * @brief
      *
-     * @param model
      */
-    void setupModel(ModelType model);
+    void setup_allegro(std::shared_ptr<View> view);
 
     /**
      * @brief
      *
      */
-    void setupAllegro();
+    void run_main_menu();
 
     /**
      * @brief
      *
      */
-    void runMainMenu();
+    void run_game(short level);
 
-    /**
-     * @brief
-     *
-     */
-    void runGame();
-
-    /**
-     * @brief
-     *
-     */
-    void runPauseMenu();
-
-    void handle_input_response(Input_response response, bool &done);
+    void handle_input_response(InputResponse response, bool &done);
 };
 
 #endif

@@ -63,9 +63,9 @@ public:
     /**
      * @brief 
      * 
-     * @param next 
+     * @param direction 
      */
-    void cycleText(bool next);
+    void cycle_text(Direction direction);
 
     /**
      * @brief Get the selected level object

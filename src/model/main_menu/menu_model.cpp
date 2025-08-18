@@ -47,16 +47,19 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
 
 std::vector<Button> MenuModel::getButtons() { return buttons_; }
 
-void MenuModel::cycleText(bool next)
+void MenuModel::cycle_text(Direction direction)
 {
     size_t level_text_idx = 1;
-    if (next)
+    switch (direction)
     {
+    case Direction::RIGHT:
         buttons_[level_text_idx].nextText();
-    }
-    else if (!next)
-    {
+        break;
+    case Direction::LEFT:
         buttons_[level_text_idx].previousText();
+        break;
+    default:
+        break;
     }
 }
 

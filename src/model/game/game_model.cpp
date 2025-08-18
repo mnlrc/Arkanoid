@@ -14,7 +14,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}
     if (level_data.is_empty())
     {
         Logger::log("[ERROR] Couldn't initialize level data");
-        return;
+        std::__throw_runtime_error("Game Data empty, wasn't initialized properly. Aborting level loading.");
     }
 
     // setting up bricks

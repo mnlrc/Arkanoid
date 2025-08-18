@@ -20,12 +20,6 @@
 #include "tests/allegro_test.hpp"
 #include "global_variables.hpp"
 
-enum class Direction : int
-{
-    LEFT = 0,
-    RIGHT,
-};
-
 /**
  * @brief The Engine class manages the collisions and movement.
  *
