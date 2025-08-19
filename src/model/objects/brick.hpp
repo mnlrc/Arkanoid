@@ -11,6 +11,7 @@
 
 #include "point.hpp"
 #include "rectangle.hpp"
+#include "object.hpp"
 #include "../../global_variables.hpp"
 
 #include <unordered_map>
@@ -31,7 +32,7 @@ const int DEFAULT_HP = 1;
 const int SILVER_HP = 2;
 const int GOLD_HP = std::numeric_limits<int>::max();
 
-class Brick : public Rectangle
+class Brick : public Rectangle, public Object
 {
 public:
     // #### Constructors ####
@@ -49,8 +50,6 @@ public:
 private:
     bool broken_ = false;
     Power_Up power_up_;
-    Color color_;
-    Color outer_color_;
     const int points_;
     int hp_;
 };

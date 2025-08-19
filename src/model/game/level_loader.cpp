@@ -42,8 +42,25 @@ LevelData LevelLoader::loadLevel(int level)
                 Logger::log("[ERROR] Conversion error for racket size, error code: " + std::to_string(error));
                 racket_width = 0.25; // setting racket size to an arbitrary value TODO magic numbers
             }
+
+            Color racket_inner_color;
+            Color racket_outer_color;
+            try
+            {
+                getline(file, line); // getting racket inner color
+                racket_inner_color = color_from_char(line[0]);
+                getline(file, line); // getting racket outer color
+                racket_outer_color = color_from_char(line[0]);
+            }
+            catch (const std::exception &e)
+            {
+                Logger::log("[ERROR] Exception when reading racket colors: " + std::string(e.what()));
+                racket_inner_color = Color::WHITE; // setting default color: TODO: set defaults as global variables
+                racket_outer_color = Color::BLACK; // setting default color
+            }
+
             // TODO: remove magic numbers
-            std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_width);
+            std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_inner_color, racket_outer_color, racket_width);
             std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = loadBricks(file);
 
             level_data.racket = temp_racket;
@@ -52,10 +69,10 @@ LevelData LevelLoader::loadLevel(int level)
             getline(file, line);
             Color background_color = color_from_string(line);
             getline(file, line);
-            Color outer_color = color_from_string(line);
+            Color line_color = color_from_string(line);
 
             level_data.background_color = background_color;
-            level_data.line_color = outer_color;
+            level_data.line_color = line_color;
         }
         else
         {
@@ -89,7 +106,7 @@ std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::if
             break;
         }
         bricks.emplace_back();
-        auto& current_row = bricks.back();
+        auto &current_row = bricks.back();
         for (size_t i = 0; i < line.length(); i += 4)
         {
             char color = line[i];
@@ -131,7 +148,6 @@ Color LevelLoader::color_from_char(const char &c)
         Logger::log("[ERROR] Unknown color when reading level file");
         return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
     }
-    return Color::BLACK; // temp
 }
 
 Color LevelLoader::color_from_string(const std::string &str)

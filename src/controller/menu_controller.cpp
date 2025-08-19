@@ -1,7 +1,7 @@
 /**
- * @file menu_controller.hpp
+ * @file menu_controller.cpp
  * @author Manuel Rocca
- * @brief Header file for the MenuController class.
+ * @brief Source file for the MenuController class.
  * @date 2025
  */
 

@@ -12,6 +12,7 @@
 #include "point.hpp"
 #include "rectangle.hpp"
 #include "global_variables.hpp"
+#include "object.hpp"
 
 /**
  * @class Racket
@@ -19,13 +20,13 @@
  *        to bounce back the ball.
  */
 
-class Racket : public Rectangle
+class Racket : public Rectangle, public Object
 {
 public:
     /**
      * @brief Default constructor of the Racket class
      */
-    Racket(double &racket_width_percentage);
+    Racket(Color inner_color, Color outer_color, double &racket_width_percentage);
 
     // #### Destructor ####
     /**

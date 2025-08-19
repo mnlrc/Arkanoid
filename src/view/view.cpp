@@ -78,12 +78,16 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
     draw_window(*game_model);
 
     std::shared_ptr<Racket> temp_racket = game_model->get_racket();
+    Color racket_inner_color = temp_racket->get_inner_color();
+    ALLEGRO_COLOR racket_inner_allegro_color = colorConvertor(racket_inner_color);
+    Color racket_outer_color = temp_racket->get_outer_color();
+    ALLEGRO_COLOR racket_outer_allegro_color = colorConvertor(racket_outer_color);
     float x1 = temp_racket->getCenter().x_ - (temp_racket->getWidth() / 2);
     float x2 = temp_racket->getCenter().x_ + (temp_racket->getWidth() / 2);
     float y1 = temp_racket->getCenter().y_ - (temp_racket->getHeight() / 2);
     float y2 = temp_racket->getCenter().y_ + (temp_racket->getHeight() / 2);
-    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-    al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
+    al_draw_filled_rectangle(x1, y1, x2, y2, racket_inner_allegro_color);
+    al_draw_rectangle(x1, y1, x2, y2, racket_outer_allegro_color, 2.0);
 
     std::vector<std::shared_ptr<Ball>> temp_balls = game_model->get_balls();
     for (auto &ball : temp_balls)
@@ -100,12 +104,16 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
         {
             if (!brick->isBroken())
             {
+                Color brick_inner_color = brick->get_inner_color();
+                ALLEGRO_COLOR brick_inner_allegro_color = colorConvertor(brick_inner_color);
+                Color brick_outer_color = brick->get_outer_color();
+                ALLEGRO_COLOR brick_outer_allegro_color = colorConvertor(brick_outer_color);
                 float x1 = brick->getCenter().x_ - (brick->getWidth() / 2);
                 float x2 = brick->getCenter().x_ + (brick->getWidth() / 2);
                 float y1 = brick->getCenter().y_ - (brick->getHeight() / 2);
                 float y2 = brick->getCenter().y_ + (brick->getHeight() / 2);
-                al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 0));
-                al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 2.0);
+                al_draw_filled_rectangle(x1, y1, x2, y2, brick_inner_allegro_color);
+                al_draw_rectangle(x1, y1, x2, y2, brick_outer_allegro_color, 2.0);
             }
         }
     }
@@ -131,6 +139,30 @@ ALLEGRO_COLOR View::colorConvertor(Color color)
         break;
     case Color::YELLOW:
         ret = COLOR_YELLOW;
+        break;
+    case Color::SILVER:
+        ret = COLOR_SILVER;
+        break;
+    case Color::ORANGE:
+        ret = COLOR_ORANGE;
+        break;
+    case Color::CYAN:
+        ret = COLOR_CYAN;
+        break;
+    case Color::GREEN:
+        ret = COLOR_GREEN;
+        break;
+    case Color::MAGENTA:
+        ret = COLOR_MAGENTA;
+        break;
+    case Color::BLUE:
+        ret = COLOR_BLUE;
+        break;
+    case Color::GOLD:
+        ret = COLOR_GOLD;
+        break;
+    case Color::DARK_GOLD:
+        ret = COLOR_DARK_GOLD;
         break;
     default:
         Logger::log("[ERROR] Unknown color");

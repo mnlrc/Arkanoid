@@ -54,6 +54,9 @@ private:
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks_;
     std::shared_ptr<Racket> racket_;
     Score current_score_;
+
+    Color background_color_;
+    Color line_color_;
 };
 
 #endif

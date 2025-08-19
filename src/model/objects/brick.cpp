@@ -8,7 +8,7 @@
 
 #include "brick.hpp"
 
-Brick::Brick(Color &color, Power_Up &power_up) : power_up_(power_up), color_(color), points_(COLOR_SCORE.at(color))
+Brick::Brick(Color &color, Power_Up &power_up) : Object{color}, power_up_(power_up), points_(COLOR_SCORE.at(color))
 {
     if (color == Color::NONE)
         broken_ = true;
@@ -25,7 +25,6 @@ Brick::Brick(Color &color, Power_Up &power_up) : power_up_(power_up), color_(col
     else
     {
         hp_ = DEFAULT_HP;
-        outer_color_ = color;
     }
 }
 

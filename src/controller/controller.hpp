@@ -14,7 +14,6 @@
 #include "../view/view.hpp"
 #include "../model/game/game_model.hpp"
 #include "../model/game/engine.hpp"
-#include "../model/pause_menu/pause_model.hpp"
 
 enum class InputResponse : int
 {
