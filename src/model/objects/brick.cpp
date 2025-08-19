@@ -28,6 +28,22 @@ Brick::Brick(Color &color, Power_Up &power_up) : Object{color}, power_up_(power_
     }
 }
 
-bool Brick::isBroken() const noexcept { return broken_; };
+bool Brick::is_broken() const noexcept { return broken_; };
 
-void Brick::setBroken() noexcept { broken_ = true; };
+int Brick::get_hp() const noexcept { return hp_; };
+
+Power_Up Brick::get_power_up() const noexcept { return power_up_; };
+
+const int Brick::get_points() const noexcept { return points_; };
+
+void Brick::hit() noexcept
+{
+    if (hp_ > 1)
+    {
+        hp_--;
+    }
+    else
+    {
+        broken_ = true;
+    }
+}

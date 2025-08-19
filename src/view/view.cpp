@@ -102,7 +102,7 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
     {
         for (auto &brick : bricks_row)
         {
-            if (!brick->isBroken())
+            if (!brick->is_broken())
             {
                 Color brick_inner_color = brick->get_inner_color();
                 ALLEGRO_COLOR brick_inner_allegro_color = colorConvertor(brick_inner_color);

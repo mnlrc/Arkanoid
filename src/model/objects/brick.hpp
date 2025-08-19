@@ -42,10 +42,16 @@ public:
     ~Brick() = default;
 
     // #### Getters ####
-    bool isBroken() const noexcept;
+    bool is_broken() const noexcept;
+
+    int get_hp() const noexcept;
+
+    Power_Up get_power_up() const noexcept;
+
+    const int get_points() const noexcept;
 
     // #### Setters ####
-    void setBroken() noexcept;
+    void hit() noexcept;
 
 private:
     bool broken_ = false;

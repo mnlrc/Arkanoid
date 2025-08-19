@@ -39,13 +39,21 @@ public:
      */
     ~Engine() = default;
 
-    void move(Racket &racket, Direction direction);
-    void move(std::vector<Ball> &balls, Racket &racket, std::vector<std::vector<Brick>> &bricks);
-    void move(std::vector<Ball> &balls, Racket &racket);
-    void checkWallCollision(Ball &);
-    void checkRacketCollision(Ball &, Racket &);
-    void checkBrickCollision(Ball &, std::vector<std::vector<Brick>> &);
-    double returnAngle(double, double) const;
+    void move(std::shared_ptr<Racket> racket, Direction direction);
+
+    void move(std::vector<std::shared_ptr<Ball>> balls,
+              std::vector<std::vector<std::shared_ptr<Brick>>> bricks,
+              std::shared_ptr<Racket> racket);
+
+private:
+    void check_wall_collision(std::shared_ptr<Ball> ball);
+
+    void check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket);
+
+    void check_brick_collision(std::shared_ptr<Ball> ball,
+                               std::vector<std::vector<std::shared_ptr<Brick>>> bricks);
+
+    double return_angle(double, double) const;
 };
 
 #endif

@@ -1,7 +1,7 @@
 ARKANOID-LEVEL
 0.4
-B
-W
+_
+R
 Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_ Y-_
 M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_ M-_
 B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_ B-_

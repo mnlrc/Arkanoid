@@ -70,16 +70,15 @@ void GameController::update_model()
 {
     if (input_keys_[Direction::RIGHT])
     {
-        engine_->move(*game_model->get_racket(), Direction::RIGHT);
+        engine_->move(game_model->get_racket(), Direction::RIGHT);
     }
 
     else if (input_keys_[Direction::LEFT])
     {
-        engine_->move(*game_model->get_racket(), Direction::LEFT);
+        engine_->move(game_model->get_racket(), Direction::LEFT);
     }
 
-    // TODO: move ball
-    // engine_->move(ball);
+    engine_->move(game_model->get_balls(), game_model->get_bricks(), game_model->get_racket());
 }
 
 void GameController::update_view()

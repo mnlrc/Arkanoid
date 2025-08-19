@@ -8,24 +8,24 @@
 //
 #include "engine.hpp"
 
-void Engine::move(Racket &racket, Direction direction)
+void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
 {
-    double y = racket.getCenter().y_;
+    double y = racket->getCenter().y_;
     switch (direction)
     {
     case Direction::RIGHT:
     {
-        double maxRight = WINDOW_WIDTH - (racket.getWidth() / 2); // max pos of the racket on the right
-        double newX = racket.getCenter().x_ + racket.get_speed();
-        racket.set_center(Point{std::min(newX, maxRight), y});
+        double maxRight = WINDOW_WIDTH - (racket->getWidth() / 2); // max pos of the racket on the right
+        double newX = racket->getCenter().x_ + racket->get_speed();
+        racket->set_center(Point{std::min(newX, maxRight), y});
         break;
     }
 
     case Direction::LEFT:
     {
-        double maxLeft = racket.getWidth() / 2; // min pos of the racket on the left
-        double newX = racket.getCenter().x_ - racket.get_speed();
-        racket.set_center(Point{std::max(newX, maxLeft), y});
+        double maxLeft = racket->getWidth() / 2; // min pos of the racket on the left
+        double newX = racket->getCenter().x_ - racket->get_speed();
+        racket->set_center(Point{std::max(newX, maxLeft), y});
         break;
     }
     default:
@@ -34,177 +34,161 @@ void Engine::move(Racket &racket, Direction direction)
     }
 }
 
-// void Engine::move(Racket &racket, bool direction)
-// {
-//     if (direction)
-//     {                                                             // move right
+void Engine::move(std::vector<std::shared_ptr<Ball>> balls,
+                  std::vector<std::vector<std::shared_ptr<Brick>>> bricks,
+                  std::shared_ptr<Racket> racket)
+{
+    for (auto &ball : balls)
+    {
+        check_wall_collision(ball);
+        check_racket_collision(ball, racket);
+        check_brick_collision(ball, bricks);
 
-//     }
-//     else
-//     {                                           // move left
+        double x_pos = ball->getCenter().x_;
+        double y_pos = ball->getCenter().y_;
 
-//     }
-// }
+        double x_speed = ball->getSpeed().x_;
+        double y_speed = ball->getSpeed().y_;
 
-// void Engine::move(std::vector<Ball> &balls, Racket &racket, [[maybe_unused]] std::vector<std::vector<Brick>> &bricks)
-// {
+        ball->setCenter({x_pos + x_speed, y_pos + y_speed});
+    }
+}
 
-//     for (auto &ball : balls)
-//     {
-//         checkWallCollision(ball);
-//         checkRacketCollision(ball, racket);
-//         checkBrickCollision(ball, bricks);
+void Engine::check_wall_collision(std::shared_ptr<Ball> ball)
+{
+    const double BALL_RADIUS = ball->getRadius();
+    const double TOP = BALL_RADIUS;
+    const double DOWN = WINDOW_HEIGHT - BALL_RADIUS;
+    const double LEFT = BALL_RADIUS;
+    const double RIGHT = WINDOW_WIDTH - BALL_RADIUS;
 
-//         ball.setCenter({ball.getCenter().x_ + ball.getSpeed().x_, ball.getCenter().y_ + ball.getSpeed().y_});
-//     }
-// }
+    // Reseting ball position after every bounce to assure it doesn't go out of bounds
+    if (ball->getCenter().x_ >= RIGHT)
+    {
+        ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
+        ball->setCenter({RIGHT, ball->getCenter().y_});
+    }
 
-// void Engine::move(std::vector<Ball> &balls, Racket &racket)
-// {
-//     for (auto &ball : balls)
-//     {
-//         ball.setCenter({racket.getCenter().x_, racket.getCenter().y_ - racket.getHeight() - ball.getRadius()});
-//     }
-// }
+    else if (ball->getCenter().x_ <= LEFT)
+    {
+        ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
+        ball->setCenter({LEFT, ball->getCenter().y_});
+    }
 
-// void Engine::checkWallCollision(Ball &ball)
-// {
-//     const double TOP = ball.getRadius();
-//     const double DOWN = WINDOW_HEIGHT - ball.getRadius();
-//     const double LEFT = ball.getRadius();
-//     const double RIGHT = WINDOW_WIDTH - ball.getRadius();
+    else if (ball->getCenter().y_ >= DOWN)
+    {
+        ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
+        ball->setCenter({ball->getCenter().x_, DOWN});
+    }
 
-//     // Reseting ball position after every bounce to assure it doesn't go out of bounds
-//     if (ball.getCenter().x_ >= RIGHT)
-//     {
-//         ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
-//         ball.setCenter({RIGHT, ball.getCenter().y_});
-//     }
+    else if (ball->getCenter().y_ <= TOP)
+    {
+        ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
+        ball->setCenter({ball->getCenter().x_, TOP});
+    }
+}
 
-//     else if (ball.getCenter().x_ <= LEFT)
-//     {
-//         ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
-//         ball.setCenter({LEFT, ball.getCenter().y_});
-//     }
+void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket)
+{
+    // ici il n'y a que la collision au sommet de la raquette qui est gérée
+    // il y des effets secondaires sur les côtés car si la balle est sous la raquette
+    // mais qu'elle percute cette dernière, elle sera "à l'intérieur" et remplira les conditions
+    // ce qui la renvoie vers le haut
+    // à voir s'il faut gérer plus proprement les collisions latérales
 
-//     else if (ball.getCenter().y_ >= DOWN)
-//     {
-//         ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
-//         ball.setCenter({ball.getCenter().x_, DOWN});
-//     }
+    const double RACKET_TOP = racket->getCenter().y_ - (racket->getHeight() / 2);
+    const double RACKET_LEFT = racket->getCenter().x_ - (racket->getWidth() / 2);
+    const double RACKET_RIGHT = racket->getCenter().x_ + (racket->getWidth() / 2);
 
-//     else if (ball.getCenter().y_ <= TOP)
-//     {
-//         ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
-//         ball.setCenter({ball.getCenter().x_, TOP});
-//     }
-// }
+    if ( // Vertical collision
+        ball->getCenter().y_ + ball->getRadius() >= RACKET_TOP &&
+        ball->getCenter().y_ - ball->getRadius() <= RACKET_TOP &&
+        // Horizontal collision
+        ball->getCenter().x_ >= RACKET_LEFT &&
+        ball->getCenter().x_ <= RACKET_RIGHT)
+    {
 
-// void Engine::checkRacketCollision(Ball &ball, Racket &racket)
-// {
-//     // ici il n'y a que la collision au sommet de la raquette qui est gérée
-//     // il y des effets secondaires sur les côtés car si la balle est sous la raquette
-//     // mais qu'elle percute cette dernière, elle sera "à l'intérieur" et remplira les conditions
-//     // ce qui la renvoie vers le haut
-//     // à voir s'il faut gérer plus proprement les collisions latérales
+        ball->setCenter({ball->getCenter().x_, RACKET_TOP - ball->getRadius()});
 
-//     double topRacket = racket.getCenter().y_ - (racket.getHeight() / 2);
-//     double leftRacket = racket.getCenter().x_ - (racket.getWidth() / 2);
-//     double rightRacket = racket.getCenter().x_ + (racket.getWidth() / 2);
+        double ballShift = ball->getCenter().x_ - RACKET_LEFT;
+        double angle = return_angle(ballShift, racket->getWidth());
+        double speed = sqrt(pow(ball->getSpeed().x_, 2) + pow(ball->getSpeed().y_, 2));
+        double xSpeed = cos(angle);
+        double ySpeed = -sin(angle);
+        ball->setSpeed({xSpeed * speed, ySpeed * speed});
+    }
+}
 
-//     if ( // Vertical collision
-//         ball.getCenter().y_ + ball.getRadius() >= topRacket &&
-//         ball.getCenter().y_ - ball.getRadius() <= topRacket &&
-//         // Horizontal collision
-//         ball.getCenter().x_ >= leftRacket &&
-//         ball.getCenter().x_ <= rightRacket)
-//     {
+void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
+                                   std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
+{
+    // Defining ball values for clearer code
+    double cX = ball->getCenter().x_;
+    double cY = ball->getCenter().y_;
+    double r = ball->getRadius();
 
-//         ball.setCenter({ball.getCenter().x_, topRacket - ball.getRadius()});
+    // Checking all bricks
+    for (auto &brickRow : bricks)
+    {
+        for (auto &brick : brickRow)
+        {
+            if (brick->is_broken())
+            {
+                continue;
+            }
 
-//         double ballShift = ball.getCenter().x_ - leftRacket;
-//         double angle = returnAngle(ballShift, racket.getWidth());
-//         double speed = sqrt(pow(ball.getSpeed().x_, 2) + pow(ball.getSpeed().y_, 2));
-//         double xSpeed = cos(angle);
-//         double ySpeed = -sin(angle);
-//         ball.setSpeed({xSpeed * speed, ySpeed * speed});
-//     }
-// }
+            // Defining brick limits for clearer code
+            double LEFT = brick->getCenter().x_ - (brick->getWidth() / 2);
+            double RIGHT = brick->getCenter().x_ + (brick->getWidth() / 2);
+            double TOP = brick->getCenter().y_ - (brick->getHeight() / 2);
+            double DOWN = brick->getCenter().y_ + (brick->getHeight() / 2);
 
-// double Engine::returnAngle(double x, double L) const
-// {
-//     return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
-// }
+            if ((cX + r > LEFT && cX - r < RIGHT) && // Horizontal collision ?
+                (cY + r > TOP && cY - r < DOWN))
+            { // Vertical collision ?
 
-// void Engine::checkBrickCollision(Ball &ball, std::vector<std::vector<Brick>> &bricks)
-// {
-//     // Don't need to check if the ball is not yet in the delimited brick zone
-//     if (ball.getCenter().y_ - ball.getRadius() >= (WINDOW_HEIGHT / 3))
-//     {
-//         return;
-//     }
+                // Calculating side of collision
+                double overlapX = std::min(cX + r - LEFT, RIGHT - (cX - r));
+                double overlapY = std::min(cY + r - TOP, DOWN - (cY - r));
 
-//     // Defining ball values for clearer code
-//     double cX = ball.getCenter().x_;
-//     double cY = ball.getCenter().y_;
-//     double r = ball.getRadius();
+                if (overlapX < overlapY)
+                {
+                    ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
+                    if (cX < brick->getCenter().x_)
+                    {
+                        ball->setCenter({LEFT - r, cY});
+                    }
+                    else
+                    {
+                        ball->setCenter({RIGHT + r, cY});
+                    }
+                }
+                else
+                {
+                    ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
+                    if (cY < brick->getCenter().y_)
+                    {
+                        ball->setCenter({cX, TOP - r});
+                    }
+                    else
+                    {
+                        ball->setCenter({cX, DOWN + r});
+                    }
+                }
 
-//     // Checking all bricks
-//     for (auto &brickRow : bricks)
-//     {
-//         for (auto &brick : brickRow)
-//         {
-//             if (brick.isBroken())
-//             {
-//                 continue;
-//             }
+                // Update brick state
+                if (!brick->is_broken())
+                {
+                    brick->hit();
+                }
+                // TODO: update score, but should i do it here ?
+                return;
+            }
+        }
+    }
+}
 
-//             // Defining brick limits for clearer code
-//             double LEFT = brick.getCenter().x_ - (brick.getWidth() / 2);
-//             double RIGHT = brick.getCenter().x_ + (brick.getWidth() / 2);
-//             double TOP = brick.getCenter().y_ - (brick.getHeight() / 2);
-//             double DOWN = brick.getCenter().y_ + (brick.getHeight() / 2);
-
-//             if ((cX + r > LEFT && cX - r < RIGHT) && // Horizontal collision ?
-//                 (cY + r > TOP && cY - r < DOWN))
-//             { // Vertical collision ?
-
-//                 // Calculating side of collision
-//                 double overlapX = std::min(cX + r - LEFT, RIGHT - (cX - r));
-//                 double overlapY = std::min(cY + r - TOP, DOWN - (cY - r));
-
-//                 if (overlapX < overlapY)
-//                 {
-//                     ball.setSpeed({ball.getSpeed().x_ * -1, ball.getSpeed().y_});
-//                     if (cX < brick.getCenter().x_)
-//                     {
-//                         ball.setCenter({LEFT - r, cY});
-//                     }
-//                     else
-//                     {
-//                         ball.setCenter({RIGHT + r, cY});
-//                     }
-//                 }
-//                 else
-//                 {
-//                     ball.setSpeed({ball.getSpeed().x_, ball.getSpeed().y_ * -1});
-//                     if (cY < brick.getCenter().y_)
-//                     {
-//                         ball.setCenter({cX, TOP - r});
-//                     }
-//                     else
-//                     {
-//                         ball.setCenter({cX, DOWN + r});
-//                     }
-//                 }
-
-//                 // Update brick state
-//                 if (brick.isBreakable())
-//                 {
-//                     brick.setBroken();
-//                 }
-//                 return;
-//             }
-//         }
-//     }
-// }
+double Engine::return_angle(double x, double L) const
+{
+    return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
+}
