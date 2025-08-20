@@ -9,6 +9,9 @@
 #define GAME_CONTROLLER_HPP
 
 #include "controller.hpp"
+#include "../model/game/engine.hpp"
+
+class Engine;
 
 class GameController : public Controller
 {
@@ -45,7 +48,7 @@ public:
      */
     void handle_key_up(int key_code);
 
-    void update_model() override;
+    UpdateResponse update_model();
 
     void update_view() override;
 

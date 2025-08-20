@@ -84,6 +84,8 @@ private:
     void run_game(short level);
 
     void handle_input_response(InputResponse response, bool &done);
+
+    bool handle_update_response(UpdateResponse response);
 };
 
 #endif

@@ -123,6 +123,17 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
             }
         }
     }
+
+    std::vector<std::shared_ptr<Circle>> temp_circles = game_model->get_circles();
+
+    for (auto& circle: temp_circles) {
+        Color circle_inner_color = circle->get_inner_color();
+        ALLEGRO_COLOR circle_inner_allegro_color = colorConvertor(circle_inner_color);
+        Color circle_outer_color = circle->get_outer_color();
+        ALLEGRO_COLOR circle_outer_allegro_color = colorConvertor(circle_outer_color);
+        al_draw_filled_circle(circle->get_center().x_, circle->get_center().y_, circle->get_radius(), circle_inner_allegro_color);
+        al_draw_circle(circle->get_center().x_, circle->get_center().y_, circle->get_radius(), circle_outer_allegro_color, 2.0);
+    }
     al_flip_display();
 }
 

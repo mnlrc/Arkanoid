@@ -17,6 +17,8 @@ class Circle : public Object
 public:
     Circle(Point &center, double &radius);
 
+    Circle(Point center, double radius, Color inner_color, Color outer_color);
+
     ~Circle() = default;
 
     double get_radius() const noexcept;

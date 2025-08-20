@@ -128,10 +128,20 @@ void Game::run_game(short level)
                 game_controller_->handle_key_up(event_.keyboard.keycode);
                 break;
             case ALLEGRO_EVENT_TIMER:
-                game_controller_->update_model();
-                draw = true;
+            {
+                if (handle_update_response(game_controller_->update_model()))
+                {
+                    // game_controller_->display_game_over(); or victory ?
+                    draw = false;
+                }
+                else
+                {
+                    draw = true;
+                }
                 al_stop_timer(timer_);
                 break;
+            }
+
             default:
                 Logger::log("[ERROR] Unhandled input");
             }
@@ -176,5 +186,24 @@ void Game::handle_input_response(InputResponse response, bool &done)
                 break;
             }
         }
+    }
+}
+
+bool Game::handle_update_response(UpdateResponse response)
+{
+    switch (response)
+    {
+    case UpdateResponse::CONTINUE:
+    case UpdateResponse::NONE:
+        return false; // no update needed, continue the game loop
+    case UpdateResponse::GAME_OVER:
+        game_loop = false;
+        return true;
+    case UpdateResponse::GAME_WON:
+        // TODO: handle game won
+        return false; // TODO
+    default:
+        Logger::log("[ERROR] Unhandled update response");
+        return false; // default case, continue the game loop
     }
 }

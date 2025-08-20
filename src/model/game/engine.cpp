@@ -34,16 +34,45 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     }
 }
 
-void Engine::move(std::vector<std::shared_ptr<Ball>> balls,
-                  std::vector<std::vector<std::shared_ptr<Brick>>> bricks,
-                  std::shared_ptr<Racket> racket)
+#include <iostream>
+using namespace std;
+UpdateResponse Engine::move(GameModel &game_model)
 {
-    for (auto &ball : balls)
+    std::vector<std::shared_ptr<Ball>> balls = game_model.get_balls();
+    std::vector<std::vector<std::shared_ptr<Brick>>> bricks = game_model.get_bricks();
+    std::shared_ptr<Racket> racket = game_model.get_racket();
+
+    size_t size = balls.size();
+    size_t temp_size = size;
+    std::vector<size_t> balls_to_remove = {}; // storing indexes
+    for (size_t i = 0; i < size; i++)
     {
-        check_wall_collision(ball);
+        std::shared_ptr<Ball> ball = balls[i];
+        if (check_wall_collision(ball))
+        {
+            if (temp_size == 1)
+            {
+                // manage life loss and/or game over
+                if (game_model.life_lost())
+                { // TODO: make a new ball at default position
+                    game_model.reset_ball();
+                    return UpdateResponse::CONTINUE;
+                }
+                else
+                {
+                    // game over
+                    return UpdateResponse::GAME_OVER;
+                }
+            }
+            else
+            {
+                temp_size--;
+                balls_to_remove.push_back(i);
+                continue;
+            }
+        }
         check_racket_collision(ball, racket);
         check_brick_collision(ball, bricks);
-
         double x_pos = ball->get_center().x_;
         double y_pos = ball->get_center().y_;
 
@@ -52,15 +81,23 @@ void Engine::move(std::vector<std::shared_ptr<Ball>> balls,
 
         ball->set_center({x_pos + x_speed, y_pos + y_speed});
     }
+
+    if (!balls_to_remove.empty())
+    {
+        delete_ball(balls, balls_to_remove);
+    }
+    return UpdateResponse::CONTINUE;
 }
 
-void Engine::check_wall_collision(std::shared_ptr<Ball> ball)
+bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 {
     const double BALL_RADIUS = ball->get_radius();
     const double TOP = BALL_RADIUS;
     const double DOWN = WINDOW_HEIGHT - BALL_RADIUS;
     const double LEFT = BALL_RADIUS;
     const double RIGHT = WINDOW_WIDTH - BALL_RADIUS;
+
+    bool is_out = false;
 
     // Reseting ball position after every bounce to assure it doesn't go out of bounds
     if (ball->get_center().x_ >= RIGHT)
@@ -77,8 +114,9 @@ void Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 
     else if (ball->get_center().y_ >= DOWN)
     {
-        ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
-        ball->set_center({ball->get_center().x_, DOWN});
+        // ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
+        // ball->set_center({ball->get_center().x_, DOWN});
+        is_out = true;
     }
 
     else if (ball->get_center().y_ <= TOP)
@@ -86,6 +124,7 @@ void Engine::check_wall_collision(std::shared_ptr<Ball> ball)
         ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
         ball->set_center({ball->get_center().x_, TOP});
     }
+    return is_out;
 }
 
 void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket)
@@ -191,4 +230,12 @@ void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
 double Engine::return_angle(double x, double L) const
 {
     return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
+}
+
+void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, std::vector<size_t> indexes)
+{
+    for (size_t &idx : indexes)
+    {
+        balls.erase(balls.begin() + idx);
+    }
 }

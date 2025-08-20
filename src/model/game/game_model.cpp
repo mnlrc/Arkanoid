@@ -54,9 +54,21 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}
     balls_.emplace_back();
     Point ball_center = Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.895};
     Point ball_speed = Point{5, 5};
-    double ball_radius = racket_height / 2; 
+    double ball_radius = racket_height / 2;
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(ball_center, ball_radius, ball_speed);
     balls_[0] = ball;
+
+    double circle_radius = racket_height / 4;
+    double margin = circle_radius / 2;
+    double circles_width = (circle_radius * 2) * remaining_lives_ + margin * (remaining_lives_ - 1);
+    double circles_x_pos = (WINDOW_WIDTH - circles_width) / 2 + circle_radius;
+    double circles_y_pos = WINDOW_HEIGHT * 0.75;
+
+    for (int i = 0; i < remaining_lives_; i++)
+    {
+        circles_.emplace_back(std::make_shared<Circle>(Point{circles_x_pos, circles_y_pos}, circle_radius, Color::RED, Color::BLACK));
+        circles_x_pos += (circle_radius * 2) + margin;
+    }
 }
 
 std::vector<std::shared_ptr<Ball>> GameModel::get_balls() const noexcept { return balls_; }
@@ -66,3 +78,33 @@ std::vector<std::vector<std::shared_ptr<Brick>>> GameModel::get_bricks() const n
 std::shared_ptr<Racket> GameModel::get_racket() const noexcept { return racket_; }
 
 Score GameModel::get_current_score() const noexcept { return current_score_; }
+
+std::vector<std::shared_ptr<Circle>> GameModel::get_circles() const noexcept { return circles_; }
+
+#include <iostream>
+using namespace std;
+bool GameModel::life_lost() noexcept
+{
+    cout << "[INFO] Life lost, remaining lives: " << remaining_lives_ << endl;
+    if (remaining_lives_ > 0)
+    {
+        remaining_lives_--;
+        circles_.pop_back();
+        return true;
+    }
+    else
+    {
+        Logger::log("[INFO] Game Over");
+        return false;
+    }
+}
+
+void GameModel::reset_ball() noexcept
+{
+    double new_ball_x = racket_->get_center().x_;
+    Point new_ball_center = Point{new_ball_x, WINDOW_HEIGHT * 0.895};
+    Point ball_speed = Point{5, 5};
+    double ball_radius = racket_->get_height() / 2;
+    std::shared_ptr<Ball> ball = std::make_shared<Ball>(new_ball_center, ball_radius, ball_speed);
+    balls_.emplace_back(ball);
+}

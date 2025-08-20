@@ -67,7 +67,7 @@ void GameController::handle_key_up(int key_code)
     }
 }
 
-void GameController::update_model()
+UpdateResponse GameController::update_model()
 {
     if (input_keys_[Direction::RIGHT])
     {
@@ -79,7 +79,7 @@ void GameController::update_model()
         engine_->move(game_model->get_racket(), Direction::LEFT);
     }
 
-    engine_->move(game_model->get_balls(), game_model->get_bricks(), game_model->get_racket());
+    return engine_->move(*game_model);
 }
 
 void GameController::update_view()

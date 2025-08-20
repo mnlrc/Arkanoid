@@ -11,12 +11,14 @@
 
 #define BRICKS_PER_ROW 14
 #define BRICKS_PER_COLUMN 8
+#define DEFAULT_LIVES 3
 
 // #### Internal includes ####
 #include "../objects/ball.hpp"
 #include "../objects/brick.hpp"
 #include "../objects/racket.hpp"
 #include "../objects/score.hpp"
+#include "../objects/circle.hpp"
 #include "../model.hpp"
 #include "level_loader.hpp"
 
@@ -48,12 +50,19 @@ public:
     std::vector<std::vector<std::shared_ptr<Brick>>> get_bricks() const noexcept;
     std::shared_ptr<Racket> get_racket() const noexcept;
     Score get_current_score() const noexcept;
+    std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
+
+    bool life_lost() noexcept;
+
+    void reset_ball() noexcept;
 
 private:
     std::vector<std::shared_ptr<Ball>> balls_;
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks_;
     std::shared_ptr<Racket> racket_;
     Score current_score_;
+    std::vector<std::shared_ptr<Circle>> circles_; // representing lives
+    int remaining_lives_ = DEFAULT_LIVES;
 
     Color background_color_;
     Color line_color_;

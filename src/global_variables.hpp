@@ -48,4 +48,19 @@ enum class PowerUp : int
     NONE,
 };
 
+enum class UpdateResponse : int
+{
+    NONE = 0,
+    CONTINUE,
+    GAME_OVER,
+    GAME_WON,
+};
+
+enum class InputResponse : int
+{
+    QUIT = 0,
+    ENTER,
+    NONE,
+};
+
 #endif
