@@ -17,6 +17,7 @@ bool GameController::setup_game_model(short int level)
         try
         {
             game_model = std::make_unique<GameModel>(level);
+            current_level = level;
         }
         catch (const std::exception &e)
         {
