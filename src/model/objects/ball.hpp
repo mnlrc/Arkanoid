@@ -10,34 +10,35 @@
 #define BALL_HPP
 
 #include "point.hpp"
+#include "circle.hpp"
 
 const bool DEFAULT_BALL_STATE = false;
 const double DEFAULT_BALL_SPEED = 5;
 
-class Ball
+class Ball : public Circle
 {
 public:
     // #### Constructor ####
-    Ball(Point c, double w, Point s);
+    Ball(Point &center, double &radius, Point &speed);
+
     Ball() = default;
+
     // #### Destructor ####
-    ~Ball();
+    ~Ball() = default;
+
     // #### Getters ####
-    double getRadius() const noexcept;
-    Point getCenter() const noexcept;
-    Point getSpeed() const noexcept;
-    bool getState() const noexcept;
+    Point get_speed() const noexcept;
+
+    bool get_state() const noexcept;
 
     // #### Setters ####
-    void setCenter(const Point pt) noexcept;
-    void setSpeed(const Point) noexcept;
-    void changeState() noexcept;
+    void set_speed(const Point &new_speed) noexcept;
+    
+    void change_state() noexcept;
 
 private:
-    Point center_;
-    double radius_;
     Point speed_;
-    bool isMoving;
+    bool is_moving_;
 };
 
 #endif

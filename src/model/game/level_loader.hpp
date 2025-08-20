@@ -92,9 +92,9 @@ private:
      * @brief
      *
      * @param c
-     * @return Power_Up
+     * @return PowerUp
      */
-    static Power_Up power_up_from_char(const char &c);
+    static PowerUp power_up_from_char(const char &c);
 };
 
 #endif

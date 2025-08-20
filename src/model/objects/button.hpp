@@ -22,15 +22,7 @@
 class Button
 {
 public:
-    /**
-     * @brief Construct a new Button object
-     *
-     * @param texts
-     * @param center
-     * @param width
-     * @param height
-     */
-    Button(const std::vector<Text> &texts, const Point &center, double width, double height);
+    Button(const std::vector<Text> &texts, Point &center, double width, double height, Color inner_color, Color outer_color);
 
     /**
      * @brief Destroy the Button object
@@ -67,7 +59,7 @@ public:
 private:
     std::vector<Text> texts_;
     size_t idx_;
-    Rectangle rect_;
+    Rectangle rectangle_;
 };
 
 #endif

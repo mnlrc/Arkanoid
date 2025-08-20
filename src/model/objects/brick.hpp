@@ -32,11 +32,11 @@ const int DEFAULT_HP = 1;
 const int SILVER_HP = 2;
 const int GOLD_HP = std::numeric_limits<int>::max();
 
-class Brick : public Rectangle, public Object
+class Brick : public Rectangle
 {
 public:
     // #### Constructors ####
-    Brick(Color &color, Power_Up &power_up);
+    Brick(Color &color, PowerUp &power_up);
 
     // #### Destructor ####
     ~Brick() = default;
@@ -46,7 +46,7 @@ public:
 
     int get_hp() const noexcept;
 
-    Power_Up get_power_up() const noexcept;
+    PowerUp get_power_up() const noexcept;
 
     const int get_points() const noexcept;
 
@@ -55,9 +55,11 @@ public:
 
 private:
     bool broken_ = false;
-    Power_Up power_up_;
+    PowerUp power_up_;
     const int points_;
     int hp_;
+
+    Color determine_outer_color(Color color) const noexcept;
 };
 
 #endif

@@ -42,7 +42,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}
     // setting up racket
     double width_percentage = level_data.racket->get_width_percentage();
     double racket_width = WINDOW_WIDTH * width_percentage;
-    double racket_height = WINDOW_HEIGHT / 20;                           // TODO: remove magic number
+    double racket_height = WINDOW_HEIGHT / 20;                            // TODO: remove magic number
     Point racket_center = Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.955}; // TODO: remove magic numbers
     level_data.racket->set_center(racket_center);
     level_data.racket->set_width(racket_width);
@@ -52,7 +52,10 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}
 
     // setting up ball
     balls_.emplace_back();
-    std::shared_ptr<Ball> ball = std::make_shared<Ball>(Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.895}, 25, Point{5, 5});
+    Point ball_center = Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.895};
+    Point ball_speed = Point{5, 5};
+    double ball_radius = racket_height / 2; 
+    std::shared_ptr<Ball> ball = std::make_shared<Ball>(ball_center, ball_radius, ball_speed);
     balls_[0] = ball;
 }
 

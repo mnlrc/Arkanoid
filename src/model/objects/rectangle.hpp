@@ -10,44 +10,40 @@
 #define RECTANGLE_HPP
 
 #include "point.hpp"
+#include "object.hpp"
+#include "../../global_variables.hpp"
 
-class Rectangle
+class Rectangle : public Object
 {
 public:
     // ##### Constructors #####
-    Rectangle(Point pt, double w, double h);
+    Rectangle(Color inner_color, Color outer_color);
+
+    Rectangle(Point &center, double &width, double &height, Color &inner_color, Color &outer_color);
 
     Rectangle() = default;
     // ##### Destructor #####
     ~Rectangle() = default;
 
     // #### Getters #####
-    /**
-     * @brief Get the x coordinate of the racket
-     * @return The x coordinate of the racket
-     */
-    Point getCenter() const noexcept;
 
     /**
      * @brief Get the width of the racket
      * @return The witdh of the racket
      */
-    double getWidth() const noexcept;
+    double get_width() const noexcept;
 
     /**
      * @brief Get the height of the racket
      * @return The height of the racket
      */
-    double getHeight() const noexcept;
-
-    void set_center(Point new_center) noexcept;
+    double get_height() const noexcept;
 
     void set_width(double &new_width) noexcept;
 
     void set_height(double &new_height) noexcept;
 
 protected:
-    Point center_;
     double width_;
     double height_;
 };

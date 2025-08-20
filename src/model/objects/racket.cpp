@@ -8,7 +8,7 @@
 
 #include "racket.hpp"
 
-Racket::Racket(Color inner_color, Color outer_color, double &racket_width_percentage) : Object{inner_color, outer_color}, racket_width_percentage_(racket_width_percentage) {}
+Racket::Racket(Color &inner_color, Color &outer_color, double &racket_width_percentage) : Rectangle{inner_color, outer_color}, racket_width_percentage_(racket_width_percentage) {}
 
 double Racket::get_width_percentage() const noexcept { return racket_width_percentage_; }
 

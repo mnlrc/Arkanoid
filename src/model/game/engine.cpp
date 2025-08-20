@@ -10,21 +10,21 @@
 
 void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
 {
-    double y = racket->getCenter().y_;
+    double y = racket->get_center().y_;
     switch (direction)
     {
     case Direction::RIGHT:
     {
-        double maxRight = WINDOW_WIDTH - (racket->getWidth() / 2); // max pos of the racket on the right
-        double newX = racket->getCenter().x_ + racket->get_speed();
+        double maxRight = WINDOW_WIDTH - (racket->get_width() / 2); // max pos of the racket on the right
+        double newX = racket->get_center().x_ + racket->get_speed();
         racket->set_center(Point{std::min(newX, maxRight), y});
         break;
     }
 
     case Direction::LEFT:
     {
-        double maxLeft = racket->getWidth() / 2; // min pos of the racket on the left
-        double newX = racket->getCenter().x_ - racket->get_speed();
+        double maxLeft = racket->get_width() / 2; // min pos of the racket on the left
+        double newX = racket->get_center().x_ - racket->get_speed();
         racket->set_center(Point{std::max(newX, maxLeft), y});
         break;
     }
@@ -44,47 +44,47 @@ void Engine::move(std::vector<std::shared_ptr<Ball>> balls,
         check_racket_collision(ball, racket);
         check_brick_collision(ball, bricks);
 
-        double x_pos = ball->getCenter().x_;
-        double y_pos = ball->getCenter().y_;
+        double x_pos = ball->get_center().x_;
+        double y_pos = ball->get_center().y_;
 
-        double x_speed = ball->getSpeed().x_;
-        double y_speed = ball->getSpeed().y_;
+        double x_speed = ball->get_speed().x_;
+        double y_speed = ball->get_speed().y_;
 
-        ball->setCenter({x_pos + x_speed, y_pos + y_speed});
+        ball->set_center({x_pos + x_speed, y_pos + y_speed});
     }
 }
 
 void Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 {
-    const double BALL_RADIUS = ball->getRadius();
+    const double BALL_RADIUS = ball->get_radius();
     const double TOP = BALL_RADIUS;
     const double DOWN = WINDOW_HEIGHT - BALL_RADIUS;
     const double LEFT = BALL_RADIUS;
     const double RIGHT = WINDOW_WIDTH - BALL_RADIUS;
 
     // Reseting ball position after every bounce to assure it doesn't go out of bounds
-    if (ball->getCenter().x_ >= RIGHT)
+    if (ball->get_center().x_ >= RIGHT)
     {
-        ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
-        ball->setCenter({RIGHT, ball->getCenter().y_});
+        ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
+        ball->set_center({RIGHT, ball->get_center().y_});
     }
 
-    else if (ball->getCenter().x_ <= LEFT)
+    else if (ball->get_center().x_ <= LEFT)
     {
-        ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
-        ball->setCenter({LEFT, ball->getCenter().y_});
+        ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
+        ball->set_center({LEFT, ball->get_center().y_});
     }
 
-    else if (ball->getCenter().y_ >= DOWN)
+    else if (ball->get_center().y_ >= DOWN)
     {
-        ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
-        ball->setCenter({ball->getCenter().x_, DOWN});
+        ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
+        ball->set_center({ball->get_center().x_, DOWN});
     }
 
-    else if (ball->getCenter().y_ <= TOP)
+    else if (ball->get_center().y_ <= TOP)
     {
-        ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
-        ball->setCenter({ball->getCenter().x_, TOP});
+        ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
+        ball->set_center({ball->get_center().x_, TOP});
     }
 }
 
@@ -96,26 +96,26 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
     // ce qui la renvoie vers le haut
     // à voir s'il faut gérer plus proprement les collisions latérales
 
-    const double RACKET_TOP = racket->getCenter().y_ - (racket->getHeight() / 2);
-    const double RACKET_LEFT = racket->getCenter().x_ - (racket->getWidth() / 2);
-    const double RACKET_RIGHT = racket->getCenter().x_ + (racket->getWidth() / 2);
+    const double RACKET_TOP = racket->get_center().y_ - (racket->get_height() / 2);
+    const double RACKET_LEFT = racket->get_center().x_ - (racket->get_width() / 2);
+    const double RACKET_RIGHT = racket->get_center().x_ + (racket->get_width() / 2);
 
     if ( // Vertical collision
-        ball->getCenter().y_ + ball->getRadius() >= RACKET_TOP &&
-        ball->getCenter().y_ - ball->getRadius() <= RACKET_TOP &&
+        ball->get_center().y_ + ball->get_radius() >= RACKET_TOP &&
+        ball->get_center().y_ - ball->get_radius() <= RACKET_TOP &&
         // Horizontal collision
-        ball->getCenter().x_ >= RACKET_LEFT &&
-        ball->getCenter().x_ <= RACKET_RIGHT)
+        ball->get_center().x_ >= RACKET_LEFT &&
+        ball->get_center().x_ <= RACKET_RIGHT)
     {
 
-        ball->setCenter({ball->getCenter().x_, RACKET_TOP - ball->getRadius()});
+        ball->set_center({ball->get_center().x_, RACKET_TOP - ball->get_radius()});
 
-        double ballShift = ball->getCenter().x_ - RACKET_LEFT;
-        double angle = return_angle(ballShift, racket->getWidth());
-        double speed = sqrt(pow(ball->getSpeed().x_, 2) + pow(ball->getSpeed().y_, 2));
+        double ballShift = ball->get_center().x_ - RACKET_LEFT;
+        double angle = return_angle(ballShift, racket->get_width());
+        double speed = sqrt(pow(ball->get_speed().x_, 2) + pow(ball->get_speed().y_, 2));
         double xSpeed = cos(angle);
         double ySpeed = -sin(angle);
-        ball->setSpeed({xSpeed * speed, ySpeed * speed});
+        ball->set_speed({xSpeed * speed, ySpeed * speed});
     }
 }
 
@@ -123,9 +123,9 @@ void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                                    std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
 {
     // Defining ball values for clearer code
-    double cX = ball->getCenter().x_;
-    double cY = ball->getCenter().y_;
-    double r = ball->getRadius();
+    double cX = ball->get_center().x_;
+    double cY = ball->get_center().y_;
+    double r = ball->get_radius();
 
     // Checking all bricks
     for (auto &brickRow : bricks)
@@ -138,10 +138,10 @@ void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
             }
 
             // Defining brick limits for clearer code
-            double LEFT = brick->getCenter().x_ - (brick->getWidth() / 2);
-            double RIGHT = brick->getCenter().x_ + (brick->getWidth() / 2);
-            double TOP = brick->getCenter().y_ - (brick->getHeight() / 2);
-            double DOWN = brick->getCenter().y_ + (brick->getHeight() / 2);
+            double LEFT = brick->get_center().x_ - (brick->get_width() / 2);
+            double RIGHT = brick->get_center().x_ + (brick->get_width() / 2);
+            double TOP = brick->get_center().y_ - (brick->get_height() / 2);
+            double DOWN = brick->get_center().y_ + (brick->get_height() / 2);
 
             if ((cX + r > LEFT && cX - r < RIGHT) && // Horizontal collision ?
                 (cY + r > TOP && cY - r < DOWN))
@@ -153,26 +153,26 @@ void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
 
                 if (overlapX < overlapY)
                 {
-                    ball->setSpeed({ball->getSpeed().x_ * -1, ball->getSpeed().y_});
-                    if (cX < brick->getCenter().x_)
+                    ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
+                    if (cX < brick->get_center().x_)
                     {
-                        ball->setCenter({LEFT - r, cY});
+                        ball->set_center({LEFT - r, cY});
                     }
                     else
                     {
-                        ball->setCenter({RIGHT + r, cY});
+                        ball->set_center({RIGHT + r, cY});
                     }
                 }
                 else
                 {
-                    ball->setSpeed({ball->getSpeed().x_, ball->getSpeed().y_ * -1});
-                    if (cY < brick->getCenter().y_)
+                    ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
+                    if (cY < brick->get_center().y_)
                     {
-                        ball->setCenter({cX, TOP - r});
+                        ball->set_center({cX, TOP - r});
                     }
                     else
                     {
-                        ball->setCenter({cX, DOWN + r});
+                        ball->set_center({cX, DOWN + r});
                     }
                 }
 

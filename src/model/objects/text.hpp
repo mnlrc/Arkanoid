@@ -17,20 +17,8 @@
 class Text
 {
 public:
-    /**
-     * @brief Construct a new Text object
-     *
-     * @param t The text
-     * @param c The color of the text
-     * @param p The position of the center of the text on the model
-     */
-    Text(std::string t, Color c, Point p);
 
-    /**
-     * @brief Construct a new Text object
-     *
-     */
-    Text() = default;
+    Text(std::string str, Color color);
 
     /**
      * @brief Destroy the Text object
@@ -43,26 +31,18 @@ public:
      *
      * @return std::string
      */
-    std::string getText() const noexcept;
+    std::string get_text() const noexcept;
 
     /**
      * @brief Get the Color object
      *
      * @return Color
      */
-    Color getColor() const noexcept;
-
-    /**
-     * @brief Get the Center object
-     *
-     * @return Point
-     */
-    Point getCenter() const noexcept;
+    Color get_color() const noexcept;
 
 private:
     std::string text_;
     Color color_;
-    Point center_;
 };
 
 #endif

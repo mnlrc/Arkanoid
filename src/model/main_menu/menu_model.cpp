@@ -26,21 +26,21 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
         switch (i)
         {
         case 0:
-            button_texts.emplace_back(PLAY_BUTTON_TEXT, Color::WHITE, center);
+            button_texts.emplace_back(PLAY_BUTTON_TEXT, Color::WHITE);
             break;
         case 1:
             for (const std::string &s : LEVEL_BUTTON_TEXT)
-                button_texts.emplace_back(s, Color::WHITE, center);
+                button_texts.emplace_back(s, Color::WHITE);
             break;
         case 2:
-            button_texts.emplace_back(EXIT_BUTTON_TEXT, Color::WHITE, center);
+            button_texts.emplace_back(EXIT_BUTTON_TEXT, Color::WHITE);
             break;
         default:
             Logger::log("[ERROR] Unknown");
             break;
         }
 
-        buttons_.emplace_back(button_texts, center, button_width, button_height);
+        buttons_.emplace_back(button_texts, center, button_width, button_height, Color::BLACK, Color::DARK_GOLD);
         button_starting_pos += button_shift;
     }
 }
@@ -66,7 +66,7 @@ void MenuModel::cycle_text(Direction direction)
 int MenuModel::get_selected_level()
 {
     size_t level_text_idx = 1;
-    std::string level_text = buttons_[level_text_idx].getSelectedText().getText();
+    std::string level_text = buttons_[level_text_idx].getSelectedText().get_text();
     int val = 1; // setting value to 1 to load the first level (as default)
 
     auto pos = level_text.find_first_of("12345");

@@ -8,10 +8,8 @@
 
 #include "text.hpp"
 
-Text::Text(std::string t, Color c, Point p) : text_(t), color_(c), center_(p) {}
+Text::Text(std::string str, Color color) : text_(str), color_(color) {}
 
-std::string Text::getText() const noexcept { return text_; }
+Color Text::get_color() const noexcept { return color_; }
 
-Color Text::getColor() const noexcept { return color_; }
-
-Point Text::getCenter() const noexcept { return center_; }
+std::string Text::get_text() const noexcept { return text_; }

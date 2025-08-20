@@ -8,15 +8,14 @@
 
 #include "rectangle.hpp"
 
-Rectangle::Rectangle(Point pt, double w, double h) : center_(pt), width_(w), height_(h) {}
+Rectangle::Rectangle(Color inner_color, Color outer_color) : Object{inner_color, outer_color} {}
 
-Point Rectangle::getCenter() const noexcept { return center_; }
+Rectangle::Rectangle(Point &center, double &width, double &height, Color &inner_color, Color &outer_color)
+    : Object{center, inner_color, outer_color}, width_{width}, height_{height} {}
 
-double Rectangle::getWidth() const noexcept { return width_; }
+double Rectangle::get_width() const noexcept { return width_; }
 
-double Rectangle::getHeight() const noexcept { return height_; }
-
-void Rectangle::set_center(Point new_center) noexcept { center_ = new_center; }
+double Rectangle::get_height() const noexcept { return height_; }
 
 void Rectangle::set_width(double &new_width) noexcept { width_ = new_width; }
 

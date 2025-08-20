@@ -20,13 +20,13 @@
  *        to bounce back the ball.
  */
 
-class Racket : public Rectangle, public Object
+class Racket : public Rectangle
 {
 public:
     /**
      * @brief Default constructor of the Racket class
      */
-    Racket(Color inner_color, Color outer_color, double &racket_width_percentage);
+    Racket(Color &inner_color, Color &outer_color, double &racket_width_percentage);
 
     // #### Destructor ####
     /**

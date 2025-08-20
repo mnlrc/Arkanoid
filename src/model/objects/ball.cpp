@@ -8,20 +8,12 @@
 
 #include "ball.hpp"
 
-Ball::Ball(Point c, double r, Point s) : center_(c), radius_(r), speed_(s), isMoving(DEFAULT_BALL_STATE) {}
+Ball::Ball(Point &center, double &radius, Point &speed) : Circle{center, radius}, speed_(speed), is_moving_(DEFAULT_BALL_STATE) {}
 
-Ball::~Ball() = default;
+Point Ball::get_speed() const noexcept { return speed_; }
 
-Point Ball::getCenter() const noexcept { return center_; }
+bool Ball::get_state() const noexcept { return is_moving_; };
 
-double Ball::getRadius() const noexcept { return radius_; }
+void Ball::set_speed(const Point &new_speed) noexcept { speed_ = new_speed; };
 
-Point Ball::getSpeed() const noexcept { return speed_; }
-
-bool Ball::getState() const noexcept { return isMoving; };
-
-void Ball::setCenter(const Point pt) noexcept { center_ = pt; }
-
-void Ball::setSpeed(const Point s) noexcept { speed_ = s; };
-
-void Ball::changeState() noexcept { isMoving = !isMoving; };
+void Ball::change_state() noexcept { is_moving_ = !is_moving_; };

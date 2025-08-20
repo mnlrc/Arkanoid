@@ -1,0 +1,28 @@
+/**
+ * @file circle.hpp
+ * @author Manuel Rocca
+ * @brief Header file for the Circle class
+ * @date 2024
+ *
+ */
+
+#ifndef CIRCLE_HPP
+#define CIRCLE_HPP
+
+#include "point.hpp"
+#include "object.hpp"
+
+class Circle : public Object
+{
+public:
+    Circle(Point &center, double &radius);
+
+    ~Circle() = default;
+
+    double get_radius() const noexcept;
+
+protected:
+    double radius_;
+};
+
+#endif

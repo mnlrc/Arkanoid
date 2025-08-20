@@ -114,7 +114,7 @@ std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::if
             char power_up = line[i + 2];
 
             Color brick_color = color_from_char(color);
-            Power_Up brick_power_up = power_up_from_char(power_up);
+            PowerUp brick_power_up = power_up_from_char(power_up);
             current_row.emplace_back(std::make_shared<Brick>(brick_color, brick_power_up));
         }
         idx++;
@@ -161,23 +161,23 @@ Color LevelLoader::color_from_string(const std::string &str)
     return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
 }
 
-Power_Up LevelLoader::power_up_from_char(const char &c)
+PowerUp LevelLoader::power_up_from_char(const char &c)
 {
     switch (c)
     {
     case 'L':
-        return Power_Up::LASER;
+        return PowerUp::LASER;
     case 'E':
-        return Power_Up::ENLARGE;
+        return PowerUp::ENLARGE;
     case 'C':
-        return Power_Up::CATCH;
+        return PowerUp::CATCH;
     case 'S':
-        return Power_Up::SLOW;
+        return PowerUp::SLOW;
     case 'M': // 'M' referencing multiply because this power up multiplies the number of balls
-        return Power_Up::STOP;
+        return PowerUp::STOP;
     case 'P':
-        return Power_Up::PLAYER;
+        return PowerUp::PLAYER;
     default:
-        return Power_Up::NONE;
+        return PowerUp::NONE;
     }
 }
