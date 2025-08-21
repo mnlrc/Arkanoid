@@ -81,28 +81,16 @@ public:
      */
     ALLEGRO_DISPLAY *getDisplay() const noexcept;
 
-    // Draw methods
-    /**
-     * @brief
-     *
-     * @param model
-     */
-    void draw(const std::unique_ptr<MenuModel> &model);
+    void render_menu_model(const std::unique_ptr<MenuModel> &model);
 
-    /**
-     * @brief 
-     * 
-     * @param game_model 
-     */
-    void draw(const std::unique_ptr<GameModel> &game_model);
+    void render_game_model(const std::unique_ptr<GameModel> &game_model);
+
+    void render_button(const Button &button);
 
 private:
     ALLEGRO_DISPLAY *display_;
     ALLEGRO_FONT *font_;
     const int FONT_SIZE = 20;
-    // void drawRacket(const Racket &racket);
-    // void drawBricks(const std::vector<std::vector<Brick>> &bricks);
-    // void drawBall(const std::vector<Ball> &balls);
 
     /**
      * @brief
@@ -113,6 +101,22 @@ private:
     ALLEGRO_COLOR colorConvertor(Color color);
 
     void draw_window(const Model &model);
+
+    /**
+     * @brief
+     *
+     * @param model
+     */
+    void draw(const std::unique_ptr<MenuModel> &model);
+
+    /**
+     * @brief
+     *
+     * @param game_model
+     */
+    void draw(const std::unique_ptr<GameModel> &game_model);
+
+    void draw(const Button &button);
 };
 
 #endif

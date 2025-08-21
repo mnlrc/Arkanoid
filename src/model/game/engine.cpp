@@ -34,12 +34,15 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     }
 }
 
-#include <iostream>
-using namespace std;
 UpdateResponse Engine::move(GameModel &game_model)
 {
-    std::vector<std::shared_ptr<Ball>> balls = game_model.get_balls();
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks = game_model.get_bricks();
+
+    if (is_win(bricks))
+    {
+        return UpdateResponse::GAME_WON;
+    }
+    std::vector<std::shared_ptr<Ball>> balls = game_model.get_balls();
     std::shared_ptr<Racket> racket = game_model.get_racket();
 
     size_t size = balls.size();
@@ -48,13 +51,19 @@ UpdateResponse Engine::move(GameModel &game_model)
     for (size_t i = 0; i < size; i++)
     {
         std::shared_ptr<Ball> ball = balls[i];
+        if (!ball->get_state())
+        {
+            Point ball_center = Point{racket->get_center().x_, ball->get_center().y_};
+            ball->set_center(ball_center);
+            continue; // ball is not moving, skip it
+        }
         if (check_wall_collision(ball))
         {
             if (temp_size == 1)
             {
                 // manage life loss and/or game over
                 if (game_model.life_lost())
-                { // TODO: make a new ball at default position
+                {
                     game_model.reset_ball();
                     return UpdateResponse::CONTINUE;
                 }
@@ -72,7 +81,7 @@ UpdateResponse Engine::move(GameModel &game_model)
             }
         }
         check_racket_collision(ball, racket);
-        check_brick_collision(ball, bricks);
+        game_model.add_score(check_brick_collision(ball, bricks));
         double x_pos = ball->get_center().x_;
         double y_pos = ball->get_center().y_;
 
@@ -158,8 +167,8 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
     }
 }
 
-void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
-                                   std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
+const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
+                                        std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
 {
     // Defining ball values for clearer code
     double cX = ball->get_center().x_;
@@ -220,11 +229,11 @@ void Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 {
                     brick->hit();
                 }
-                // TODO: update score, but should i do it here ?
-                return;
+                return brick->get_points();
             }
         }
     }
+    return 0; // no brick was broken
 }
 
 double Engine::return_angle(double x, double L) const
@@ -238,4 +247,19 @@ void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, std::vector<
     {
         balls.erase(balls.begin() + idx);
     }
+}
+
+bool Engine::is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
+{
+    for (const auto &row : bricks)
+    {
+        for (const auto &brick : row)
+        {
+            if (!brick->is_broken())
+            {
+                return false; // if any brick is not broken, the game is not won
+            }
+        }
+    }
+    return true; // all bricks are broken, the game is won
 }

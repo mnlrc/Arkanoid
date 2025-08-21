@@ -101,6 +101,8 @@ void Game::run_main_menu()
         }
     }
 }
+#include <iostream>
+using namespace std;
 
 void Game::run_game(short level)
 {
@@ -119,6 +121,7 @@ void Game::run_game(short level)
         al_wait_for_event(queue_, nullptr);
         while (al_get_next_event(queue_, &event_))
         {
+            cout << "[INFO] Event type: " << event_.type << endl;
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
@@ -132,6 +135,7 @@ void Game::run_game(short level)
                 if (handle_update_response(game_controller_->update_model()))
                 {
                     // game_controller_->display_game_over(); or victory ?
+                    cout << "[INFO] Game Over" << endl;
                     draw = false;
                 }
                 else
@@ -148,6 +152,7 @@ void Game::run_game(short level)
         }
         if (draw)
         {
+            cout << "[INFO] Drawing game view" << endl;
             draw = false;
             al_start_timer(timer_);
             game_controller_->update_view();
@@ -157,13 +162,16 @@ void Game::run_game(short level)
 
 void Game::handle_input_response(InputResponse response, bool &done)
 {
+    cout << "[INFO] Handling input response: " << static_cast<int>(response) << endl;
     if (main_loop)
     {
         if (game_loop)
         {
+            cout << "[INFO] Handling game input response" << endl;
             switch (response)
             {
             case InputResponse::QUIT:
+                cout << "[INFO] Quitting game" << endl;
                 done = true;
                 game_loop = false;
                 break;
@@ -197,11 +205,11 @@ bool Game::handle_update_response(UpdateResponse response)
     case UpdateResponse::NONE:
         return false; // no update needed, continue the game loop
     case UpdateResponse::GAME_OVER:
-        game_loop = false;
+        game_controller_->draw_end(false);
         return true;
     case UpdateResponse::GAME_WON:
-        // TODO: handle game won
-        return false; // TODO
+        game_controller_->draw_end(true);
+        return true; // TODO
     default:
         Logger::log("[ERROR] Unhandled update response");
         return false; // default case, continue the game loop

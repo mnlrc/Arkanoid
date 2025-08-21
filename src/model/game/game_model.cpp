@@ -8,7 +8,8 @@
 
 #include "game_model.hpp"
 
-GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}
+GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button_{END_TEXT, Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2}, WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.1, Color::WHITE, Color::DARK_GOLD}
+
 {
     LevelData level_data = LevelLoader::loadLevel(level);
     if (level_data.is_empty())
@@ -79,13 +80,15 @@ std::shared_ptr<Racket> GameModel::get_racket() const noexcept { return racket_;
 
 Score GameModel::get_current_score() const noexcept { return current_score_; }
 
+void GameModel::add_score(unsigned points) noexcept
+{
+    current_score_.add_score(points);
+}
+
 std::vector<std::shared_ptr<Circle>> GameModel::get_circles() const noexcept { return circles_; }
 
-#include <iostream>
-using namespace std;
 bool GameModel::life_lost() noexcept
 {
-    cout << "[INFO] Life lost, remaining lives: " << remaining_lives_ << endl;
     if (remaining_lives_ > 0)
     {
         remaining_lives_--;
@@ -103,8 +106,35 @@ void GameModel::reset_ball() noexcept
 {
     double new_ball_x = racket_->get_center().x_;
     Point new_ball_center = Point{new_ball_x, WINDOW_HEIGHT * 0.895};
-    Point ball_speed = Point{5, 5};
     double ball_radius = racket_->get_height() / 2;
-    std::shared_ptr<Ball> ball = std::make_shared<Ball>(new_ball_center, ball_radius, ball_speed);
+    std::shared_ptr<Ball> ball = std::make_shared<Ball>(new_ball_center, ball_radius, false);
     balls_.emplace_back(ball);
+}
+
+void GameModel::launch_ball() noexcept
+{
+    if (!balls_.empty())
+    {
+        for (auto &ball : balls_)
+        {
+            if (!ball->get_state())
+            { // if a ball isn't moving
+                ball->change_state();
+            }
+        }
+    }
+    else
+    {
+        Logger::log("[ERROR] No balls available to launch");
+    }
+}
+
+Button GameModel::get_end_button(bool is_win) noexcept {
+    if (is_win) {
+        end_button_.set_selected_text(0); // win text
+    }
+    else {
+        end_button_.set_selected_text(1); // lose text
+    }
+    return end_button_;
 }

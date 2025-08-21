@@ -50,12 +50,14 @@ private:
 
     void check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket);
 
-    void check_brick_collision(std::shared_ptr<Ball> ball,
+    const int check_brick_collision(std::shared_ptr<Ball> ball,
                                std::vector<std::vector<std::shared_ptr<Brick>>> bricks);
 
     double return_angle(double, double) const;
 
     void delete_ball(std::vector<std::shared_ptr<Ball>> &balls, std::vector<size_t> indexes);
+
+    bool is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks);
 };
 
 #endif

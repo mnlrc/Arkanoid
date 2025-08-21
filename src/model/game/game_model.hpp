@@ -19,12 +19,22 @@
 #include "../objects/racket.hpp"
 #include "../objects/score.hpp"
 #include "../objects/circle.hpp"
+#include "../objects/button.hpp"
 #include "../model.hpp"
 #include "level_loader.hpp"
 
 // #### Includes ####
 #include <vector>
 #include <memory>
+#include <string>
+
+const std::string WIN_STRING = "You won !";
+const std::string LOSE_STRING = "You lost !";
+
+const Text WIN_TEXT = Text{WIN_STRING, Color::GREEN};
+const Text LOSE_TEXT = Text{LOSE_STRING, Color::RED};
+
+const std::vector<Text> END_TEXT = {WIN_TEXT, LOSE_TEXT};
 
 /**
  * @brief Class that centralizes objects of the model
@@ -50,11 +60,16 @@ public:
     std::vector<std::vector<std::shared_ptr<Brick>>> get_bricks() const noexcept;
     std::shared_ptr<Racket> get_racket() const noexcept;
     Score get_current_score() const noexcept;
+    void add_score(unsigned points) noexcept;
     std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
 
     bool life_lost() noexcept;
 
     void reset_ball() noexcept;
+
+    void launch_ball() noexcept;
+
+    Button get_end_button(bool is_win) noexcept;
 
 private:
     std::vector<std::shared_ptr<Ball>> balls_;
@@ -66,6 +81,8 @@ private:
 
     Color background_color_;
     Color line_color_;
+
+    Button end_button_; // idx 0 is the win text, idx 1 is the lose text
 };
 
 #endif

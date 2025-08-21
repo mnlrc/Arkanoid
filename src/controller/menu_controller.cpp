@@ -32,6 +32,6 @@ InputResponse MenuController::handle_key_down(int key_code)
     }
 }
 
-void MenuController::update_view() { view_->draw(menu_model_); }
+void MenuController::update_view() { view_->render_menu_model(menu_model_); }
 
 short int MenuController::get_selected_level() const noexcept { return menu_model_->get_selected_level(); }

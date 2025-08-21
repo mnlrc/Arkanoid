@@ -21,6 +21,8 @@ public:
     // #### Constructor ####
     Ball(Point &center, double &radius, Point &speed);
 
+    Ball(Point center, double radius, bool state);
+
     Ball() = default;
 
     // #### Destructor ####

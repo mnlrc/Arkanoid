@@ -10,7 +10,7 @@
 
 Rectangle::Rectangle(Color inner_color, Color outer_color) : Object{inner_color, outer_color} {}
 
-Rectangle::Rectangle(Point &center, double &width, double &height, Color &inner_color, Color &outer_color)
+Rectangle::Rectangle(Point center, double width, double height, Color inner_color, Color outer_color)
     : Object{center, inner_color, outer_color}, width_{width}, height_{height} {}
 
 double Rectangle::get_width() const noexcept { return width_; }

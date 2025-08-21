@@ -42,7 +42,8 @@ InputResponse GameController::handle_key_down(int key_code)
     case ALLEGRO_KEY_RIGHT:
         input_keys_[Direction::RIGHT] = true;
         return InputResponse::NONE;
-    case ALLEGRO_KEY_SPACE: // starting the game OR throwing the ball
+    case ALLEGRO_KEY_SPACE: // launch a ball
+        game_model->launch_ball();
         return InputResponse::NONE;
     case ALLEGRO_KEY_ESCAPE: // return to previous menu
         return InputResponse::QUIT;
@@ -84,5 +85,11 @@ UpdateResponse GameController::update_model()
 
 void GameController::update_view()
 {
-    view_->draw(game_model);
+    view_->render_game_model(game_model);
+}
+
+void GameController::draw_end(bool is_win)
+{
+    Button end_button = game_model->get_end_button(is_win);
+    view_->render_button(end_button);
 }

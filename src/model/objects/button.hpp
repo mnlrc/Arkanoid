@@ -14,6 +14,7 @@
 
 #include "rectangle.hpp"
 #include "text.hpp"
+#include "../../log/logger.hpp"
 
 /**
  * @brief
@@ -22,7 +23,7 @@
 class Button
 {
 public:
-    Button(const std::vector<Text> &texts, Point &center, double width, double height, Color inner_color, Color outer_color);
+    Button(const std::vector<Text> &texts, Point center, double width, double height, Color inner_color, Color outer_color);
 
     /**
      * @brief Destroy the Button object
@@ -48,6 +49,8 @@ public:
      *
      */
     void previousText();
+
+    void set_selected_text(size_t idx);
 
     /**
      * @brief Get the Rectangle object

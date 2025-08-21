@@ -9,20 +9,27 @@
 #ifndef SCORE_HPP
 #define SCORE_HPP
 
-#include "point.hpp"
+#define STARTING_SCORE 0
+
 #include "global_variables.hpp"
+#include "rectangle.hpp"
 
 class Score
 {
-private:
-    unsigned score_;
-    Point pos_;
-
 public:
     Score();
-    unsigned getScore() const noexcept;
-    void setScore(unsigned sc) noexcept;
-    void incScore();
+
+    unsigned get_score() const noexcept;
+
+    void set_score(unsigned new_score) noexcept;
+
+    void add_score(unsigned points) noexcept;
+
+    Point get_center() const noexcept;
+
+private:
+    Rectangle rectangle_;
+    unsigned score_;
 };
 
 #endif

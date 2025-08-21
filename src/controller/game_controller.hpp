@@ -52,6 +52,8 @@ public:
 
     void update_view() override;
 
+    void draw_end(bool is_win);
+
 private:
     std::unique_ptr<Engine> engine_;
     std::unique_ptr<GameModel> game_model;
