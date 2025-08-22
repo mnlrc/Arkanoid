@@ -126,6 +126,8 @@ Color LevelLoader::color_from_char(const char &c)
 {
     switch (c)
     {
+    case 'W':
+        return Color::WHITE;
     case 'Y':
         return Color::YELLOW;
     case 'M':
@@ -140,8 +142,10 @@ Color LevelLoader::color_from_char(const char &c)
         return Color::CYAN;
     case 'O':
         return Color::ORANGE;
-    case 'W':
-        return Color::WHITE;
+    case 'S':
+        return Color::SILVER;
+    case 'I': // I as infinite for infinite hp 
+        return Color::GOLD;
     case '_':
         return Color::NONE;
     default:

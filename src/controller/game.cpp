@@ -121,7 +121,6 @@ void Game::run_game(short level)
         al_wait_for_event(queue_, nullptr);
         while (al_get_next_event(queue_, &event_))
         {
-            cout << "[INFO] Event type: " << event_.type << endl;
             switch (event_.type)
             {
             case ALLEGRO_EVENT_KEY_DOWN:
@@ -152,7 +151,6 @@ void Game::run_game(short level)
         }
         if (draw)
         {
-            cout << "[INFO] Drawing game view" << endl;
             draw = false;
             al_start_timer(timer_);
             game_controller_->update_view();

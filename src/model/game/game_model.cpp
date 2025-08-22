@@ -72,7 +72,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     }
 }
 
-std::vector<std::shared_ptr<Ball>> GameModel::get_balls() const noexcept { return balls_; }
+std::vector<std::shared_ptr<Ball>> &GameModel::get_balls() noexcept { return balls_; }
 
 std::vector<std::vector<std::shared_ptr<Brick>>> GameModel::get_bricks() const noexcept { return bricks_; }
 
@@ -129,11 +129,14 @@ void GameModel::launch_ball() noexcept
     }
 }
 
-Button GameModel::get_end_button(bool is_win) noexcept {
-    if (is_win) {
+Button GameModel::get_end_button(bool is_win) noexcept
+{
+    if (is_win)
+    {
         end_button_.set_selected_text(0); // win text
     }
-    else {
+    else
+    {
         end_button_.set_selected_text(1); // lose text
     }
     return end_button_;

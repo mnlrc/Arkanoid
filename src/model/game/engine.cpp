@@ -42,12 +42,12 @@ UpdateResponse Engine::move(GameModel &game_model)
     {
         return UpdateResponse::GAME_WON;
     }
-    std::vector<std::shared_ptr<Ball>> balls = game_model.get_balls();
+    std::vector<std::shared_ptr<Ball>> &balls = game_model.get_balls();
     std::shared_ptr<Racket> racket = game_model.get_racket();
 
     size_t size = balls.size();
     size_t temp_size = size;
-    std::vector<size_t> balls_to_remove = {}; // storing indexes
+    std::vector<std::shared_ptr<Ball>> balls_to_remove;
     for (size_t i = 0; i < size; i++)
     {
         std::shared_ptr<Ball> ball = balls[i];
@@ -67,16 +67,15 @@ UpdateResponse Engine::move(GameModel &game_model)
                     game_model.reset_ball();
                     return UpdateResponse::CONTINUE;
                 }
-                else
+                else // game over
                 {
-                    // game over
                     return UpdateResponse::GAME_OVER;
                 }
             }
             else
             {
                 temp_size--;
-                balls_to_remove.push_back(i);
+                balls_to_remove.push_back(ball);
                 continue;
             }
         }
@@ -224,7 +223,7 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                     }
                 }
 
-                // Update brick state
+                // update brick state
                 if (!brick->is_broken())
                 {
                     brick->hit();
@@ -241,11 +240,11 @@ double Engine::return_angle(double x, double L) const
     return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
 }
 
-void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, std::vector<size_t> indexes)
+void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, const std::vector<std::shared_ptr<Ball>> &balls_to_remove)
 {
-    for (size_t &idx : indexes)
+    for (const auto &ball : balls_to_remove)
     {
-        balls.erase(balls.begin() + idx);
+        balls.erase(std::remove(balls.begin(), balls.end(), ball), balls.end());
     }
 }
 
