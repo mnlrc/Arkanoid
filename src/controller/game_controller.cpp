@@ -93,3 +93,12 @@ void GameController::draw_end(bool is_win)
     Button end_button = game_model->get_end_button(is_win);
     view_->render_button(end_button);
 }
+
+void GameController::reset_game_model() noexcept
+{
+    if (game_model)
+    {
+        game_model.reset();
+        current_level = 0;
+    }
+}

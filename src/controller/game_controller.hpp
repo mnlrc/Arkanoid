@@ -54,6 +54,8 @@ public:
 
     void draw_end(bool is_win);
 
+    void reset_game_model() noexcept;
+
 private:
     std::unique_ptr<Engine> engine_;
     std::unique_ptr<GameModel> game_model;

@@ -133,8 +133,7 @@ void Game::run_game(short level)
             {
                 if (handle_update_response(game_controller_->update_model()))
                 {
-                    // game_controller_->display_game_over(); or victory ?
-                    cout << "[INFO] Game Over" << endl;
+                    // cout << "[INFO] Game Over" << endl;
                     draw = false;
                 }
                 else
@@ -160,16 +159,16 @@ void Game::run_game(short level)
 
 void Game::handle_input_response(InputResponse response, bool &done)
 {
-    cout << "[INFO] Handling input response: " << static_cast<int>(response) << endl;
+    // cout << "[INFO] Handling input response: " << static_cast<int>(response) << endl;
     if (main_loop)
     {
         if (game_loop)
         {
-            cout << "[INFO] Handling game input response" << endl;
+            // cout << "[INFO] Handling game input response" << endl;
             switch (response)
             {
             case InputResponse::QUIT:
-                cout << "[INFO] Quitting game" << endl;
+                // cout << "[INFO] Quitting game" << endl;
                 done = true;
                 game_loop = false;
                 break;
@@ -204,10 +203,12 @@ bool Game::handle_update_response(UpdateResponse response)
         return false; // no update needed, continue the game loop
     case UpdateResponse::GAME_OVER:
         game_controller_->draw_end(false);
+        game_controller_->reset_game_model();
         return true;
     case UpdateResponse::GAME_WON:
         game_controller_->draw_end(true);
-        return true; // TODO
+        game_controller_->reset_game_model();
+        return true;
     default:
         Logger::log("[ERROR] Unhandled update response");
         return false; // default case, continue the game loop
