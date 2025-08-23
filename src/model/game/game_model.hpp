@@ -65,17 +65,23 @@ public:
 
     Score get_current_score() const noexcept;
 
+    std::vector<PowerUp>& get_active_power_ups() noexcept;
+
     void add_score(unsigned points) noexcept;
 
     std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
 
     bool life_lost() noexcept;
 
+    void add_life() noexcept;
+
     void reset_ball() noexcept;
 
     void launch_ball() noexcept;
 
     Button get_end_button(bool is_win) noexcept;
+
+    void add_power_up(const PowerUp &power_up) noexcept;
 
 private:
     std::vector<std::shared_ptr<Ball>> balls_;
@@ -91,6 +97,8 @@ private:
     Color line_color_;
 
     Button end_button_; // idx 0 is the win text, idx 1 is the lose text
+
+    void setup_circles();
 };
 
 #endif

@@ -15,17 +15,17 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     {
     case Direction::RIGHT:
     {
-        double maxRight = WINDOW_WIDTH - (racket->get_width() / 2); // max pos of the racket on the right
-        double newX = racket->get_center().x_ + racket->get_speed();
-        racket->set_center(Point{std::min(newX, maxRight), y});
+        double max_right = WINDOW_WIDTH - (racket->get_width() / 2); // max pos of the racket on the right
+        double new_x = racket->get_center().x_ + racket->get_speed();
+        racket->set_center(Point{std::min(new_x, max_right), y});
         break;
     }
 
     case Direction::LEFT:
     {
-        double maxLeft = racket->get_width() / 2; // min pos of the racket on the left
-        double newX = racket->get_center().x_ - racket->get_speed();
-        racket->set_center(Point{std::max(newX, maxLeft), y});
+        double max_left = racket->get_width() / 2; // min pos of the racket on the left
+        double new_x = racket->get_center().x_ - racket->get_speed();
+        racket->set_center(Point{std::max(new_x, max_left), y});
         break;
     }
     default:
@@ -34,10 +34,11 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     }
 }
 
-UpdateResponse Engine::move(GameModel &game_model)
+UpdateResponse Engine::update_model(GameModel &game_model)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
 
+    // checking win condition
     if (is_win(bricks))
     {
         return UpdateResponse::GAME_WON;
@@ -45,6 +46,7 @@ UpdateResponse Engine::move(GameModel &game_model)
     std::vector<std::shared_ptr<Ball>> &balls = game_model.get_balls();
     std::shared_ptr<Racket> racket = game_model.get_racket();
 
+    // updating ball positions
     size_t size = balls.size();
     size_t temp_size = size;
     std::vector<std::shared_ptr<Ball>> balls_to_remove;
@@ -79,8 +81,14 @@ UpdateResponse Engine::move(GameModel &game_model)
                 continue;
             }
         }
+
+        // checking racket collision
         check_racket_collision(ball, racket);
-        game_model.add_score(check_brick_collision(ball, bricks));
+
+        // checking brick collision
+        game_model.add_score(check_brick_collision(ball, game_model));
+
+        // updating ball position
         double x_pos = ball->get_center().x_;
         double y_pos = ball->get_center().y_;
 
@@ -90,11 +98,63 @@ UpdateResponse Engine::move(GameModel &game_model)
         ball->set_center({x_pos + x_speed, y_pos + y_speed});
     }
 
+    // removing balls that are out of bounds
     if (!balls_to_remove.empty())
     {
         delete_ball(balls, balls_to_remove);
     }
+
+    falling_power_ups(game_model);
+
     return UpdateResponse::CONTINUE;
+}
+
+void Engine::init_power_up(GameModel& game_model, Power power)
+{
+   switch (power) {
+    case Power::LASER:
+        break;
+    case Power::ENLARGE:
+        break;
+    case Power::CATCH:
+        break;
+    case Power::SLOW:
+        break;
+    case Power::STOP:
+        break;
+    case Power::PLAYER:
+        game_model.add_life();
+        break;
+    case Power::NONE:
+    default:
+        Logger::log("[ERROR] Unknown or unhandled power up");
+        break;
+   }
+}
+
+// void Engine::update_power_ups(GameModel &game_model)
+// {
+// }
+
+void Engine::falling_power_ups(GameModel &game_model)
+{
+    const int FALLING_SPEED = 3; // TODO: set as global variable
+    std::vector<PowerUp> &power_ups = game_model.get_active_power_ups();
+
+    if (power_ups.empty())
+    {
+        return;
+    }
+
+    for (auto &power_up : power_ups)
+    {
+        if (power_up.is_falling() && !power_up.is_active())
+        {
+            Point current_center = power_up.get_center();
+            power_up.set_center(Point{current_center.x_, current_center.y_ + FALLING_SPEED});
+        }
+    }
+    check_power_up_collision(game_model);
 }
 
 bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
@@ -122,8 +182,6 @@ bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 
     else if (ball->get_center().y_ >= DOWN)
     {
-        // ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
-        // ball->set_center({ball->get_center().x_, DOWN});
         is_out = true;
     }
 
@@ -165,12 +223,14 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
         ball->set_speed({xSpeed * speed, ySpeed * speed});
     }
 }
+
 const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
-                                        std::vector<std::vector<std::shared_ptr<Brick>>> &bricks)
+                                        GameModel &game_model)
 {
     double c_x = ball->get_center().x_;
     double c_y = ball->get_center().y_;
     double r = ball->get_radius();
+    std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
 
     // Checking all bricks
     for (auto &brick_row : bricks)
@@ -192,10 +252,10 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 (c_y + r > TOP && c_y - r < DOWN))
             { // Vertical collision ?
                 // Calculating side of collision
-                double overlapX = std::min(c_x + r - LEFT, RIGHT - (c_x - r));
-                double overlapY = std::min(c_y + r - TOP, DOWN - (c_y - r));
+                double overlap_x = std::min(c_x + r - LEFT, RIGHT - (c_x - r));
+                double overlap_y = std::min(c_y + r - TOP, DOWN - (c_y - r));
 
-                if (overlapX < overlapY)
+                if (overlap_x < overlap_y)
                 {
                     ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
                     if (c_x < brick->get_center().x_)
@@ -223,6 +283,12 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 // update brick state
                 if (brick->hit()) // brick was broken
                 {
+                    Power broken_brick_power = brick->get_power_up();
+                    if (broken_brick_power != Power::NONE)
+                    {
+                        PowerUp power_up = PowerUp{brick->get_center(), broken_brick_power};
+                        game_model.add_power_up(power_up);
+                    }
                     return brick->get_points();
                 }
                 return 0; // no brick was broken
@@ -230,6 +296,39 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
         }
     }
     return 0; // no collision
+}
+
+void Engine::check_power_up_collision(GameModel& game_model)
+{
+    std::shared_ptr<Racket> racket = game_model.get_racket();
+    std::vector<PowerUp> &power_ups = game_model.get_active_power_ups();
+
+    const double RACKET_TOP = racket->get_center().y_ - (racket->get_height() / 2);
+    const double RACKET_LEFT = racket->get_center().x_ - (racket->get_width() / 2);
+    const double RACKET_RIGHT = racket->get_center().x_ + (racket->get_width() / 2);
+
+    for (auto &power_up : power_ups)
+    {
+        if (power_up.is_falling())
+        {
+            const double POWER_UP_BOTTOM = power_up.get_center().y_ + (power_up.get_height() / 2);
+            const double POWER_UP_LEFT = power_up.get_center().x_ - (power_up.get_width() / 2);
+            const double POWER_UP_RIGHT = power_up.get_center().x_ + (power_up.get_width() / 2);
+            const double POWER_UP_TOP = power_up.get_center().y_ - (power_up.get_height() / 2);
+
+            if (POWER_UP_BOTTOM >= RACKET_TOP &&                               // vertical collision
+                POWER_UP_RIGHT >= RACKET_LEFT && POWER_UP_LEFT <= RACKET_RIGHT // horizontal collision
+            )
+            {
+                power_up.activate();
+                init_power_up(game_model, power_up.get_power());
+            }
+            if (POWER_UP_TOP >= WINDOW_HEIGHT) {
+                // delete power up mais c'est chiant woula car on itère dans la boucle
+                // TODO
+            }
+        }
+    }
 }
 
 double Engine::return_angle(double x, double L) const
@@ -251,7 +350,7 @@ bool Engine::is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
     {
         for (const auto &brick : row)
         {
-            if (!brick->is_broken())
+            if (!brick->is_broken() && brick->get_inner_color() != Color::GOLD)
             {
                 return false; // if any brick is not broken, the game is not won
             }

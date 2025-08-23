@@ -80,7 +80,7 @@ UpdateResponse GameController::update_model()
         engine_->move(game_model->get_racket(), Direction::LEFT);
     }
 
-    return engine_->move(*game_model);
+    return engine_->update_model(*game_model);
 }
 
 void GameController::update_view()

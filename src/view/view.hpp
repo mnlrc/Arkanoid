@@ -92,14 +92,6 @@ private:
     ALLEGRO_FONT *font_;
     const int FONT_SIZE = 20;
 
-    /**
-     * @brief
-     *
-     * @param color
-     * @return ALLEGRO_COLOR
-     */
-    ALLEGRO_COLOR color_convertor(Color color);
-
     void draw_window(const Model &model);
 
     /**
@@ -121,6 +113,16 @@ private:
     void draw(const Rectangle &rectangle);
 
     void draw(const Circle &circle);
+
+    void draw(Point &center, std::string &text, Color &color);
+
+    /**
+     * @brief
+     *
+     * @param color
+     * @return ALLEGRO_COLOR
+     */
+    ALLEGRO_COLOR color_convertor(Color color);
 };
 
 #endif

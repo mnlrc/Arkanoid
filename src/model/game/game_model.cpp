@@ -46,7 +46,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     // setting up racket
     double width_percentage = level_data.racket->get_width_percentage();
     double racket_width = WINDOW_WIDTH * width_percentage;
-    double racket_height = WINDOW_HEIGHT / 20;                            // TODO: remove magic number
+    double racket_height = WINDOW_HEIGHT / 25;                            // TODO: remove magic number
     Point racket_center = Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.955}; // TODO: remove magic numbers
     level_data.racket->set_center(racket_center);
     level_data.racket->set_width(racket_width);
@@ -62,17 +62,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(ball_center, ball_radius, ball_speed);
     balls_[0] = ball;
 
-    double circle_radius = racket_height / 4;
-    double margin = circle_radius / 2;
-    double circles_width = (circle_radius * 2) * remaining_lives_ + margin * (remaining_lives_ - 1);
-    double circles_x_pos = (WINDOW_WIDTH - circles_width) / 2 + circle_radius;
-    double circles_y_pos = WINDOW_HEIGHT * 0.75;
-
-    for (int i = 0; i < remaining_lives_; i++)
-    {
-        circles_.emplace_back(std::make_shared<Circle>(Point{circles_x_pos, circles_y_pos}, circle_radius, Color::RED, Color::BLACK));
-        circles_x_pos += (circle_radius * 2) + margin;
-    }
+    setup_circles();
 }
 
 std::vector<std::shared_ptr<Ball>> &GameModel::get_balls() noexcept { return balls_; }
@@ -82,6 +72,8 @@ std::vector<std::vector<std::shared_ptr<Brick>>> &GameModel::get_bricks() noexce
 std::shared_ptr<Racket> GameModel::get_racket() const noexcept { return racket_; }
 
 Score GameModel::get_current_score() const noexcept { return current_score_; }
+
+std::vector<PowerUp> &GameModel::get_active_power_ups() noexcept { return active_power_ups_; }
 
 void GameModel::add_score(unsigned points) noexcept
 {
@@ -96,6 +88,7 @@ bool GameModel::life_lost() noexcept
     {
         remaining_lives_--;
         circles_.pop_back();
+        setup_circles();
         return true;
     }
     else
@@ -103,6 +96,12 @@ bool GameModel::life_lost() noexcept
         Logger::log("[INFO] Game Over");
         return false;
     }
+}
+
+void GameModel::add_life() noexcept
+{
+    remaining_lives_++;
+    setup_circles();
 }
 
 void GameModel::reset_ball() noexcept
@@ -143,4 +142,29 @@ Button GameModel::get_end_button(bool is_win) noexcept
         end_button_.set_selected_text(1); // lose text
     }
     return end_button_;
+}
+
+void GameModel::add_power_up(const PowerUp &power_up) noexcept
+{
+    active_power_ups_.emplace_back(power_up);
+}
+
+void GameModel::setup_circles()
+{
+    if (!circles_.empty())
+    {
+        circles_.clear();
+    }
+    double racket_height = racket_->get_height();
+    double circle_radius = racket_height / 4;
+    double margin = circle_radius / 2;
+    double circles_width = (circle_radius * 2) * remaining_lives_ + margin * (remaining_lives_ - 1);
+    double circles_x_pos = (WINDOW_WIDTH - circles_width) / 2 + circle_radius;
+    double circles_y_pos = WINDOW_HEIGHT * 0.75;
+
+    for (int i = 0; i < remaining_lives_; i++)
+    {
+        circles_.emplace_back(std::make_shared<Circle>(Point{circles_x_pos, circles_y_pos}, circle_radius, Color::RED, Color::BLACK));
+        circles_x_pos += (circle_radius * 2) + margin;
+    }
 }

@@ -37,17 +37,6 @@ enum class Color : int
     // ...
 };
 
-enum class Power : int
-{
-    LASER = 0, // shoot lasers from the racket
-    ENLARGE,   // enlarge the rackets width
-    CATCH,     // catch ball when it hits the racket
-    SLOW,      // slow the balls travel speed
-    STOP,      // ball multiplier
-    PLAYER,    // add life
-    NONE,
-};
-
 enum class UpdateResponse : int
 {
     NONE = 0,

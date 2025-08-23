@@ -12,10 +12,12 @@
 #include "point.hpp"
 #include "rectangle.hpp"
 #include "object.hpp"
+#include "power_up.hpp"
 #include "../../global_variables.hpp"
 
 #include <unordered_map>
 #include <limits>
+#include <string>
 
 const std::unordered_map<Color, const int> COLOR_SCORE = {{Color::NONE, 0},
                                                           {Color::WHITE, 50},
@@ -28,6 +30,15 @@ const std::unordered_map<Color, const int> COLOR_SCORE = {{Color::NONE, 0},
                                                           {Color::YELLOW, 120},
                                                           {Color::SILVER, 200},
                                                           {Color::GOLD, std::numeric_limits<int>::max()}};
+
+const std::unordered_map<Power, const std::string> POWER_CHAR = {
+    {Power::LASER, "L"},
+    {Power::ENLARGE, "E"},
+    {Power::CATCH, "C"},
+    {Power::SLOW, "S"},
+    {Power::STOP, "M"},
+    {Power::PLAYER, "P"},
+    {Power::NONE, ""}};
 
 const int DEFAULT_HP = 1;
 const int SILVER_HP = 2;

@@ -21,11 +21,13 @@ public:
 
     unsigned get_score() const noexcept;
 
-    void set_score(unsigned new_score) noexcept;
-
     void add_score(unsigned points) noexcept;
-
+    
     Point get_center() const noexcept;
+
+    Color get_color() const noexcept;
+
+    void set_score(unsigned new_score) noexcept;
 
 private:
     Rectangle rectangle_;

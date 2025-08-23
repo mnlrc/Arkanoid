@@ -12,6 +12,7 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+#include <ctime>
 #include <algorithm>
 
 #include "model/objects/ball.hpp"
@@ -44,15 +45,28 @@ public:
 
     void move(std::shared_ptr<Racket> racket, Direction direction);
 
-    UpdateResponse move(GameModel &game_model);
+    UpdateResponse update_model(GameModel &game_model);
 
 private:
+    std::clock_t laser_timer_;
+    std::clock_t enlarge_timer_;
+    std::clock_t catch_timer_;
+    std::clock_t slow_timer_;
+
+    void init_power_up(GameModel& game_model, Power power);
+
+    void update_power_ups(GameModel &game_model);
+
+    void falling_power_ups(GameModel &game_model);
+
     bool check_wall_collision(std::shared_ptr<Ball> ball);
 
     void check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket);
 
     const int check_brick_collision(std::shared_ptr<Ball> ball,
-                                    std::vector<std::vector<std::shared_ptr<Brick>>> &bricks);
+                                    GameModel &game_model);
+
+    void check_power_up_collision(GameModel& game_model);
 
     double return_angle(double, double) const;
 

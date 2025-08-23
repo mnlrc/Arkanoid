@@ -13,6 +13,7 @@
 #include "../objects/racket.hpp"
 #include "../objects/brick.hpp"
 #include "../../log/logger.hpp"
+#include "../objects/power_up.hpp"
 #include "../../global_variables.hpp"
 #include <string>
 #include <vector>
