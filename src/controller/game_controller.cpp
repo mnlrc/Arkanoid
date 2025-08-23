@@ -13,7 +13,7 @@ bool GameController::setup_game_model(short int level)
 {
     if (level != current_level)
     {
-        game_model.release();
+        reset_game_model();
         try
         {
             game_model = std::make_unique<GameModel>(level);

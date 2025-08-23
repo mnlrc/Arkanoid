@@ -51,7 +51,7 @@ public:
     const int get_points() const noexcept;
 
     // #### Setters ####
-    void hit() noexcept;
+    bool hit() noexcept;
 
 private:
     bool broken_ = false;

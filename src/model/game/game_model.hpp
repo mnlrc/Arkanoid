@@ -57,10 +57,15 @@ public:
     ~GameModel() = default;
 
     std::vector<std::shared_ptr<Ball>> &get_balls() noexcept;
-    std::vector<std::vector<std::shared_ptr<Brick>>> get_bricks() const noexcept;
+
+    std::vector<std::vector<std::shared_ptr<Brick>>> &get_bricks() noexcept;
+
     std::shared_ptr<Racket> get_racket() const noexcept;
+
     Score get_current_score() const noexcept;
+
     void add_score(unsigned points) noexcept;
+
     std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
 
     bool life_lost() noexcept;

@@ -28,12 +28,25 @@ PowerUp Brick::get_power_up() const noexcept { return power_up_; };
 
 const int Brick::get_points() const noexcept { return points_; };
 
-void Brick::hit() noexcept
+bool Brick::hit() noexcept
 {
+    if (inner_color_ == Color::GOLD) {
+        return false;
+    }
     if (hp_ > 1)
+    {
         hp_--;
+        if (inner_color_ == Color::SILVER)
+        {
+            outer_color_ = Color::WHITE; // changing color to show damage
+        }
+        return false; // signaling that the brick isn't broken yet
+    }
     else
+    {
         broken_ = true;
+        return true; // signaling that the brick is now broken
+    }
 }
 
 Color Brick::determine_outer_color(Color color) const noexcept

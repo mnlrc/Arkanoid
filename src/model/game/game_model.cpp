@@ -74,7 +74,7 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
 
 std::vector<std::shared_ptr<Ball>> &GameModel::get_balls() noexcept { return balls_; }
 
-std::vector<std::vector<std::shared_ptr<Brick>>> GameModel::get_bricks() const noexcept { return bricks_; }
+std::vector<std::vector<std::shared_ptr<Brick>>> &GameModel::get_bricks() noexcept { return bricks_; }
 
 std::shared_ptr<Racket> GameModel::get_racket() const noexcept { return racket_; }
 

@@ -36,7 +36,7 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
 
 UpdateResponse Engine::move(GameModel &game_model)
 {
-    std::vector<std::vector<std::shared_ptr<Brick>>> bricks = game_model.get_bricks();
+    std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
 
     if (is_win(bricks))
     {
@@ -165,10 +165,12 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
         ball->set_speed({xSpeed * speed, ySpeed * speed});
     }
 }
-
+#include <iostream>
+using namespace std;
 const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
-                                        std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
+                                        std::vector<std::vector<std::shared_ptr<Brick>>> &bricks)
 {
+    cout << "Checking brick collisions..." << endl;
     // Defining ball values for clearer code
     double cX = ball->get_center().x_;
     double cY = ball->get_center().y_;
@@ -179,6 +181,7 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
     {
         for (auto &brick : brickRow)
         {
+            cout << "Handling new brick..." << endl;
             if (brick->is_broken())
             {
                 continue;
@@ -193,7 +196,9 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
             if ((cX + r > LEFT && cX - r < RIGHT) && // Horizontal collision ?
                 (cY + r > TOP && cY - r < DOWN))
             { // Vertical collision ?
-
+                cout << "COLLISION WITH BRICK DETECTED" << endl;
+                cout << endl;
+                cout << endl;
                 // Calculating side of collision
                 double overlapX = std::min(cX + r - LEFT, RIGHT - (cX - r));
                 double overlapY = std::min(cY + r - TOP, DOWN - (cY - r));
@@ -224,15 +229,17 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 }
 
                 // update brick state
-                if (!brick->is_broken())
+                cout << "BRICK HP: " << brick->get_hp() << endl;
+                if (brick->hit()) // brick was broken
                 {
-                    brick->hit();
+                    // exit(0);
+                    return brick->get_points();
                 }
-                return brick->get_points();
+                return 0; // no brick was broken
             }
         }
     }
-    return 0; // no brick was broken
+    return 0; // no collision
 }
 
 double Engine::return_angle(double x, double L) const
