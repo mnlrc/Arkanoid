@@ -52,7 +52,7 @@ void View::render_button(const Button &button)
     al_flip_display();
 }
 
-ALLEGRO_COLOR View::colorConvertor(Color color)
+ALLEGRO_COLOR View::color_convertor(Color color)
 {
     ALLEGRO_COLOR ret;
     switch (color)
@@ -96,6 +96,9 @@ ALLEGRO_COLOR View::colorConvertor(Color color)
     case Color::DARK_GOLD:
         ret = COLOR_DARK_GOLD;
         break;
+    case Color::NONE:
+        ret = COLOR_PINK; // using pink to represent none color
+        break;
     default:
         Logger::log("[ERROR] Unknown color");
         break;
@@ -111,8 +114,8 @@ void View::draw_window(const Model &model)
     const Color temp_inner_color = model.getInnerColor();
     const Color temp_outer_color = model.getOuterColor();
 
-    ALLEGRO_COLOR window_inner_color = colorConvertor(temp_inner_color);
-    ALLEGRO_COLOR window_outer_color = colorConvertor(temp_outer_color);
+    ALLEGRO_COLOR window_inner_color = color_convertor(temp_inner_color);
+    ALLEGRO_COLOR window_outer_color = color_convertor(temp_outer_color);
 
     al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
     al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
@@ -135,22 +138,12 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
     draw_window(*game_model);
 
     std::shared_ptr<Racket> temp_racket = game_model->get_racket();
-    Color racket_inner_color = temp_racket->get_inner_color();
-    ALLEGRO_COLOR racket_inner_allegro_color = colorConvertor(racket_inner_color);
-    Color racket_outer_color = temp_racket->get_outer_color();
-    ALLEGRO_COLOR racket_outer_allegro_color = colorConvertor(racket_outer_color);
-    float x1 = temp_racket->get_center().x_ - (temp_racket->get_width() / 2);
-    float x2 = temp_racket->get_center().x_ + (temp_racket->get_width() / 2);
-    float y1 = temp_racket->get_center().y_ - (temp_racket->get_height() / 2);
-    float y2 = temp_racket->get_center().y_ + (temp_racket->get_height() / 2);
-    al_draw_filled_rectangle(x1, y1, x2, y2, racket_inner_allegro_color);
-    al_draw_rectangle(x1, y1, x2, y2, racket_outer_allegro_color, 2.0);
+    draw(*temp_racket);
 
     std::vector<std::shared_ptr<Ball>> temp_balls = game_model->get_balls();
     for (auto &ball : temp_balls)
     {
-        al_draw_filled_circle(ball->get_center().x_, ball->get_center().y_, ball->get_radius(), al_map_rgb(0, 0, 0));
-        al_draw_circle(ball->get_center().x_, ball->get_center().y_, ball->get_radius(), al_map_rgb(255, 255, 255), 2.0);
+        draw(*ball);
     }
 
     std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = game_model->get_bricks();
@@ -161,16 +154,7 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
         {
             if (!brick->is_broken())
             {
-                Color brick_inner_color = brick->get_inner_color();
-                ALLEGRO_COLOR brick_inner_allegro_color = colorConvertor(brick_inner_color);
-                Color brick_outer_color = brick->get_outer_color();
-                ALLEGRO_COLOR brick_outer_allegro_color = colorConvertor(brick_outer_color);
-                float x1 = brick->get_center().x_ - (brick->get_width() / 2);
-                float x2 = brick->get_center().x_ + (brick->get_width() / 2);
-                float y1 = brick->get_center().y_ - (brick->get_height() / 2);
-                float y2 = brick->get_center().y_ + (brick->get_height() / 2);
-                al_draw_filled_rectangle(x1, y1, x2, y2, brick_inner_allegro_color);
-                al_draw_rectangle(x1, y1, x2, y2, brick_outer_allegro_color, 2.0);
+                draw(*brick);
             }
         }
     }
@@ -179,12 +163,7 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
 
     for (auto &circle : temp_circles)
     {
-        Color circle_inner_color = circle->get_inner_color();
-        ALLEGRO_COLOR circle_inner_allegro_color = colorConvertor(circle_inner_color);
-        Color circle_outer_color = circle->get_outer_color();
-        ALLEGRO_COLOR circle_outer_allegro_color = colorConvertor(circle_outer_color);
-        al_draw_filled_circle(circle->get_center().x_, circle->get_center().y_, circle->get_radius(), circle_inner_allegro_color);
-        al_draw_circle(circle->get_center().x_, circle->get_center().y_, circle->get_radius(), circle_outer_allegro_color, 2.0);
+        draw(*circle);
     }
 
     Score temp_score = game_model->get_current_score();
@@ -199,34 +178,56 @@ void View::draw(const Button &button)
 {
     Rectangle temp_rec = button.getRectangle();
 
-    Point rec_center = temp_rec.get_center();
-    double rec_width = temp_rec.get_width();
-    double rec_height = temp_rec.get_height();
-
-    // upper left
-    double x1 = rec_center.x_ - (rec_width / 2);
-    double y1 = rec_center.y_ - (rec_height / 2);
-
-    // lower right
-    double x2 = rec_center.x_ + (rec_width / 2);
-    double y2 = rec_center.y_ + (rec_height / 2);
-
-    Color temp_inner_color = temp_rec.get_inner_color();
-    ALLEGRO_COLOR temp_inner_allegro_color = colorConvertor(temp_inner_color);
-    Color temp_outer_color = temp_rec.get_outer_color();
-    ALLEGRO_COLOR temp_outer_allegro_color = colorConvertor(temp_outer_color);
-
-    al_draw_filled_rectangle(x1, y1, x2, y2, temp_inner_allegro_color);
-    al_draw_rectangle(x1, y1, x2, y2, temp_outer_allegro_color, 2.0);
+    draw(temp_rec);
 
     Text temp_text = button.getSelectedText();
 
-    Point text_center = rec_center;
+    Point text_center = temp_rec.get_center();
     std::string temp_string = temp_text.get_text();
     Color temp_color = temp_text.get_color();
 
     const char *text = temp_string.c_str();
-    ALLEGRO_COLOR text_color = colorConvertor(temp_color);
+    ALLEGRO_COLOR text_color = color_convertor(temp_color);
 
     al_draw_text(font_, text_color, text_center.x_, text_center.y_, ALLEGRO_ALIGN_CENTRE, text);
+}
+
+void View::draw(const Rectangle &rectangle)
+{
+    Point RECTANGLE_CENTER = rectangle.get_center();
+    double RECTANGLE_WIDTH = rectangle.get_width();
+    double RECTANGLE_HEIGHT = rectangle.get_height();
+
+    // upper left
+    double x1 = RECTANGLE_CENTER.x_ - (RECTANGLE_WIDTH / 2);
+    double y1 = RECTANGLE_CENTER.y_ - (RECTANGLE_HEIGHT / 2);
+
+    // lower right
+    double x2 = RECTANGLE_CENTER.x_ + (RECTANGLE_WIDTH / 2);
+    double y2 = RECTANGLE_CENTER.y_ + (RECTANGLE_HEIGHT / 2);
+
+    // converting colors
+    Color RECTANGLE_INNER_COLOR = rectangle.get_inner_color();
+    ALLEGRO_COLOR RECTANGLE_INNER_COLOR_ALLEGRO = color_convertor(RECTANGLE_INNER_COLOR);
+    Color RECTANGLE_OUTER_COLOR = rectangle.get_outer_color();
+    ALLEGRO_COLOR RECTANGLE_OUTER_COLOR_ALLEGRO = color_convertor(RECTANGLE_OUTER_COLOR);
+
+    al_draw_filled_rectangle(x1, y1, x2, y2, RECTANGLE_INNER_COLOR_ALLEGRO);
+    al_draw_rectangle(x1, y1, x2, y2, RECTANGLE_OUTER_COLOR_ALLEGRO, 2.0);
+}
+
+void View::draw(const Circle &circle)
+{
+    float CIRCLE_X = circle.get_center().x_;
+    float CIRCLE_Y = circle.get_center().y_;
+    float CIRCLE_RADIUS = circle.get_radius();
+
+    // converting colors
+    Color CIRCLE_INNER_COLOR = circle.get_inner_color();
+    ALLEGRO_COLOR CIRCLE_INNER_COLOR_ALLEGRO = color_convertor(CIRCLE_INNER_COLOR);
+    Color CIRCLE_OUTER_COLOR = circle.get_outer_color();
+    ALLEGRO_COLOR CIRCLE_OUTER_COLOR_ALLEGRO = color_convertor(CIRCLE_OUTER_COLOR);
+
+    al_draw_filled_circle(CIRCLE_X, CIRCLE_Y, CIRCLE_RADIUS, CIRCLE_INNER_COLOR_ALLEGRO);
+    al_draw_circle(CIRCLE_X, CIRCLE_Y, CIRCLE_RADIUS, CIRCLE_OUTER_COLOR_ALLEGRO, 2.0);
 }

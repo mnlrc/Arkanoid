@@ -98,7 +98,7 @@ private:
      * @param color
      * @return ALLEGRO_COLOR
      */
-    ALLEGRO_COLOR colorConvertor(Color color);
+    ALLEGRO_COLOR color_convertor(Color color);
 
     void draw_window(const Model &model);
 
@@ -117,6 +117,10 @@ private:
     void draw(const std::unique_ptr<GameModel> &game_model);
 
     void draw(const Button &button);
+
+    void draw(const Rectangle &rectangle);
+
+    void draw(const Circle &circle);
 };
 
 #endif
