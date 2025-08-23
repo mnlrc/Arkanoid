@@ -37,7 +37,7 @@ enum class Color : int
     // ...
 };
 
-enum class PowerUp : int
+enum class Power : int
 {
     LASER = 0, // shoot lasers from the racket
     ENLARGE,   // enlarge the rackets width

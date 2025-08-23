@@ -32,6 +32,8 @@ struct LevelData
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks;
     Color background_color;
     Color line_color;
+    int bricks_per_row;
+    int bricks_per_column;
 
     /**
      * @brief
@@ -70,7 +72,7 @@ private:
      * @param file
      * @return std::vector<Brick>
      */
-    static std::vector<std::vector<std::shared_ptr<Brick>>> loadBricks(std::ifstream &file);
+    static std::vector<std::vector<std::shared_ptr<Brick>>> loadBricks(std::ifstream &file, LevelData &level_data);
 
     /**
      * @brief
@@ -92,9 +94,9 @@ private:
      * @brief
      *
      * @param c
-     * @return PowerUp
+     * @return Power
      */
-    static PowerUp power_up_from_char(const char &c);
+    static Power power_up_from_char(const char &c);
 };
 
 #endif

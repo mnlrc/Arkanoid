@@ -18,16 +18,19 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
         std::__throw_runtime_error("Game Data empty, wasn't initialized properly. Aborting level loading.");
     }
 
+    int bricks_per_row = level_data.bricks_per_row;
+    int bricks_per_column = level_data.bricks_per_column;
+
     // setting up bricks
-    double brick_width = static_cast<double>(WINDOW_WIDTH) / static_cast<double>(BRICKS_PER_ROW);
-    double brick_height = (WINDOW_HEIGHT * 0.5) / static_cast<double>(BRICKS_PER_COLUMN);
+    double brick_width = static_cast<double>(WINDOW_WIDTH) / static_cast<double>(bricks_per_row);
+    double brick_height = (WINDOW_HEIGHT * 0.5) / static_cast<double>(bricks_per_column);
 
     double x_pos = brick_width / 2;
     double y_pos = brick_height / 2;
 
-    for (int i = 0; i < BRICKS_PER_COLUMN; i++)
+    for (int i = 0; i < bricks_per_column; i++)
     {
-        for (int j = 0; j < BRICKS_PER_ROW; j++)
+        for (int j = 0; j < bricks_per_row; j++)
         {
             Point brick_center = Point{x_pos, y_pos};
             level_data.bricks[i][j]->set_center(brick_center);

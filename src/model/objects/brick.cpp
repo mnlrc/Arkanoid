@@ -7,11 +7,14 @@
  */
 
 #include "brick.hpp"
-
-Brick::Brick(Color &color, PowerUp &power_up) : Rectangle{color, determine_outer_color(color)}, power_up_(power_up), points_(COLOR_SCORE.at(color))
+#include <iostream>
+using namespace std;
+Brick::Brick(Color &color, Power &power_up) : Rectangle{color, determine_outer_color(color)}, power_up_(power_up), points_(COLOR_SCORE.at(color))
 {
     if (color == Color::NONE)
+    {
         broken_ = true;
+    }
     if (color == Color::GOLD)
         hp_ = GOLD_HP;
     if (color == Color::SILVER)
@@ -24,13 +27,14 @@ bool Brick::is_broken() const noexcept { return broken_; };
 
 int Brick::get_hp() const noexcept { return hp_; };
 
-PowerUp Brick::get_power_up() const noexcept { return power_up_; };
+Power Brick::get_power_up() const noexcept { return power_up_; };
 
 const int Brick::get_points() const noexcept { return points_; };
 
 bool Brick::hit() noexcept
 {
-    if (inner_color_ == Color::GOLD) {
+    if (inner_color_ == Color::GOLD)
+    {
         return false;
     }
     if (hp_ > 1)

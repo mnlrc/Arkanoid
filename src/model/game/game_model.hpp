@@ -20,6 +20,7 @@
 #include "../objects/score.hpp"
 #include "../objects/circle.hpp"
 #include "../objects/button.hpp"
+#include "../objects/power_up.hpp"
 #include "../model.hpp"
 #include "level_loader.hpp"
 

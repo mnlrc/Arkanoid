@@ -61,7 +61,7 @@ LevelData LevelLoader::loadLevel(int level)
 
             // TODO: remove magic numbers
             std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_inner_color, racket_outer_color, racket_width);
-            std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = loadBricks(file);
+            std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = loadBricks(file, level_data);
 
             level_data.racket = temp_racket;
             level_data.bricks = temp_bricks;
@@ -93,8 +93,7 @@ bool LevelLoader::checkTag(const std::string &level_tag)
 {
     return level_tag == "ARKANOID-LEVEL";
 }
-
-std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::ifstream &file)
+std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::ifstream &file, LevelData &level_data)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks;
     std::string line;
@@ -112,13 +111,17 @@ std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::if
             char color = line[i];
             // char dash = line[i + 1];
             char power_up = line[i + 2];
-
             Color brick_color = color_from_char(color);
-            PowerUp brick_power_up = power_up_from_char(power_up);
+            Power brick_power_up = power_up_from_char(power_up);
             current_row.emplace_back(std::make_shared<Brick>(brick_color, brick_power_up));
         }
         idx++;
+        if (!current_row.empty())
+        {
+            level_data.bricks_per_row = static_cast<int>(current_row.size());
+        }
     }
+    level_data.bricks_per_column = idx;
     return bricks;
 }
 
@@ -144,7 +147,7 @@ Color LevelLoader::color_from_char(const char &c)
         return Color::ORANGE;
     case 'S':
         return Color::SILVER;
-    case 'I': // I as infinite for infinite hp 
+    case 'I': // I as infinite for infinite hp
         return Color::GOLD;
     case '_':
         return Color::NONE;
@@ -165,23 +168,23 @@ Color LevelLoader::color_from_string(const std::string &str)
     return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
 }
 
-PowerUp LevelLoader::power_up_from_char(const char &c)
+Power LevelLoader::power_up_from_char(const char &c)
 {
     switch (c)
     {
     case 'L':
-        return PowerUp::LASER;
+        return Power::LASER;
     case 'E':
-        return PowerUp::ENLARGE;
+        return Power::ENLARGE;
     case 'C':
-        return PowerUp::CATCH;
+        return Power::CATCH;
     case 'S':
-        return PowerUp::SLOW;
+        return Power::SLOW;
     case 'M': // 'M' referencing multiply because this power up multiplies the number of balls
-        return PowerUp::STOP;
+        return Power::STOP;
     case 'P':
-        return PowerUp::PLAYER;
+        return Power::PLAYER;
     default:
-        return PowerUp::NONE;
+        return Power::NONE;
     }
 }

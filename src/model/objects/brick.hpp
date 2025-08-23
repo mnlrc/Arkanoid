@@ -17,7 +17,8 @@
 #include <unordered_map>
 #include <limits>
 
-const std::unordered_map<Color, const int> COLOR_SCORE = {{Color::WHITE, 50},
+const std::unordered_map<Color, const int> COLOR_SCORE = {{Color::NONE, 0},
+                                                          {Color::WHITE, 50},
                                                           {Color::ORANGE, 60},
                                                           {Color::CYAN, 70},
                                                           {Color::GREEN, 80},
@@ -36,7 +37,7 @@ class Brick : public Rectangle
 {
 public:
     // #### Constructors ####
-    Brick(Color &color, PowerUp &power_up);
+    Brick(Color &color, Power &power_up);
 
     // #### Destructor ####
     ~Brick() = default;
@@ -46,7 +47,7 @@ public:
 
     int get_hp() const noexcept;
 
-    PowerUp get_power_up() const noexcept;
+    Power get_power_up() const noexcept;
 
     const int get_points() const noexcept;
 
@@ -55,7 +56,7 @@ public:
 
 private:
     bool broken_ = false;
-    PowerUp power_up_;
+    Power power_up_;
     const int points_;
     int hp_;
 
