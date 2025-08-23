@@ -165,23 +165,18 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
         ball->set_speed({xSpeed * speed, ySpeed * speed});
     }
 }
-#include <iostream>
-using namespace std;
 const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                                         std::vector<std::vector<std::shared_ptr<Brick>>> &bricks)
 {
-    cout << "Checking brick collisions..." << endl;
-    // Defining ball values for clearer code
-    double cX = ball->get_center().x_;
-    double cY = ball->get_center().y_;
+    double c_x = ball->get_center().x_;
+    double c_y = ball->get_center().y_;
     double r = ball->get_radius();
 
     // Checking all bricks
-    for (auto &brickRow : bricks)
+    for (auto &brick_row : bricks)
     {
-        for (auto &brick : brickRow)
+        for (auto &brick : brick_row)
         {
-            cout << "Handling new brick..." << endl;
             if (brick->is_broken())
             {
                 continue;
@@ -193,46 +188,41 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
             double TOP = brick->get_center().y_ - (brick->get_height() / 2);
             double DOWN = brick->get_center().y_ + (brick->get_height() / 2);
 
-            if ((cX + r > LEFT && cX - r < RIGHT) && // Horizontal collision ?
-                (cY + r > TOP && cY - r < DOWN))
+            if ((c_x + r > LEFT && c_x - r < RIGHT) && // Horizontal collision ?
+                (c_y + r > TOP && c_y - r < DOWN))
             { // Vertical collision ?
-                cout << "COLLISION WITH BRICK DETECTED" << endl;
-                cout << endl;
-                cout << endl;
                 // Calculating side of collision
-                double overlapX = std::min(cX + r - LEFT, RIGHT - (cX - r));
-                double overlapY = std::min(cY + r - TOP, DOWN - (cY - r));
+                double overlapX = std::min(c_x + r - LEFT, RIGHT - (c_x - r));
+                double overlapY = std::min(c_y + r - TOP, DOWN - (c_y - r));
 
                 if (overlapX < overlapY)
                 {
                     ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
-                    if (cX < brick->get_center().x_)
+                    if (c_x < brick->get_center().x_)
                     {
-                        ball->set_center({LEFT - r, cY});
+                        ball->set_center({LEFT - r, c_y});
                     }
                     else
                     {
-                        ball->set_center({RIGHT + r, cY});
+                        ball->set_center({RIGHT + r, c_y});
                     }
                 }
                 else
                 {
                     ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
-                    if (cY < brick->get_center().y_)
+                    if (c_y < brick->get_center().y_)
                     {
-                        ball->set_center({cX, TOP - r});
+                        ball->set_center({c_x, TOP - r});
                     }
                     else
                     {
-                        ball->set_center({cX, DOWN + r});
+                        ball->set_center({c_x, DOWN + r});
                     }
                 }
 
                 // update brick state
-                cout << "BRICK HP: " << brick->get_hp() << endl;
                 if (brick->hit()) // brick was broken
                 {
-                    // exit(0);
                     return brick->get_points();
                 }
                 return 0; // no brick was broken

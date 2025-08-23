@@ -84,6 +84,8 @@ private:
     std::vector<std::shared_ptr<Circle>> circles_; // representing lives
     int remaining_lives_ = DEFAULT_LIVES;
 
+    std::vector<PowerUp> active_power_ups_;
+
     Color background_color_;
     Color line_color_;
 
