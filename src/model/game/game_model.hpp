@@ -20,6 +20,7 @@
 #include "../objects/score.hpp"
 #include "../objects/circle.hpp"
 #include "../objects/button.hpp"
+#include "../objects/laser.hpp"
 #include "../objects/power_up.hpp"
 #include "../model.hpp"
 #include "level_loader.hpp"
@@ -65,23 +66,29 @@ public:
 
     Score get_current_score() const noexcept;
 
-    std::vector<PowerUp>& get_active_power_ups() noexcept;
+    PowerUp get_active_power_up() noexcept;
 
-    void add_score(unsigned points) noexcept;
+    std::vector<PowerUp> &get_falling_power_ups() noexcept;
 
     std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
+
+    Button get_end_button(bool is_win) noexcept;
+
+    void add_score(unsigned points) noexcept;
 
     bool life_lost() noexcept;
 
     void add_life() noexcept;
 
+    void enlarge_racket() noexcept;
+
     void reset_ball() noexcept;
 
     void launch_ball() noexcept;
 
-    Button get_end_button(bool is_win) noexcept;
+    void activate_power_up(const PowerUp &power_up) noexcept;
 
-    void add_power_up(const PowerUp &power_up) noexcept;
+    void add_falling_power_up(const PowerUp &power_up) noexcept;
 
 private:
     std::vector<std::shared_ptr<Ball>> balls_;
@@ -91,7 +98,9 @@ private:
     std::vector<std::shared_ptr<Circle>> circles_; // representing lives
     int remaining_lives_ = DEFAULT_LIVES;
 
-    std::vector<PowerUp> active_power_ups_;
+    std::vector<PowerUp> falling_power_ups_;
+    PowerUp active_power_;
+    std::vector<Laser> lasers_;
 
     Color background_color_;
     Color line_color_;
@@ -99,6 +108,12 @@ private:
     Button end_button_; // idx 0 is the win text, idx 1 is the lose text
 
     void setup_circles();
+
+    void clear_power_up(const PowerUp new_power_up);
+
+    void clear_balls();
+
+    void reset_ball_speed(const Power new_power);
 };
 
 #endif

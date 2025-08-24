@@ -13,9 +13,11 @@
 #define POWER_UP_HEIGHT WINDOW_HEIGHT * 0.05
 
 #include "rectangle.hpp"
+#include "../../log/logger.hpp"
 #include "../../global_variables.hpp"
 
 #include <unordered_map>
+#include <ctime>
 
 enum class Power : int
 {
@@ -28,6 +30,8 @@ enum class Power : int
     NONE,
 };
 
+const double RACKET_ENLARGE_PERCENTAGE = 2.0;
+
 const std::unordered_map<Power, Color> POWER_UP_COLOR = {
     {Power::LASER, Color::RED},
     {Power::ENLARGE, Color::BLUE},
@@ -37,10 +41,17 @@ const std::unordered_map<Power, Color> POWER_UP_COLOR = {
     {Power::PLAYER, Color::GREY},
     {Power::NONE, Color::NONE}};
 
+const std::unordered_map<Power, double> POWER_UP_DURATION = {
+    {Power::LASER, 10.0},
+    {Power::CATCH, 3.0},
+    {Power::SLOW, 5.0}};
+
 class PowerUp : public Rectangle
 {
 public:
     PowerUp(Point center, Power power);
+
+    PowerUp();
 
     ~PowerUp() = default;
 
@@ -52,10 +63,15 @@ public:
 
     void activate() noexcept;
 
+    bool time_up() noexcept;
+
+    void stop_fall() noexcept;
+
 private:
     Power power_;
     bool is_falling_;
     bool is_active_;
+    std::clock_t time_active_;
 };
 
 #endif

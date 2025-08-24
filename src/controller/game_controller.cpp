@@ -14,16 +14,16 @@ bool GameController::setup_game_model(short int level)
     if (level != current_level)
     {
         reset_game_model();
-        // try
-        // {
+        try
+        {
             game_model = std::make_unique<GameModel>(level);
             current_level = level;
-        // }
-        // catch (const std::exception &e)
-        // {
-            // Logger::log(std::string("[ERROR] Exception while creating GameModel: ") + e.what());
-            // return false;
-        // }
+        }
+        catch (const std::exception &e)
+        {
+            Logger::log(std::string("[ERROR] Exception while creating GameModel: ") + e.what());
+            return false;
+        }
     }
     return true;
 }

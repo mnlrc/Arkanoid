@@ -12,7 +12,6 @@
 #include <vector>
 #include <cmath>
 #include <limits>
-#include <ctime>
 #include <algorithm>
 
 #include "model/objects/ball.hpp"
@@ -48,15 +47,6 @@ public:
     UpdateResponse update_model(GameModel &game_model);
 
 private:
-    std::clock_t laser_timer_;
-    std::clock_t enlarge_timer_;
-    std::clock_t catch_timer_;
-    std::clock_t slow_timer_;
-
-    void init_power_up(GameModel& game_model, Power power);
-
-    void update_power_ups(GameModel &game_model);
-
     void falling_power_ups(GameModel &game_model);
 
     bool check_wall_collision(std::shared_ptr<Ball> ball);

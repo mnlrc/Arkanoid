@@ -123,7 +123,7 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
 
     draw(score_center, score_string, score_color);
 
-    std::vector<PowerUp> power_ups = game_model->get_active_power_ups();
+    std::vector<PowerUp> &power_ups = game_model->get_falling_power_ups();
     for (auto &power_up : power_ups)
     {
         if (power_up.is_falling())

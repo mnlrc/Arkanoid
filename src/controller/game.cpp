@@ -101,8 +101,6 @@ void Game::run_main_menu()
         }
     }
 }
-#include <iostream>
-using namespace std;
 
 void Game::run_game(short level)
 {

@@ -43,6 +43,13 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     {
         return UpdateResponse::GAME_WON;
     }
+
+    // handle power ups
+    PowerUp active_power_up = game_model.get_active_power_up();
+    if (active_power_up.time_up()) {
+        game_model.activate_power_up(PowerUp());
+    }
+
     std::vector<std::shared_ptr<Ball>> &balls = game_model.get_balls();
     std::shared_ptr<Racket> racket = game_model.get_racket();
 
@@ -109,37 +116,10 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     return UpdateResponse::CONTINUE;
 }
 
-void Engine::init_power_up(GameModel& game_model, Power power)
-{
-   switch (power) {
-    case Power::LASER:
-        break;
-    case Power::ENLARGE:
-        break;
-    case Power::CATCH:
-        break;
-    case Power::SLOW:
-        break;
-    case Power::STOP:
-        break;
-    case Power::PLAYER:
-        game_model.add_life();
-        break;
-    case Power::NONE:
-    default:
-        Logger::log("[ERROR] Unknown or unhandled power up");
-        break;
-   }
-}
-
-// void Engine::update_power_ups(GameModel &game_model)
-// {
-// }
-
 void Engine::falling_power_ups(GameModel &game_model)
 {
     const int FALLING_SPEED = 3; // TODO: set as global variable
-    std::vector<PowerUp> &power_ups = game_model.get_active_power_ups();
+    std::vector<PowerUp> &power_ups = game_model.get_falling_power_ups();
 
     if (power_ups.empty())
     {
@@ -283,12 +263,16 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 // update brick state
                 if (brick->hit()) // brick was broken
                 {
-                    Power broken_brick_power = brick->get_power_up();
-                    if (broken_brick_power != Power::NONE)
+                    if (game_model.get_active_power_up().get_power() != Power::STOP)
                     {
-                        PowerUp power_up = PowerUp{brick->get_center(), broken_brick_power};
-                        game_model.add_power_up(power_up);
+                        Power broken_brick_power = brick->get_power_up();
+                        if (broken_brick_power != Power::NONE)
+                        {
+                            PowerUp power_up = PowerUp{brick->get_center(), broken_brick_power};
+                            game_model.add_falling_power_up(power_up);
+                        }
                     }
+
                     return brick->get_points();
                 }
                 return 0; // no brick was broken
@@ -298,10 +282,10 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
     return 0; // no collision
 }
 
-void Engine::check_power_up_collision(GameModel& game_model)
+void Engine::check_power_up_collision(GameModel &game_model)
 {
     std::shared_ptr<Racket> racket = game_model.get_racket();
-    std::vector<PowerUp> &power_ups = game_model.get_active_power_ups();
+    std::vector<PowerUp> &power_ups = game_model.get_falling_power_ups();
 
     const double RACKET_TOP = racket->get_center().y_ - (racket->get_height() / 2);
     const double RACKET_LEFT = racket->get_center().x_ - (racket->get_width() / 2);
@@ -309,7 +293,7 @@ void Engine::check_power_up_collision(GameModel& game_model)
 
     for (auto &power_up : power_ups)
     {
-        if (power_up.is_falling())
+        if (power_up.is_falling()) // verification
         {
             const double POWER_UP_BOTTOM = power_up.get_center().y_ + (power_up.get_height() / 2);
             const double POWER_UP_LEFT = power_up.get_center().x_ - (power_up.get_width() / 2);
@@ -321,11 +305,11 @@ void Engine::check_power_up_collision(GameModel& game_model)
             )
             {
                 power_up.activate();
-                init_power_up(game_model, power_up.get_power());
+                game_model.activate_power_up(power_up);
             }
-            if (POWER_UP_TOP >= WINDOW_HEIGHT) {
-                // delete power up mais c'est chiant woula car on itère dans la boucle
-                // TODO
+            if (POWER_UP_TOP >= WINDOW_HEIGHT)
+            {
+                power_up.stop_fall();
             }
         }
     }

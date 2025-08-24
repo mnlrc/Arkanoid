@@ -22,6 +22,8 @@ public:
 
     Object(Point &center);
 
+    Object() = default;
+
     ~Object() = default;
 
     Color get_inner_color() const noexcept;

@@ -38,8 +38,13 @@ public:
 
     double get_speed() const noexcept;
 
+    void enlarge(const double factor) noexcept;
+
+    void reset_width() noexcept;
+
 private:
     double racket_width_percentage_; // percentage of the windows width
+    double default_width_percentage_;
     double speed_ = 10;
 };
 
