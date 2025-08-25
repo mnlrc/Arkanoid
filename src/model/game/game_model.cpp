@@ -113,17 +113,6 @@ bool GameModel::life_lost() noexcept
     }
 }
 
-void GameModel::add_life() noexcept
-{
-    remaining_lives_++;
-    setup_circles();
-}
-
-void GameModel::enlarge_racket() noexcept
-{
-    racket_->enlarge(RACKET_ENLARGE_PERCENTAGE);
-}
-
 void GameModel::reset_ball() noexcept
 {
     double new_ball_x = racket_->get_center().x_;
@@ -155,6 +144,7 @@ void GameModel::activate_power_up(const PowerUp &power_up) noexcept
 {
     clear_power_up(power_up);
     active_power_ = power_up;
+    activate_power(active_power_.get_power());
 }
 
 void GameModel::add_falling_power_up(const PowerUp &power_up) noexcept
@@ -179,6 +169,31 @@ void GameModel::setup_circles()
     {
         circles_.emplace_back(std::make_shared<Circle>(Point{circles_x_pos, circles_y_pos}, circle_radius, Color::RED, Color::BLACK));
         circles_x_pos += (circle_radius * 2) + margin;
+    }
+}
+
+void GameModel::activate_power(const Power power)
+{
+    switch (power)
+    {
+    case Power::LASER:
+        break;
+    case Power::ENLARGE:
+        enlarge_racket();
+        break;
+    case Power::CATCH:
+        break;
+    case Power::SLOW:
+        break;
+    case Power::STOP:
+        ball_multiplier();
+        break;
+    case Power::PLAYER:
+        add_life();
+        break;
+    case Power::NONE:
+    default:
+        break;
     }
 }
 
@@ -209,6 +224,34 @@ void GameModel::clear_power_up(const PowerUp new_power_up)
     default:
         break;
     }
+}
+
+void GameModel::add_life() noexcept
+{
+    remaining_lives_++;
+    setup_circles();
+}
+
+void GameModel::enlarge_racket() noexcept
+{
+    racket_->enlarge(RACKET_ENLARGE_PERCENTAGE);
+}
+
+void GameModel::ball_multiplier()
+{
+    std::shared_ptr<Ball> active_ball = balls_[0];
+    Point active_center = active_ball->get_center();
+    double active_radius = active_ball->get_radius();
+    Point active_speed = active_ball->get_speed();
+    bool active_state = active_ball->get_state();
+
+    Point new_speed_one = Point{active_speed.x_ * -1, active_speed.y_};
+    std::shared_ptr<Ball> new_ball_one = std::make_shared<Ball>(active_center, active_radius, new_speed_one, active_state);
+    Point new_speed_two = Point{active_speed.x_, active_speed.y_ * -1};
+    std::shared_ptr<Ball> new_ball_two = std::make_shared<Ball>(active_center, active_radius, new_speed_two, active_state);
+
+    balls_.push_back(new_ball_one);
+    balls_.push_back(new_ball_two);
 }
 
 void GameModel::clear_balls()

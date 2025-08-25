@@ -78,10 +78,6 @@ public:
 
     bool life_lost() noexcept;
 
-    void add_life() noexcept;
-
-    void enlarge_racket() noexcept;
-
     void reset_ball() noexcept;
 
     void launch_ball() noexcept;
@@ -109,7 +105,15 @@ private:
 
     void setup_circles();
 
+    void activate_power(const Power power);
+
     void clear_power_up(const PowerUp new_power_up);
+
+    void add_life() noexcept;
+
+    void enlarge_racket() noexcept;
+
+    void ball_multiplier();
 
     void clear_balls();
 

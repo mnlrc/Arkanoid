@@ -10,7 +10,9 @@
 
 Ball::Ball(Point &center, double &radius, Point &speed) : Circle{center, radius}, speed_(speed), is_moving_(DEFAULT_BALL_STATE), default_ball_speed_(speed) {}
 
-Ball::Ball(Point center, double radius, bool state) : Circle{center, radius}, speed_{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED}, is_moving_(state), default_ball_speed_(DEFAULT_BALL_SPEED) {}
+Ball::Ball(Point center, double radius, bool state) : Circle{center, radius}, speed_{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED}, is_moving_(state), default_ball_speed_{DEFAULT_BALL_SPEED, DEFAULT_BALL_SPEED} {}
+
+Ball::Ball(Point center, double radius, Point speed, bool state) : Circle{center, radius}, speed_(speed), is_moving_(state), default_ball_speed_(speed) {}
 
 Point Ball::get_speed() const noexcept { return speed_; }
 

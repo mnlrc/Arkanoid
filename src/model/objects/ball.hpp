@@ -24,6 +24,8 @@ public:
 
     Ball(Point center, double radius, bool state);
 
+    Ball(Point center, double radius, Point speed, bool state);
+
     Ball() = default;
 
     // #### Destructor ####
