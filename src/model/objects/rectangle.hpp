@@ -2,7 +2,7 @@
  * @file rectangle.hpp
  * @author Manuel Rocca
  * @brief Header file for the Rectangle class
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -38,6 +38,14 @@ public:
      * @return The height of the racket
      */
     double get_height() const noexcept;
+
+    double get_left() const noexcept;
+
+    double get_right() const noexcept;
+
+    double get_top() const noexcept;
+
+    double get_bottom() const noexcept;
 
     void set_width(double &new_width) noexcept;
 

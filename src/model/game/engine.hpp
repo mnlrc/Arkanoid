@@ -2,7 +2,7 @@
  * @file engine.hpp
  * @author Manuel Rocca
  * @brief Header file for the Engine class
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -47,7 +47,7 @@ public:
     UpdateResponse update_model(GameModel &game_model);
 
 private:
-    void falling_power_ups(GameModel &game_model);
+    void handle_falling_power_ups(GameModel &game_model);
 
     bool check_wall_collision(std::shared_ptr<Ball> ball);
 

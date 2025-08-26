@@ -2,7 +2,7 @@
  * @file global_variables.hpp
  * @author Manuel Rocca
  * @brief Header file that contains global variables
- * @date 2024
+ * @date 2025
  *
  */
 

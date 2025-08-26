@@ -2,7 +2,7 @@
  * @file game.cpp
  * @author Manuel Rocca
  * @brief Source file for the Game class
- * @date 2024
+ * @date 2025
  *
  */
 

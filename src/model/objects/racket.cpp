@@ -2,7 +2,7 @@
  * @file racket.cpp
  * @author Manuel Rocca
  * @brief Source file for the Racket class
- * @date 2024
+ * @date 2025
  *
  */
 

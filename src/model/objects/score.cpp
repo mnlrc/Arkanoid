@@ -2,7 +2,7 @@
  * @file score.cpp
  * @author Manuel Rocca
  * @brief Source file for the Score class
- * @date 2024
+ * @date 2025
  *
  */
 

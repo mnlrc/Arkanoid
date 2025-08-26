@@ -2,7 +2,7 @@
  * @file ball.cpp
  * @author Manuel Rocca
  * @brief Source file for the Ball class
- * @date 2024
+ * @date 2025
  *
  */
 

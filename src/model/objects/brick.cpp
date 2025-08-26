@@ -2,7 +2,7 @@
  * @file brick.cpp
  * @author Manuel Rocca
  * @brief Source file for the Brick class
- * @date 2024
+ * @date 2025
  *
  */
 

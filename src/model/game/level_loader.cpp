@@ -13,7 +13,7 @@ bool LevelData::is_empty()
     return !racket && bricks.empty();
 }
 
-LevelData LevelLoader::loadLevel(int level)
+LevelData LevelLoader::load_level(int level)
 {
     LevelData level_data;
     if (level <= 0 || level > 5)
@@ -29,7 +29,7 @@ LevelData LevelLoader::loadLevel(int level)
     if (file.is_open())
     {
         getline(file, line); // getting tag
-        if (checkTag(line))
+        if (check_tag(line))
         {
             getline(file, line); // getting racket width value
             double racket_width;
@@ -61,7 +61,7 @@ LevelData LevelLoader::loadLevel(int level)
 
             // TODO: remove magic numbers
             std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_inner_color, racket_outer_color, racket_width);
-            std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = loadBricks(file, level_data);
+            std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = load_bricks(file, level_data);
 
             level_data.racket = temp_racket;
             level_data.bricks = temp_bricks;
@@ -89,11 +89,11 @@ LevelData LevelLoader::loadLevel(int level)
     return level_data;
 }
 
-bool LevelLoader::checkTag(const std::string &level_tag)
+bool LevelLoader::check_tag(const std::string &level_tag)
 {
     return level_tag == "ARKANOID-LEVEL";
 }
-std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::loadBricks(std::ifstream &file, LevelData &level_data)
+std::vector<std::vector<std::shared_ptr<Brick>>> LevelLoader::load_bricks(std::ifstream &file, LevelData &level_data)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks;
     std::string line;

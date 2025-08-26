@@ -2,7 +2,7 @@
  * @file circle.hpp
  * @author Manuel Rocca
  * @brief Header file for the Circle class
- * @date 2024
+ * @date 2025
  *
  */
 

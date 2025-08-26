@@ -2,7 +2,7 @@
  * @file point.hpp
  * @author Manuel Rocca
  * @brief Header file for the Point struct
- * @date 2024
+ * @date 2025
  *
  */
 

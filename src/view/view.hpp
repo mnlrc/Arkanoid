@@ -2,7 +2,7 @@
  * @file view.hpp
  * @author Manuel Rocca
  * @brief Header file for the View class
- * @date 2024
+ * @date 2025
  *
  */
 

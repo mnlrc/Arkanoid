@@ -2,7 +2,7 @@
  * @file allegro_test.cpp
  * @author Manuel Rocca
  * @brief Source file for the test functions
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -17,7 +17,7 @@ void init_test(bool test, const char *description)
     }
 }
 
-void init_test(void * test, const char *description)
+void init_test(void *test, const char *description)
 {
     init_test(test != nullptr, description);
 }

@@ -2,7 +2,7 @@
  * @file engine.cpp
  * @author Manuel Rocca
  * @brief Source file for the Engine class
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -64,8 +64,8 @@ UpdateResponse Engine::update_model(GameModel &game_model)
                 ball->set_moving();
             }
             else
-            { // updating the position to follow the racket
-                double ball_shift = ball->get_shift();
+            {                                          // updating the position to follow the racket
+                double ball_shift = ball->get_shift(); // TODO: add this to a methode "track racket"
                 double racket_center_x = racket->get_center().x_;
                 Point ball_center = Point{racket_center_x + ball_shift, ball->get_center().y_};
                 ball->set_center(ball_center);
@@ -118,7 +118,7 @@ UpdateResponse Engine::update_model(GameModel &game_model)
         delete_ball(balls, balls_to_remove);
     }
 
-    falling_power_ups(game_model);
+    handle_falling_power_ups(game_model);
 
     if (game_model.get_active_power_up().get_power() == Power::LASER)
     {
@@ -145,7 +145,7 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     return UpdateResponse::CONTINUE;
 }
 
-void Engine::falling_power_ups(GameModel &game_model)
+void Engine::handle_falling_power_ups(GameModel &game_model)
 {
     const int FALLING_SPEED = 3; // TODO: set as global variable
     std::vector<PowerUp> &power_ups = game_model.get_falling_power_ups();
@@ -170,13 +170,13 @@ bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 {
     const double BALL_RADIUS = ball->get_radius();
     const double TOP = BALL_RADIUS;
-    const double DOWN = WINDOW_HEIGHT - BALL_RADIUS;
+    const double BOTTOM = WINDOW_HEIGHT - BALL_RADIUS;
     const double LEFT = BALL_RADIUS;
     const double RIGHT = WINDOW_WIDTH - BALL_RADIUS;
 
     bool is_out = false;
 
-    // Reseting ball position after every bounce to assure it doesn't go out of bounds
+    // resetting ball position after every bounce to assure it doesn't go out of bounds
     if (ball->get_center().x_ >= RIGHT)
     {
         ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
@@ -189,7 +189,7 @@ bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
         ball->set_center({LEFT, ball->get_center().y_});
     }
 
-    else if (ball->get_center().y_ >= DOWN)
+    else if (ball->get_center().y_ >= BOTTOM)
     {
         is_out = true;
     }
@@ -205,15 +205,10 @@ bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
 void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball> ball)
 {
     std::shared_ptr<Racket> racket = game_model.get_racket();
-    // ici il n'y a que la collision au sommet de la raquette qui est gérée
-    // il y des effets secondaires sur les côtés car si la balle est sous la raquette
-    // mais qu'elle percute cette dernière, elle sera "à l'intérieur" et remplira les conditions
-    // ce qui la renvoie vers le haut
-    // à voir s'il faut gérer plus proprement les collisions latérales
 
-    const double RACKET_TOP = racket->get_center().y_ - (racket->get_height() / 2);
-    const double RACKET_LEFT = racket->get_center().x_ - (racket->get_width() / 2);
-    const double RACKET_RIGHT = racket->get_center().x_ + (racket->get_width() / 2);
+    const double RACKET_TOP = racket->get_top();
+    const double RACKET_LEFT = racket->get_left();
+    const double RACKET_RIGHT = racket->get_right();
 
     if ( // Vertical collision
         ball->get_center().y_ + ball->get_radius() >= RACKET_TOP &&
@@ -236,7 +231,7 @@ void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball>
         {
             // the distance of the ball from the center of the racket
             double delta = ball->get_center().x_ - racket->get_center().x_;
-            ball->set_stop();
+            ball->set_stop(); // stopping the ball and starting the timer
             ball->set_shift(delta);
         }
     }
@@ -245,9 +240,9 @@ void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball>
 const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                                         GameModel &game_model)
 {
-    double c_x = ball->get_center().x_;
-    double c_y = ball->get_center().y_;
-    double r = ball->get_radius();
+    double C_X = ball->get_center().x_;
+    double C_Y = ball->get_center().y_;
+    double RADIUS = ball->get_radius();
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
 
     // Checking all bricks
@@ -261,40 +256,40 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
             }
 
             // Defining brick limits for clearer code
-            double LEFT = brick->get_center().x_ - (brick->get_width() / 2);
-            double RIGHT = brick->get_center().x_ + (brick->get_width() / 2);
-            double TOP = brick->get_center().y_ - (brick->get_height() / 2);
-            double DOWN = brick->get_center().y_ + (brick->get_height() / 2);
+            double LEFT = brick->get_left();
+            double RIGHT = brick->get_right();
+            double TOP = brick->get_top();
+            double BOTTOM = brick->get_bottom();
 
-            if ((c_x + r > LEFT && c_x - r < RIGHT) && // Horizontal collision ?
-                (c_y + r > TOP && c_y - r < DOWN))
+            if ((C_X + RADIUS > LEFT && C_X - RADIUS < RIGHT) && // Horizontal collision ?
+                (C_Y + RADIUS > TOP && C_Y - RADIUS < BOTTOM))
             { // Vertical collision ?
                 // Calculating side of collision
-                double overlap_x = std::min(c_x + r - LEFT, RIGHT - (c_x - r));
-                double overlap_y = std::min(c_y + r - TOP, DOWN - (c_y - r));
+                double overlap_x = std::min(C_X + RADIUS - LEFT, RIGHT - (C_X - RADIUS));
+                double overlap_y = std::min(C_Y + RADIUS - TOP, BOTTOM - (C_Y - RADIUS));
 
                 if (overlap_x < overlap_y)
                 {
                     ball->set_speed({ball->get_speed().x_ * -1, ball->get_speed().y_});
-                    if (c_x < brick->get_center().x_)
+                    if (C_X < brick->get_center().x_)
                     {
-                        ball->set_center({LEFT - r, c_y});
+                        ball->set_center({LEFT - RADIUS, C_Y});
                     }
                     else
                     {
-                        ball->set_center({RIGHT + r, c_y});
+                        ball->set_center({RIGHT + RADIUS, C_Y});
                     }
                 }
                 else
                 {
                     ball->set_speed({ball->get_speed().x_, ball->get_speed().y_ * -1});
-                    if (c_y < brick->get_center().y_)
+                    if (C_Y < brick->get_center().y_)
                     {
-                        ball->set_center({c_x, TOP - r});
+                        ball->set_center({C_X, TOP - RADIUS});
                     }
                     else
                     {
-                        ball->set_center({c_x, DOWN + r});
+                        ball->set_center({C_X, BOTTOM + RADIUS});
                     }
                 }
 
@@ -315,18 +310,18 @@ void Engine::check_power_up_collision(GameModel &game_model)
     std::shared_ptr<Racket> racket = game_model.get_racket();
     std::vector<PowerUp> &power_ups = game_model.get_falling_power_ups();
 
-    const double RACKET_TOP = racket->get_center().y_ - (racket->get_height() / 2);
-    const double RACKET_LEFT = racket->get_center().x_ - (racket->get_width() / 2);
-    const double RACKET_RIGHT = racket->get_center().x_ + (racket->get_width() / 2);
+    const double RACKET_TOP = racket->get_top();
+    const double RACKET_LEFT = racket->get_left();
+    const double RACKET_RIGHT = racket->get_right();
 
     for (auto &power_up : power_ups)
     {
         if (power_up.is_falling()) // verification
         {
-            const double POWER_UP_BOTTOM = power_up.get_center().y_ + (power_up.get_height() / 2);
-            const double POWER_UP_LEFT = power_up.get_center().x_ - (power_up.get_width() / 2);
-            const double POWER_UP_RIGHT = power_up.get_center().x_ + (power_up.get_width() / 2);
-            const double POWER_UP_TOP = power_up.get_center().y_ - (power_up.get_height() / 2);
+            const double POWER_UP_BOTTOM = power_up.get_bottom();
+            const double POWER_UP_LEFT = power_up.get_left();
+            const double POWER_UP_RIGHT = power_up.get_right();
+            const double POWER_UP_TOP = power_up.get_top();
 
             if (POWER_UP_BOTTOM >= RACKET_TOP &&                               // vertical collision
                 POWER_UP_RIGHT >= RACKET_LEFT && POWER_UP_LEFT <= RACKET_RIGHT // horizontal collision
@@ -351,17 +346,15 @@ int Engine::check_laser_collision(Laser &laser, GameModel &game_model)
     {
         for (auto &brick : brick_row)
         {
-            double BRICK_LEFT = brick->get_center().x_ - (brick->get_width() / 2);
-            double BRICK_RIGHT = brick->get_center().x_ + (brick->get_width() / 2);
-            // double BRICK_TOP = brick->get_center().y_ - (brick->get_height() / 2);
-            double BRICK_DOWN = brick->get_center().y_ + (brick->get_height() / 2);
+            double BRICK_LEFT = brick->get_left();
+            double BRICK_RIGHT = brick->get_right();
+            double BRICK_BOTTOM = brick->get_bottom();
 
-            double LASER_LEFT = laser.get_center().x_ - (laser.get_width() / 2);
-            double LASER_RIGHT = laser.get_center().x_ + (laser.get_width() / 2);
-            double LASER_TOP = laser.get_center().y_ - (laser.get_height() / 2);
-            // double LASER_DOWN = laser.get_center().y_ + (laser.get_height() / 2);
+            double LASER_LEFT = laser.get_left();
+            double LASER_RIGHT = laser.get_right();
+            double LASER_TOP = laser.get_top();
 
-            if (LASER_TOP <= BRICK_DOWN &&                                // vertical collision
+            if (LASER_TOP <= BRICK_BOTTOM &&                              // vertical collision
                 LASER_RIGHT >= BRICK_LEFT && LASER_LEFT <= BRICK_RIGHT && // horizontal collision
                 !brick->is_broken())
             {
@@ -383,7 +376,7 @@ double Engine::return_angle(double x, double L) const
 }
 
 void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, const std::vector<std::shared_ptr<Ball>> &balls_to_remove)
-{
+{ // TODO: move to game model
     for (const auto &ball : balls_to_remove)
     {
         balls.erase(std::remove(balls.begin(), balls.end(), ball), balls.end());

@@ -2,7 +2,7 @@
  * @file game.hpp
  * @author Manuel Rocca
  * @brief Header file for the Game class
- * @date 2024
+ * @date 2025
  *
  */
 

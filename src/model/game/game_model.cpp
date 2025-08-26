@@ -11,7 +11,7 @@
 GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button_{END_TEXT, Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2}, WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.1, Color::WHITE, Color::DARK_GOLD}
 
 {
-    LevelData level_data = LevelLoader::loadLevel(level);
+    LevelData level_data = LevelLoader::load_level(level);
     if (level_data.is_empty())
     {
         Logger::log("[ERROR] Couldn't initialize level data");

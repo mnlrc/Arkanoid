@@ -55,7 +55,7 @@ public:
     LevelLoader() = delete;
     ~LevelLoader() = delete;
 
-    static LevelData loadLevel(int level);
+    static LevelData load_level(int level);
 
 private:
     /**
@@ -65,7 +65,7 @@ private:
      * @return true
      * @return false
      */
-    static bool checkTag(const std::string &level_tag);
+    static bool check_tag(const std::string &level_tag);
 
     /**
      * @brief
@@ -73,7 +73,7 @@ private:
      * @param file
      * @return std::vector<Brick>
      */
-    static std::vector<std::vector<std::shared_ptr<Brick>>> loadBricks(std::ifstream &file, LevelData &level_data);
+    static std::vector<std::vector<std::shared_ptr<Brick>>> load_bricks(std::ifstream &file, LevelData &level_data);
 
     /**
      * @brief

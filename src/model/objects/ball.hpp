@@ -2,7 +2,7 @@
  * @file ball.hpp
  * @author Manuel Rocca
  * @brief Header file for the Ball class
- * @date 2024
+ * @date 2025
  *
  */
 

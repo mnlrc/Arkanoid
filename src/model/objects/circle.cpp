@@ -2,7 +2,7 @@
  * @file circle.cpp
  * @author Manuel Rocca
  * @brief Source file for the Circle class
- * @date 2024
+ * @date 2025
  *
  */
 

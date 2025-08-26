@@ -11,3 +11,5 @@
 - casser brique -> power up drop (ajouter au modèle) -> power up tombe (update modèle avec l'engine) -> contact avec la raquette
 - Essayer de retirer les espérluettes de gueu dans les getters (logiquement un getter renvoie une réf ?)
 - Retirer les shared_ptr pour les objets comme la racket, ... (ceux contenus dans les modèles) et garder des unique_ptr pour les "gros" objets
+- Logger: écrire toujours dans un nouveau fichier
+- Makefile: créer les directory obj s'ils n'existent pas

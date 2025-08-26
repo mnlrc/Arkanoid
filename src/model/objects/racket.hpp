@@ -2,7 +2,7 @@
  * @file raquette.hpp
  * @author Manuel Rocca
  * @brief Header file for the Racket class
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -33,7 +33,7 @@ public:
      * @brief Destructor for the Racket class
      */
     ~Racket() = default;
-    
+
     double get_width_percentage() const noexcept;
 
     double get_speed() const noexcept;
@@ -42,7 +42,7 @@ public:
 
     void reset_width() noexcept;
 
-    void set_center(const Point& new_point) noexcept override;
+    void set_center(const Point &new_point) noexcept override;
 
 private:
     double racket_width_percentage_; // percentage of the windows width

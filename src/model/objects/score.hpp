@@ -2,7 +2,7 @@
  * @file score.hpp
  * @author Manuel Rocca
  * @brief Header file for the Score class
- * @date 2024
+ * @date 2025
  *
  */
 
@@ -22,7 +22,7 @@ public:
     unsigned get_score() const noexcept;
 
     void add_score(unsigned points) noexcept;
-    
+
     Point get_center() const noexcept;
 
     Color get_color() const noexcept;
