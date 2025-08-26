@@ -34,6 +34,13 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     racket->set_center(new_center);
 }
 
+void Engine::move(double mouse_x_position, GameModel &game_model) noexcept
+{
+    std::shared_ptr<Racket> racket = game_model.get_racket();
+    Point new_center = Point{mouse_x_position, racket->get_center().y_};
+    racket->set_center(new_center);
+}
+
 UpdateResponse Engine::update_model(GameModel &game_model)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();

@@ -84,6 +84,8 @@ public:
 
     void handle_space_input() noexcept;
 
+    void handle_mouse_input(double mouse_x_pos) noexcept;
+
     void update_ball_progress(double progress);
 
     void activate_power_up(const PowerUp &power_up) noexcept;

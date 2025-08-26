@@ -44,6 +44,8 @@ public:
 
     void move(std::shared_ptr<Racket> racket, Direction direction);
 
+    void move(double mouse_x_position, GameModel &game_model) noexcept;
+
     UpdateResponse update_model(GameModel &game_model);
 
 private:

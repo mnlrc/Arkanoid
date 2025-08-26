@@ -68,6 +68,12 @@ void GameController::handle_key_up(int key_code)
     }
 }
 
+void GameController::handle_mouse_movement(ALLEGRO_EVENT mouse_event)
+{
+    double mouse_x_pos = mouse_event.mouse.x;
+    engine_->move(mouse_x_pos, *game_model);
+}
+
 UpdateResponse GameController::update_model()
 {
     if (input_keys_[Direction::RIGHT])

@@ -48,6 +48,8 @@ public:
      */
     void handle_key_up(int key_code);
 
+    void handle_mouse_movement(ALLEGRO_EVENT mouse_event);
+
     UpdateResponse update_model();
 
     void update_view() override;

@@ -127,6 +127,9 @@ void Game::run_game(short level)
             case ALLEGRO_EVENT_KEY_UP:
                 game_controller_->handle_key_up(event_.keyboard.keycode);
                 break;
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                game_controller_->handle_mouse_movement(event_);
+                break;
             case ALLEGRO_EVENT_TIMER:
             {
                 if (handle_update_response(game_controller_->update_model()))
