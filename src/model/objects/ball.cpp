@@ -57,9 +57,12 @@ bool Ball::time_up() noexcept
 {
     try
     {
+        if (time_on_racket_ == steady_clock::time_point{})
+        {
+            return false; // not initialised
+        }
         steady_clock::time_point end = steady_clock::now();
-        seconds delta = duration_cast<seconds>(end - time_on_racket_);
-
+        duration<double> delta = duration_cast<milliseconds>(end - time_on_racket_);
         return delta >= seconds(MAX_TIME_ON_RACKET);
     }
     catch (const std::exception &e)

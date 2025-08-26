@@ -7,7 +7,8 @@
  */
 
 #include "game_model.hpp"
-
+#include <iostream>
+using namespace std;
 GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button_{END_TEXT, Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2}, WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.1, Color::WHITE, Color::DARK_GOLD}
 
 {
@@ -61,6 +62,10 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     double ball_radius = racket_height / 2;
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(ball_center, ball_radius, ball_speed);
     balls_[0] = ball;
+    if (ball->is_moving())
+    {
+        cout << "TAMERLAPUT" << endl;
+    }
 
     setup_circles();
 }
@@ -223,7 +228,7 @@ void GameModel::clear_power_up(const PowerUp new_power_up)
         racket_->reset_width();
         break;
     case Power::CATCH:
-        launch_balls();
+        launch_balls(new_power);
         break;
     case Power::SLOW:
         reset_ball_speed(new_power);
@@ -256,9 +261,10 @@ void GameModel::enlarge_racket() noexcept
     racket_->enlarge(RACKET_ENLARGE_PERCENTAGE);
 }
 
-void GameModel::launch_balls() noexcept
+void GameModel::launch_balls(const Power new_power) noexcept
 {
-    if (!balls_.empty())
+    // not releasing balls if the new power up is catch, because it still applies
+    if (!balls_.empty() && new_power != Power::CATCH)
     {
         for (auto &ball : balls_)
         {

@@ -60,8 +60,10 @@ UpdateResponse Engine::update_model(GameModel &game_model)
         std::shared_ptr<Ball> ball = balls[i];
         if (!ball->is_moving())
         {
+            cout << "BALL NOT MOVING" << endl;
             if (ball->time_up())
             {
+                cout << "TIME UP" << endl;
                 ball->set_moving();
             }
             else
@@ -235,9 +237,7 @@ void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball>
         double y_speed = -sin(angle);
         ball->set_speed({x_speed * speed, y_speed * speed});
 
-        if (game_model.get_active_power_up().get_power() == Power::CATCH
-            // && !ball->just_released()
-        )
+        if (game_model.get_active_power_up().get_power() == Power::CATCH)
         {
             // the distance of the ball from the center of the racket
             double delta = ball->get_center().x_ - racket->get_center().x_;

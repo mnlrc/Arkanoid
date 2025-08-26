@@ -67,7 +67,9 @@ private:
     bool is_moving_;
     Point default_ball_speed_;
     double current_slow_factor_ = 1.0;
-    steady_clock::time_point time_on_racket_;
+    steady_clock::time_point time_on_racket_ = steady_clock::time_point{}; // serves as a 0,
+                                                                           // to symbolize that it wasn't
+                                                                           // started
     double shift_on_racket_ = 0;
 };
 

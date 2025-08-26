@@ -119,7 +119,7 @@ private:
 
     void enlarge_racket() noexcept;
 
-    void launch_balls() noexcept;
+    void launch_balls(const Power new_power) noexcept;
 
     void ball_multiplier();
 
