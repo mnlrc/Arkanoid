@@ -58,19 +58,19 @@ public:
      *
      * @return Rectangle*
      */
-    std::vector<Button> getButtons();
+    std::vector<Button> get_buttons();
 
     /**
-     * @brief 
-     * 
-     * @param direction 
+     * @brief
+     *
+     * @param direction
      */
     void cycle_text(Direction direction);
 
     /**
      * @brief Get the selected level object
-     * 
-     * @return int 
+     *
+     * @return int
      */
     int get_selected_level();
 

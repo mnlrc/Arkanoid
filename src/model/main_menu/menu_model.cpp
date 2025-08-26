@@ -45,7 +45,7 @@ MenuModel::MenuModel(const int width, const int height) : Model{width, height}
     }
 }
 
-std::vector<Button> MenuModel::getButtons() { return buttons_; }
+std::vector<Button> MenuModel::get_buttons() { return buttons_; }
 
 void MenuModel::cycle_text(Direction direction)
 {
@@ -66,7 +66,7 @@ void MenuModel::cycle_text(Direction direction)
 int MenuModel::get_selected_level()
 {
     size_t level_text_idx = 1;
-    std::string level_text = buttons_[level_text_idx].getSelectedText().get_text();
+    std::string level_text = buttons_[level_text_idx].get_selected_text().get_text();
     int val = 1; // setting value to 1 to load the first level (as default)
 
     auto pos = level_text.find_first_of("12345");

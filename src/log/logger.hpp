@@ -29,7 +29,7 @@ public:
    *
    * @return Logger& The instance of the Logger
    */
-  static Logger &getInstance(const std::string &filename = "");
+  static Logger &get_instance(const std::string &filename = "");
 
   /**
    * @brief Destroy the Logger object
@@ -56,7 +56,7 @@ private:
   Logger();
 
   static std::unique_ptr<Logger> instance_;
-  static std::ofstream logFile_;
+  static std::ofstream log_file_;
 };
 
 #endif // LOGGER_HPP

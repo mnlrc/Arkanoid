@@ -7,12 +7,12 @@
 
 #include "logger.hpp"
 
-
 // #### Static Members ####
 std::unique_ptr<Logger> Logger::instance_ = nullptr;
-std::ofstream Logger::logFile_;
+std::ofstream Logger::log_file_;
 
-std::string getDate() {
+std::string get_date()
+{
   const time_t now = time(nullptr);
   const tm *localTime = localtime(&now);
 
@@ -24,33 +24,43 @@ std::string getDate() {
 // #### Logger Singleton ####
 Logger::Logger() = default;
 
-Logger &Logger::getInstance(const std::string &path) {
-  if (!instance_) {
+Logger &Logger::get_instance(const std::string &path)
+{
+  if (!instance_)
+  {
     instance_ = std::unique_ptr<Logger>(new Logger());
-    if (!path.empty()) {
+    if (!path.empty())
+    {
 
-      const std::string date = getDate();
+      const std::string date = get_date();
       const std::string filename = path + date + ".log";
 
-      Logger::logFile_.open(filename, std::ios::app);
-      if (!Logger::logFile_.is_open()) {
+      Logger::log_file_.open(filename, std::ios::app);
+      if (!Logger::log_file_.is_open())
+      {
         throw std::runtime_error("Failed to open log file: " + filename);
       }
-    } else {
-      Logger::logFile_.open(path + "arkanoid.log", std::ios::app);
+    }
+    else
+    {
+      Logger::log_file_.open(path + "arkanoid.log", std::ios::app);
     }
   }
   return *instance_;
 }
 
-Logger::~Logger() {
-  if (logFile_.is_open()) {
-    logFile_.close();
+Logger::~Logger()
+{
+  if (log_file_.is_open())
+  {
+    log_file_.close();
   }
 }
 
-void Logger::log(const std::string &message) {
-  if (logFile_.is_open()) {
-    logFile_ << message << std::endl;
+void Logger::log(const std::string &message)
+{
+  if (log_file_.is_open())
+  {
+    log_file_ << message << std::endl;
   }
 }

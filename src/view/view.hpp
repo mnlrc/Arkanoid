@@ -79,7 +79,7 @@ public:
      *
      * @return ALLEGRO_DISPLAY*
      */
-    ALLEGRO_DISPLAY *getDisplay() const noexcept;
+    ALLEGRO_DISPLAY *get_display() const noexcept;
 
     void render_menu_model(const std::unique_ptr<MenuModel> &model);
 

@@ -9,4 +9,4 @@
 
 Controller::Controller(std::shared_ptr<View> view) : view_(view) {}
 
-ALLEGRO_DISPLAY *Controller::get_display() const noexcept { return view_->getDisplay(); }
+ALLEGRO_DISPLAY *Controller::get_display() const noexcept { return view_->get_display(); }

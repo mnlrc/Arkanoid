@@ -32,7 +32,7 @@ void View::setupAllegro(const int width, const int height)
     init_test(display_, "display");
 }
 
-ALLEGRO_DISPLAY *View::getDisplay() const noexcept { return display_; }
+ALLEGRO_DISPLAY *View::get_display() const noexcept { return display_; }
 
 void View::render_menu_model(const std::unique_ptr<MenuModel> &model)
 {
@@ -55,10 +55,10 @@ void View::render_button(const Button &button)
 void View::draw_window(const Model &model)
 {
     // drawing main window
-    const int window_width = model.getWidth();
-    const int window_height = model.getHeight();
-    const Color temp_inner_color = model.getInnerColor();
-    const Color temp_outer_color = model.getOuterColor();
+    const int window_width = model.get_width();
+    const int window_height = model.get_height();
+    const Color temp_inner_color = model.get_inner_color();
+    const Color temp_outer_color = model.get_outer_color();
 
     ALLEGRO_COLOR window_inner_color = color_convertor(temp_inner_color);
     ALLEGRO_COLOR window_outer_color = color_convertor(temp_outer_color);
@@ -71,7 +71,7 @@ void View::draw(const std::unique_ptr<MenuModel> &model)
 {
     draw_window(*model);
 
-    std::vector<Button> buttons = model->getButtons();
+    std::vector<Button> buttons = model->get_buttons();
 
     for (size_t i = 0; i < NUMBER_OF_BUTTONS; i++)
     {
@@ -162,11 +162,11 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
 
 void View::draw(const Button &button)
 {
-    Rectangle temp_rec = button.getRectangle();
+    Rectangle temp_rec = button.get_rectangle();
 
     draw(temp_rec);
 
-    Text temp_text = button.getSelectedText();
+    Text temp_text = button.get_selected_text();
 
     Point text_center = temp_rec.get_center();
     std::string temp_string = temp_text.get_text();

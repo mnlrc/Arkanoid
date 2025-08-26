@@ -40,7 +40,7 @@ void Game::setup_allegro(std::shared_ptr<View> view)
     init_test(al_install_mouse(), "mouse");
 
     // link events to queue
-    al_register_event_source(queue_, al_get_display_event_source(view->getDisplay()));
+    al_register_event_source(queue_, al_get_display_event_source(view->get_display()));
     al_register_event_source(queue_, al_get_timer_event_source(timer_));
     al_register_event_source(queue_, al_get_keyboard_event_source());
     al_register_event_source(queue_, al_get_mouse_event_source());

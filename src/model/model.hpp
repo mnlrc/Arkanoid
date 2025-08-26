@@ -33,28 +33,28 @@ public:
      *
      * @return const int
      */
-    const int getWidth() const noexcept;
+    const int get_width() const noexcept;
 
     /**
      * @brief Get the height_ attribute
      *
      * @return const int
      */
-    const int getHeight() const noexcept;
+    const int get_height() const noexcept;
 
     /**
      * @brief Get the inner_color_ attribute
      *
      * @return const Color
      */
-    const Color getInnerColor() const noexcept;
+    const Color get_inner_color() const noexcept;
 
     /**
      * @brief Get the outer_color_ attribute
      *
      * @return const Color
      */
-    const Color getOuterColor() const noexcept;
+    const Color get_outer_color() const noexcept;
 
 protected:
     const int width_;

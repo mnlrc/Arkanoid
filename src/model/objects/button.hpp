@@ -36,7 +36,7 @@ public:
      *
      * @return const Text&
      */
-    const Text &getSelectedText() const noexcept;
+    const Text &get_selected_text() const noexcept;
 
     /**
      * @brief
@@ -57,7 +57,7 @@ public:
      *
      * @return const Rectangle&
      */
-    const Rectangle &getRectangle() const noexcept;
+    const Rectangle &get_rectangle() const noexcept;
 
 private:
     std::vector<Text> texts_;

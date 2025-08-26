@@ -11,7 +11,7 @@
 Button::Button(const std::vector<Text> &texts, Point center, double width, double height, Color inner_color, Color outer_color)
     : texts_(texts), idx_(0), rectangle_(Rectangle{center, width, height, inner_color, outer_color}) {}
 
-const Text &Button::getSelectedText() const noexcept { return texts_[idx_]; }
+const Text &Button::get_selected_text() const noexcept { return texts_[idx_]; }
 
 void Button::nextText()
 {
@@ -25,12 +25,16 @@ void Button::previousText()
         idx_ = (idx_ + texts_.size() - 1) % texts_.size();
 }
 
-void Button::set_selected_text(size_t idx) {
-    if (idx < texts_.size() && idx >= 0) {
+void Button::set_selected_text(size_t idx)
+{
+    if (idx < texts_.size() && idx >= 0)
+    {
         idx_ = idx;
-    } else {
+    }
+    else
+    {
         Logger::log("[ERROR] Index out of bounds for Button texts");
     }
 }
 
-const Rectangle &Button::getRectangle() const noexcept { return rectangle_; }
+const Rectangle &Button::get_rectangle() const noexcept { return rectangle_; }

@@ -11,7 +11,7 @@
 
 int main()
 {
-    Logger::getInstance(); // init the logger
+    Logger::get_instance(); // init the logger
     Logger::log("[INFO] Start of the program");
 
     Game game = Game();
