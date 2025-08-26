@@ -17,7 +17,9 @@
 #include "../../global_variables.hpp"
 
 #include <unordered_map>
-#include <ctime>
+#include <chrono>
+
+using namespace std::chrono;
 
 enum class Power : int
 {
@@ -41,7 +43,7 @@ const std::unordered_map<Power, Color> POWER_UP_COLOR = {
     {Power::PLAYER, Color::GREY},
     {Power::NONE, Color::NONE}};
 
-const std::unordered_map<Power, double> POWER_UP_DURATION = {
+const std::unordered_map<Power, int64_t> POWER_UP_DURATION = {
     {Power::LASER, 10.0},
     {Power::CATCH, 3.0},
     {Power::SLOW, 5.0}};
@@ -63,7 +65,7 @@ public:
 
     void activate() noexcept;
 
-    bool time_up() noexcept;
+    double progress() noexcept;
 
     void stop_fall() noexcept;
 
@@ -71,7 +73,7 @@ private:
     Power power_;
     bool is_falling_;
     bool is_active_;
-    std::clock_t time_active_;
+    steady_clock::time_point time_active_;
 };
 
 #endif

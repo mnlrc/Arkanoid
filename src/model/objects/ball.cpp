@@ -24,10 +24,22 @@ void Ball::set_speed(const Point &new_speed) noexcept { speed_ = new_speed; };
 
 void Ball::change_state() noexcept { is_moving_ = !is_moving_; };
 
-void Ball::slow() noexcept
+void Ball::apply_slow() noexcept
 {
-    Point new_speed = get_speed();
-    new_speed.x_ = new_speed.x_ * SLOW_PERCENTAGE;
-    new_speed.y_ = new_speed.y_ * SLOW_PERCENTAGE;
-    set_speed(new_speed);
+    current_slow_factor_ *= SLOW_FACTOR;
+
+    speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * current_slow_factor_, speed_.x_);
+    speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * current_slow_factor_, speed_.y_);
+}
+#include <iostream>
+using namespace std;
+void Ball::update_speed_progress(double progress) noexcept
+{
+    // using linear interpolation
+    double factor = current_slow_factor_ + (1.0 - current_slow_factor_) * progress;
+    speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * factor, speed_.x_);
+    speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * factor, speed_.y_);
+
+    cout << "Speed x: " << speed_.x_ << endl;
+    cout << "Speed y: " << speed_.y_ << endl;
 }

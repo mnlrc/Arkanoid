@@ -102,7 +102,16 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
             {
                 draw(*brick);
                 Point center = brick->get_center();
-                std::string str = POWER_CHAR.at(brick->get_power_up());
+                std::string str;
+                try
+                {
+                    str = POWER_CHAR.at(brick->get_power_up());
+                }
+                catch (const std::exception &e)
+                {
+                    Logger::log("[ERROR] Exception when retrieving brick power up: " + std::string(e.what()));
+                    str = "";
+                }
                 Color color = Color::BLACK;
                 draw(center, str, color);
             }

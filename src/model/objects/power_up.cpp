@@ -22,27 +22,43 @@ void PowerUp::activate() noexcept
 {
     is_active_ = true;
     stop_fall();
-    time_active_ = clock();
+    time_active_ = steady_clock::now();
 }
-
-bool PowerUp::time_up() noexcept
+#include <iostream>
+using namespace std;
+double PowerUp::progress() noexcept
 {
-    clock_t duration = clock() - time_active_;
-    double elapsed = duration / CLOCKS_PER_SEC;
-
+    int64_t time_limit;
     try
     {
-        double time_limit = POWER_UP_DURATION.at(power_);
-        if (elapsed >= time_limit)
-        {
-            return true;
-        }
+        time_limit = POWER_UP_DURATION.at(power_);
     }
     catch (const std::exception &e)
     {
-        Logger::log("[INFO] Power up has no time limit");
+        Logger::log("[ERROR] Exception when retrieving power up duration value: " + std::string(e.what()));
+        return 0;
     }
-    return false;
+    steady_clock::time_point end = steady_clock::now();
+    seconds delta = duration_cast<seconds>(end - time_active_);
+    cout << "Progress: " << std::min(1.0, double(delta.count() / double(time_limit))) << endl;
+    return std::min(1.0, double(delta.count() / double(time_limit)));
 }
+
+// bool PowerUp::time_up() noexcept
+// {
+//     try
+//     {
+//         int64_t time_limit = POWER_UP_DURATION.at(power_);
+//         steady_clock::time_point end = steady_clock::now();
+//         seconds delta = duration_cast<seconds>(end - time_active_);
+
+//         return delta >= seconds(time_limit);
+//     }
+//     catch (const std::exception &e)
+//     {
+//         Logger::log("[INFO] Power up has no time limit");
+//     }
+//     return false;
+// }
 
 void PowerUp::stop_fall() noexcept { is_falling_ = false; }

@@ -63,6 +63,8 @@ private:
     void delete_ball(std::vector<std::shared_ptr<Ball>> &balls, const std::vector<std::shared_ptr<Ball>> &balls_to_remove);
 
     bool is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks);
+
+    void handle_power_up(GameModel &game_model);
 };
 
 #endif

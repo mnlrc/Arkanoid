@@ -33,7 +33,8 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
         break;
     }
 }
-
+#include <iostream>
+using namespace std;
 UpdateResponse Engine::update_model(GameModel &game_model)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
@@ -45,10 +46,7 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     }
 
     // handle power ups
-    PowerUp active_power_up = game_model.get_active_power_up();
-    if (active_power_up.time_up()) {
-        game_model.activate_power_up(PowerUp());
-    }
+    handle_power_up(game_model);
 
     std::vector<std::shared_ptr<Ball>> &balls = game_model.get_balls();
     std::shared_ptr<Racket> racket = game_model.get_racket();
@@ -263,7 +261,7 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 // update brick state
                 if (brick->hit()) // brick was broken
                 {
-                    if (game_model.get_active_power_up().get_power() != Power::STOP)
+                    if (!game_model.current_power_stop())
                     {
                         Power broken_brick_power = brick->get_power_up();
                         if (broken_brick_power != Power::NONE)
@@ -341,4 +339,29 @@ bool Engine::is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks)
         }
     }
     return true; // all bricks are broken, the game is won
+}
+
+void Engine::handle_power_up(GameModel &game_model)
+{
+    PowerUp active_power_up = game_model.get_active_power_up();
+    double progress = active_power_up.progress();
+
+    switch (active_power_up.get_power())
+    {
+    case Power::SLOW:
+    {
+        for (auto& ball: game_model.get_balls()) {
+            ball->update_speed_progress(progress);
+        }
+    }
+    break;
+    default:
+        break;
+    }
+
+    if (progress == 1.0) // time is 100% up
+    {
+        cout << "Power up time's up" << endl;
+        game_model.activate_power_up(PowerUp());
+    }
 }

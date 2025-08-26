@@ -86,6 +86,8 @@ public:
 
     void add_falling_power_up(const PowerUp &power_up) noexcept;
 
+    bool current_power_stop() noexcept;
+
 private:
     std::vector<std::shared_ptr<Ball>> balls_;
     std::vector<std::vector<std::shared_ptr<Brick>>> bricks_;
@@ -116,6 +118,8 @@ private:
     void ball_multiplier();
 
     void clear_balls();
+
+    void slow_balls();
 
     void reset_ball_speed(const Power new_power);
 };

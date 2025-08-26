@@ -140,10 +140,17 @@ void GameModel::launch_ball() noexcept
     }
 }
 
+#include <iostream>
+using namespace std;
 void GameModel::activate_power_up(const PowerUp &power_up) noexcept
 {
+    cout << "Power up caught" << endl;
+    cout << endl;
+
+    cout << "Clearing power up" << endl;
     clear_power_up(power_up);
     active_power_ = power_up;
+    cout << "Activating power up" << endl;
     activate_power(active_power_.get_power());
 }
 
@@ -184,6 +191,7 @@ void GameModel::activate_power(const Power power)
     case Power::CATCH:
         break;
     case Power::SLOW:
+        slow_balls();
         break;
     case Power::STOP:
         ball_multiplier();
@@ -226,6 +234,11 @@ void GameModel::clear_power_up(const PowerUp new_power_up)
     }
 }
 
+bool GameModel::current_power_stop() noexcept
+{
+    return active_power_.get_power() == Power::STOP && balls_.size() != 1;
+}
+
 void GameModel::add_life() noexcept
 {
     remaining_lives_++;
@@ -259,15 +272,19 @@ void GameModel::clear_balls()
     balls_.resize(1); // keeping one ball, the first of the vector
 }
 
+void GameModel::slow_balls()
+{
+    for (auto &ball : balls_)
+    {
+        ball->apply_slow();
+    }
+}
+
 void GameModel::reset_ball_speed(const Power new_power)
 {
     for (auto &ball : balls_)
     {
-        if (new_power == Power::SLOW)
-        { // slowing the balls even more
-            ball->slow();
-        }
-        else
+        if (new_power != Power::SLOW)
         {
             ball->reset_speed();
         }
