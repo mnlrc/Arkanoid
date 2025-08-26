@@ -44,21 +44,4 @@ double PowerUp::progress() noexcept
     return progress;
 }
 
-// bool PowerUp::time_up() noexcept
-// {
-//     try
-//     {
-//         int64_t time_limit = POWER_UP_DURATION.at(power_);
-//         steady_clock::time_point end = steady_clock::now();
-//         seconds delta = duration_cast<seconds>(end - time_active_);
-
-//         return delta >= seconds(time_limit);
-//     }
-//     catch (const std::exception &e)
-//     {
-//         Logger::log("[INFO] Power up has no time limit");
-//     }
-//     return false;
-// }
-
 void PowerUp::stop_fall() noexcept { is_falling_ = false; }

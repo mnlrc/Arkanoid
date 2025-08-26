@@ -123,14 +123,16 @@ void GameModel::reset_ball() noexcept
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(new_ball_center, ball_radius, false);
     balls_.emplace_back(ball);
 }
-
+#include <iostream>
+using namespace std;
 void GameModel::handle_space_input() noexcept
 {
     for (auto &ball : balls_)
     {
-        if (!ball->get_state())
-        { // if a ball isn't moving
-            ball->change_state();
+        if (!ball->is_moving())
+        {
+            cout << "Setting the ball to move" << endl;
+            ball->set_moving();
             return;
         }
     }
@@ -220,7 +222,8 @@ void GameModel::clear_power_up(const PowerUp new_power_up)
     case Power::ENLARGE:
         racket_->reset_width();
         break;
-    case Power::CATCH: // nothing to do or handle
+    case Power::CATCH:
+        launch_balls();
         break;
     case Power::SLOW:
         reset_ball_speed(new_power);
@@ -253,23 +256,23 @@ void GameModel::enlarge_racket() noexcept
     racket_->enlarge(RACKET_ENLARGE_PERCENTAGE);
 }
 
-// void GameModel::launch_ball() noexcept
-// {
-//     if (!balls_.empty())
-//     {
-//         for (auto &ball : balls_)
-//         {
-//             if (!ball->get_state())
-//             { // if a ball isn't moving
-//                 ball->change_state();
-//             }
-//         }
-//     }
-//     else
-//     {
-//         Logger::log("[ERROR] No balls available to launch");
-//     }
-// }
+void GameModel::launch_balls() noexcept
+{
+    if (!balls_.empty())
+    {
+        for (auto &ball : balls_)
+        {
+            if (!ball->is_moving())
+            {
+                ball->set_moving();
+            }
+        }
+    }
+    else
+    {
+        Logger::log("[ERROR] No balls available to launch");
+    }
+}
 
 void GameModel::ball_multiplier()
 {
@@ -277,7 +280,7 @@ void GameModel::ball_multiplier()
     Point active_center = active_ball->get_center();
     double active_radius = active_ball->get_radius();
     Point active_speed = active_ball->get_speed();
-    bool active_state = active_ball->get_state();
+    bool active_state = active_ball->is_moving();
 
     Point new_speed_one = Point{active_speed.x_ * -1, active_speed.y_};
     std::shared_ptr<Ball> new_ball_one = std::make_shared<Ball>(active_center, active_radius, new_speed_one, active_state);

@@ -119,7 +119,7 @@ private:
 
     void enlarge_racket() noexcept;
 
-    // void launch_ball() noexcept;
+    void launch_balls() noexcept;
 
     void ball_multiplier();
 

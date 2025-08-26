@@ -45,7 +45,7 @@ const std::unordered_map<Power, Color> POWER_UP_COLOR = {
 
 const std::unordered_map<Power, int64_t> POWER_UP_DURATION = {
     {Power::LASER, 10.0},
-    {Power::CATCH, 3.0},
+    {Power::CATCH, 15.0},
     {Power::SLOW, 5.0}};
 
 class PowerUp : public Rectangle

@@ -9,7 +9,7 @@ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_ R-_
 G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_ G-_
 C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_
 O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_
-W-L W-L W-L I-_ I-_ W-L I-_ W-L W-L I-_ I-_ I-_ I-_ I-_
+W-C W-C W-C I-_ I-_ W-C I-_ W-C W-C I-_ I-_ I-_ I-_ I-_
 
 GREY
 BLACK

@@ -58,11 +58,24 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     for (size_t i = 0; i < size; i++)
     {
         std::shared_ptr<Ball> ball = balls[i];
-        if (!ball->get_state())
+        if (!ball->is_moving())
         {
-            Point ball_center = Point{racket->get_center().x_, ball->get_center().y_};
-            ball->set_center(ball_center);
-            continue; // ball is not moving, skip it
+            if (ball->time_up())
+            {
+                ball->set_moving();
+            }
+            else
+            { // updating the position to follow the racket
+                double ball_shift = ball->get_shift();
+                double racket_center_x = racket->get_center().x_;
+                Point ball_center = Point{racket_center_x + ball_shift, ball->get_center().y_};
+                ball->set_center(ball_center);
+                continue; // ball is not moving, skip it
+            }
+        }
+        else
+        {
+            check_racket_collision(game_model, ball);
         }
         if (check_wall_collision(ball))
         {
@@ -86,9 +99,6 @@ UpdateResponse Engine::update_model(GameModel &game_model)
                 continue;
             }
         }
-
-        // checking racket collision
-        check_racket_collision(ball, racket);
 
         // checking brick collision
         game_model.add_score(check_brick_collision(ball, game_model));
@@ -119,7 +129,6 @@ UpdateResponse Engine::update_model(GameModel &game_model)
             if (!laser.is_launched()) // the lasers are activated from idx 0 to 1000
             {                         // so if we run into a laser that isn't launched
                                       // we don't need to check the rest
-                // cout << "Checked all launched lasers, breaking loop" << endl;
                 break;
             }
             if (laser.was_used())
@@ -195,8 +204,9 @@ bool Engine::check_wall_collision(std::shared_ptr<Ball> ball)
     return is_out;
 }
 
-void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket)
+void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball> ball)
 {
+    std::shared_ptr<Racket> racket = game_model.get_racket();
     // ici il n'y a que la collision au sommet de la raquette qui est gérée
     // il y des effets secondaires sur les côtés car si la balle est sous la raquette
     // mais qu'elle percute cette dernière, elle sera "à l'intérieur" et remplira les conditions
@@ -214,15 +224,26 @@ void Engine::check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<
         ball->get_center().x_ >= RACKET_LEFT &&
         ball->get_center().x_ <= RACKET_RIGHT)
     {
+        cout << "RACKET COLLISION" << endl;
 
         ball->set_center({ball->get_center().x_, RACKET_TOP - ball->get_radius()});
 
-        double ballShift = ball->get_center().x_ - RACKET_LEFT;
-        double angle = return_angle(ballShift, racket->get_width());
+        double ball_shift = ball->get_center().x_ - RACKET_LEFT; // used to calculate the bounce angle
+        double angle = return_angle(ball_shift, racket->get_width());
         double speed = sqrt(pow(ball->get_speed().x_, 2) + pow(ball->get_speed().y_, 2));
-        double xSpeed = cos(angle);
-        double ySpeed = -sin(angle);
-        ball->set_speed({xSpeed * speed, ySpeed * speed});
+        double x_speed = cos(angle);
+        double y_speed = -sin(angle);
+        ball->set_speed({x_speed * speed, y_speed * speed});
+
+        if (game_model.get_active_power_up().get_power() == Power::CATCH
+            // && !ball->just_released()
+        )
+        {
+            // the distance of the ball from the center of the racket
+            double delta = ball->get_center().x_ - racket->get_center().x_;
+            ball->set_stop();
+            ball->set_shift(delta);
+        }
     }
 }
 

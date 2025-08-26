@@ -16,7 +16,7 @@ Ball::Ball(Point center, double radius, Point speed, bool state) : Circle{center
 
 Point Ball::get_speed() const noexcept { return speed_; }
 
-bool Ball::get_state() const noexcept { return is_moving_; };
+bool Ball::is_moving() const noexcept { return is_moving_; };
 
 void Ball::reset_speed() noexcept
 {
@@ -24,9 +24,17 @@ void Ball::reset_speed() noexcept
     speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_), speed_.y_);
 }
 
+double Ball::get_shift() const noexcept { return shift_on_racket_; }
+
 void Ball::set_speed(const Point &new_speed) noexcept { speed_ = new_speed; };
 
-void Ball::change_state() noexcept { is_moving_ = !is_moving_; };
+void Ball::set_moving() noexcept { is_moving_ = true; };
+
+void Ball::set_stop() noexcept
+{
+    is_moving_ = false;
+    time_on_racket_ = steady_clock::now();
+};
 
 void Ball::apply_slow() noexcept
 {
@@ -43,3 +51,22 @@ void Ball::update_speed_progress(double progress) noexcept
     speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * factor, speed_.x_);
     speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * factor, speed_.y_);
 }
+#include <iostream>
+using namespace std;
+bool Ball::time_up() noexcept
+{
+    try
+    {
+        steady_clock::time_point end = steady_clock::now();
+        seconds delta = duration_cast<seconds>(end - time_on_racket_);
+
+        return delta >= seconds(MAX_TIME_ON_RACKET);
+    }
+    catch (const std::exception &e)
+    {
+        Logger::log("[INFO] Power up has no time limit");
+    }
+    return false;
+}
+
+void Ball::set_shift(double new_shift) noexcept { shift_on_racket_ = new_shift; }

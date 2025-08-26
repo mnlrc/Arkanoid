@@ -51,7 +51,7 @@ private:
 
     bool check_wall_collision(std::shared_ptr<Ball> ball);
 
-    void check_racket_collision(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket);
+    void check_racket_collision(GameModel &game_model, std::shared_ptr<Ball> ball);
 
     const int check_brick_collision(std::shared_ptr<Ball> ball,
                                     GameModel &game_model);
