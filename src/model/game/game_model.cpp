@@ -77,6 +77,8 @@ PowerUp GameModel::get_active_power_up() noexcept { return active_power_; }
 
 std::vector<PowerUp> &GameModel::get_falling_power_ups() noexcept { return falling_power_ups_; }
 
+std::vector<Laser> &GameModel::get_lasers() noexcept { return lasers_; }
+
 std::vector<std::shared_ptr<Circle>> GameModel::get_circles() const noexcept { return circles_; }
 
 Button GameModel::get_end_button(bool is_win) noexcept
@@ -122,21 +124,21 @@ void GameModel::reset_ball() noexcept
     balls_.emplace_back(ball);
 }
 
-void GameModel::launch_ball() noexcept
+void GameModel::handle_space_input() noexcept
 {
-    if (!balls_.empty())
+    for (auto &ball : balls_)
     {
-        for (auto &ball : balls_)
-        {
-            if (!ball->get_state())
-            { // if a ball isn't moving
-                ball->change_state();
-            }
+        if (!ball->get_state())
+        { // if a ball isn't moving
+            ball->change_state();
+            return;
         }
     }
-    else
+    if (active_power_.get_power() == Power::LASER)
     {
-        Logger::log("[ERROR] No balls available to launch");
+        Laser new_laser = Laser(racket_->get_center());
+        new_laser.launch();
+        lasers_.push_back(new_laser);
     }
 }
 
@@ -148,17 +150,10 @@ void GameModel::update_ball_progress(double progress)
     }
 }
 
-#include <iostream>
-using namespace std;
 void GameModel::activate_power_up(const PowerUp &power_up) noexcept
 {
-    cout << "Power up caught" << endl;
-    cout << endl;
-
-    cout << "Clearing power up" << endl;
     clear_power_up(power_up);
     active_power_ = power_up;
-    cout << "Activating power up" << endl;
     activate_power(active_power_.get_power());
 }
 
@@ -191,7 +186,7 @@ void GameModel::activate_power(const Power power)
 {
     switch (power)
     {
-    case Power::LASER:
+    case Power::LASER: // nothing to handle
         break;
     case Power::ENLARGE:
         enlarge_racket();
@@ -257,6 +252,24 @@ void GameModel::enlarge_racket() noexcept
 {
     racket_->enlarge(RACKET_ENLARGE_PERCENTAGE);
 }
+
+// void GameModel::launch_ball() noexcept
+// {
+//     if (!balls_.empty())
+//     {
+//         for (auto &ball : balls_)
+//         {
+//             if (!ball->get_state())
+//             { // if a ball isn't moving
+//                 ball->change_state();
+//             }
+//         }
+//     }
+//     else
+//     {
+//         Logger::log("[ERROR] No balls available to launch");
+//     }
+// }
 
 void GameModel::ball_multiplier()
 {

@@ -70,6 +70,8 @@ public:
 
     std::vector<PowerUp> &get_falling_power_ups() noexcept;
 
+    std::vector<Laser> &get_lasers() noexcept;
+
     std::vector<std::shared_ptr<Circle>> get_circles() const noexcept;
 
     Button get_end_button(bool is_win) noexcept;
@@ -80,7 +82,7 @@ public:
 
     void reset_ball() noexcept;
 
-    void launch_ball() noexcept;
+    void handle_space_input() noexcept;
 
     void update_ball_progress(double progress);
 
@@ -116,6 +118,8 @@ private:
     void add_life() noexcept;
 
     void enlarge_racket() noexcept;
+
+    // void launch_ball() noexcept;
 
     void ball_multiplier();
 

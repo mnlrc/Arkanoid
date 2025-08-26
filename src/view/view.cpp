@@ -140,6 +140,24 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
             draw(power_up);
         }
     }
+
+    if (game_model->get_active_power_up().get_power() == Power::LASER)
+    {
+        std::vector<Laser> &lasers = game_model->get_lasers();
+
+        for (auto &laser : lasers)
+        {
+            if (!laser.is_launched())
+            {
+                break;
+            }
+            if (laser.was_used())
+            {
+                continue;
+            }
+            draw(laser);
+        }
+    }
 }
 
 void View::draw(const Button &button)

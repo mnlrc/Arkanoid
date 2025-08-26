@@ -56,7 +56,9 @@ private:
     const int check_brick_collision(std::shared_ptr<Ball> ball,
                                     GameModel &game_model);
 
-    void check_power_up_collision(GameModel& game_model);
+    void check_power_up_collision(GameModel &game_model);
+
+    int check_laser_collision(Laser &laser, GameModel &game_model);
 
     double return_angle(double, double) const;
 
@@ -65,6 +67,8 @@ private:
     bool is_win(std::vector<std::vector<std::shared_ptr<Brick>>> bricks);
 
     void handle_power_up(GameModel &game_model);
+
+    int brick_hit(GameModel &game_model, std::shared_ptr<Brick> hit_brick);
 };
 
 #endif

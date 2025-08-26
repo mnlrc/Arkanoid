@@ -31,7 +31,7 @@ public:
 
     Point get_center() const noexcept;
 
-    void set_center(const Point &new_point) noexcept;
+    virtual void set_center(const Point &new_point) noexcept;
 
 protected:
     Point center_;

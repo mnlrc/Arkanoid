@@ -11,27 +11,27 @@
 void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
 {
     double y = racket->get_center().y_;
+    double new_x;
     switch (direction)
     {
     case Direction::RIGHT:
     {
-        double max_right = WINDOW_WIDTH - (racket->get_width() / 2); // max pos of the racket on the right
-        double new_x = racket->get_center().x_ + racket->get_speed();
-        racket->set_center(Point{std::min(new_x, max_right), y});
+        new_x = racket->get_center().x_ + racket->get_speed();
         break;
     }
 
     case Direction::LEFT:
     {
-        double max_left = racket->get_width() / 2; // min pos of the racket on the left
-        double new_x = racket->get_center().x_ - racket->get_speed();
-        racket->set_center(Point{std::max(new_x, max_left), y});
+        new_x = racket->get_center().x_ - racket->get_speed();
         break;
     }
     default:
+        new_x = WINDOW_WIDTH / 2;
         Logger::log("[ERROR] Unknown direction");
         break;
     }
+    Point new_center = Point{new_x, y};
+    racket->set_center(new_center);
 }
 #include <iostream>
 using namespace std;
@@ -110,6 +110,30 @@ UpdateResponse Engine::update_model(GameModel &game_model)
     }
 
     falling_power_ups(game_model);
+
+    if (game_model.get_active_power_up().get_power() == Power::LASER)
+    {
+        std::vector<Laser> &lasers = game_model.get_lasers();
+        for (auto &laser : lasers)
+        {
+            if (!laser.is_launched()) // the lasers are activated from idx 0 to 1000
+            {                         // so if we run into a laser that isn't launched
+                                      // we don't need to check the rest
+                // cout << "Checked all launched lasers, breaking loop" << endl;
+                break;
+            }
+            if (laser.was_used())
+            {
+                cout << "Used laser, continuing" << endl;
+                continue;
+            }
+            Point previous_center = laser.get_center();
+            Point laser_speed = laser.get_speed();
+            Point new_center = Point{previous_center.x_, previous_center.y_ + laser_speed.y_};
+            laser.set_center(new_center);
+            game_model.add_score(check_laser_collision(laser, game_model));
+        }
+    }
 
     return UpdateResponse::CONTINUE;
 }
@@ -261,17 +285,7 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 // update brick state
                 if (brick->hit()) // brick was broken
                 {
-                    if (!game_model.current_power_stop())
-                    {
-                        Power broken_brick_power = brick->get_power_up();
-                        if (broken_brick_power != Power::NONE)
-                        {
-                            PowerUp power_up = PowerUp{brick->get_center(), broken_brick_power};
-                            game_model.add_falling_power_up(power_up);
-                        }
-                    }
-
-                    return brick->get_points();
+                    return brick_hit(game_model, brick);
                 }
                 return 0; // no brick was broken
             }
@@ -313,6 +327,40 @@ void Engine::check_power_up_collision(GameModel &game_model)
     }
 }
 
+int Engine::check_laser_collision(Laser &laser, GameModel &game_model)
+{
+    std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
+
+    for (auto &brick_row : bricks)
+    {
+        for (auto &brick : brick_row)
+        {
+            double BRICK_LEFT = brick->get_center().x_ - (brick->get_width() / 2);
+            double BRICK_RIGHT = brick->get_center().x_ + (brick->get_width() / 2);
+            // double BRICK_TOP = brick->get_center().y_ - (brick->get_height() / 2);
+            double BRICK_DOWN = brick->get_center().y_ + (brick->get_height() / 2);
+
+            double LASER_LEFT = laser.get_center().x_ - (laser.get_width() / 2);
+            double LASER_RIGHT = laser.get_center().x_ + (laser.get_width() / 2);
+            double LASER_TOP = laser.get_center().y_ - (laser.get_height() / 2);
+            // double LASER_DOWN = laser.get_center().y_ + (laser.get_height() / 2);
+
+            if (LASER_TOP <= BRICK_DOWN &&                                // vertical collision
+                LASER_RIGHT >= BRICK_LEFT && LASER_LEFT <= BRICK_RIGHT && // horizontal collision
+                !brick->is_broken())
+            {
+                laser.has_hit();
+                if (brick->hit())
+                {
+                    return brick_hit(game_model, brick);
+                }
+                return 0;
+            }
+        }
+    }
+    return 0; // no brick was hit
+}
+
 double Engine::return_angle(double x, double L) const
 {
     return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
@@ -349,8 +397,8 @@ void Engine::handle_power_up(GameModel &game_model)
     switch (active_power_up.get_power())
     {
     case Power::SLOW:
-    game_model.update_ball_progress(progress);
-    break;
+        game_model.update_ball_progress(progress);
+        break;
     default:
         break;
     }
@@ -360,4 +408,18 @@ void Engine::handle_power_up(GameModel &game_model)
         cout << "Power up time's up" << endl;
         game_model.activate_power_up(PowerUp());
     }
+}
+
+int Engine::brick_hit(GameModel &game_model, std::shared_ptr<Brick> hit_brick)
+{
+    if (!game_model.current_power_stop())
+    {
+        Power broken_brick_power = hit_brick->get_power_up();
+        if (broken_brick_power != Power::NONE)
+        {
+            PowerUp power_up = PowerUp{hit_brick->get_center(), broken_brick_power};
+            game_model.add_falling_power_up(power_up);
+        }
+    }
+    return hit_brick->get_points();
 }

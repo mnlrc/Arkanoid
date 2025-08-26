@@ -42,6 +42,8 @@ public:
 
     void reset_width() noexcept;
 
+    void set_center(const Point& new_point) noexcept override;
+
 private:
     double racket_width_percentage_; // percentage of the windows width
     double default_width_percentage_;
