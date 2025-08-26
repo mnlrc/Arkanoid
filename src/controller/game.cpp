@@ -131,7 +131,6 @@ void Game::run_game(short level)
             {
                 if (handle_update_response(game_controller_->update_model()))
                 {
-                    // cout << "[INFO] Game Over" << endl;
                     draw = false;
                 }
                 else
@@ -157,16 +156,13 @@ void Game::run_game(short level)
 
 void Game::handle_input_response(InputResponse response, bool &done)
 {
-    // cout << "[INFO] Handling input response: " << static_cast<int>(response) << endl;
     if (main_loop)
     {
         if (game_loop)
         {
-            // cout << "[INFO] Handling game input response" << endl;
             switch (response)
             {
             case InputResponse::QUIT:
-                // cout << "[INFO] Quitting game" << endl;
                 done = true;
                 game_loop = false;
                 break;

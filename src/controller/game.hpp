@@ -13,7 +13,6 @@
 #define BRICKS_COLS 14 // number of brick columns
 #define BRICKS_ROWS 8  // number of brick rows
 
-#include <iostream>
 #include <map>
 #include <memory>
 #include <allegro5/allegro.h>

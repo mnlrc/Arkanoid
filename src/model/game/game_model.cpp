@@ -7,8 +7,7 @@
  */
 
 #include "game_model.hpp"
-#include <iostream>
-using namespace std;
+
 GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button_{END_TEXT, Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2}, WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.1, Color::WHITE, Color::DARK_GOLD}
 
 {
@@ -64,7 +63,6 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     balls_[0] = ball;
     if (ball->is_moving())
     {
-        cout << "TAMERLAPUT" << endl;
     }
 
     setup_circles();
@@ -128,15 +126,13 @@ void GameModel::reset_ball() noexcept
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(new_ball_center, ball_radius, false);
     balls_.emplace_back(ball);
 }
-#include <iostream>
-using namespace std;
+
 void GameModel::handle_space_input() noexcept
 {
     for (auto &ball : balls_)
     {
         if (!ball->is_moving())
         {
-            cout << "Setting the ball to move" << endl;
             ball->set_moving();
             return;
         }

@@ -33,8 +33,7 @@ void Engine::move(std::shared_ptr<Racket> racket, Direction direction)
     Point new_center = Point{new_x, y};
     racket->set_center(new_center);
 }
-#include <iostream>
-using namespace std;
+
 UpdateResponse Engine::update_model(GameModel &game_model)
 {
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
@@ -60,10 +59,8 @@ UpdateResponse Engine::update_model(GameModel &game_model)
         std::shared_ptr<Ball> ball = balls[i];
         if (!ball->is_moving())
         {
-            cout << "BALL NOT MOVING" << endl;
             if (ball->time_up())
             {
-                cout << "TIME UP" << endl;
                 ball->set_moving();
             }
             else
@@ -135,7 +132,6 @@ UpdateResponse Engine::update_model(GameModel &game_model)
             }
             if (laser.was_used())
             {
-                cout << "Used laser, continuing" << endl;
                 continue;
             }
             Point previous_center = laser.get_center();
@@ -226,7 +222,6 @@ void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball>
         ball->get_center().x_ >= RACKET_LEFT &&
         ball->get_center().x_ <= RACKET_RIGHT)
     {
-        cout << "RACKET COLLISION" << endl;
 
         ball->set_center({ball->get_center().x_, RACKET_TOP - ball->get_radius()});
 
@@ -426,7 +421,6 @@ void Engine::handle_power_up(GameModel &game_model)
 
     if (progress == 1.0) // time is 100% up
     {
-        cout << "Power up time's up" << endl;
         game_model.activate_power_up(PowerUp());
     }
 }

@@ -7,8 +7,7 @@
  */
 
 #include "brick.hpp"
-#include <iostream>
-using namespace std;
+
 Brick::Brick(Color &color, Power &power_up) : Rectangle{color, determine_outer_color(color)}, power_up_(power_up), points_(COLOR_SCORE.at(color))
 {
     if (color == Color::NONE)

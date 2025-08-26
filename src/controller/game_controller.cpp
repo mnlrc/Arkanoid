@@ -28,8 +28,6 @@ bool GameController::setup_game_model(short int level)
     return true;
 }
 
-#include <iostream>
-using namespace std;
 InputResponse GameController::handle_key_down(int key_code)
 {
     switch (key_code)
@@ -45,7 +43,6 @@ InputResponse GameController::handle_key_down(int key_code)
         input_keys_[Direction::RIGHT] = true;
         return InputResponse::NONE;
     case ALLEGRO_KEY_SPACE: // launch a ball or shoot a laser
-        cout << "SPACE PRESSED" << endl;
         game_model->handle_space_input();
         return InputResponse::NONE;
     case ALLEGRO_KEY_ESCAPE: // return to previous menu

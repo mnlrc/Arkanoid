@@ -51,8 +51,7 @@ void Ball::update_speed_progress(double progress) noexcept
     speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * factor, speed_.x_);
     speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * factor, speed_.y_);
 }
-#include <iostream>
-using namespace std;
+
 bool Ball::time_up() noexcept
 {
     try
