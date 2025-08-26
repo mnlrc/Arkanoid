@@ -82,6 +82,8 @@ public:
 
     void launch_ball() noexcept;
 
+    void update_ball_progress(double progress);
+
     void activate_power_up(const PowerUp &power_up) noexcept;
 
     void add_falling_power_up(const PowerUp &power_up) noexcept;

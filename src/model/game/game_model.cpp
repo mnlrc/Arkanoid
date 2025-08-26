@@ -140,6 +140,14 @@ void GameModel::launch_ball() noexcept
     }
 }
 
+void GameModel::update_ball_progress(double progress)
+{
+    for (auto &ball : balls_)
+    {
+        ball->update_speed_progress(progress);
+    }
+}
+
 #include <iostream>
 using namespace std;
 void GameModel::activate_power_up(const PowerUp &power_up) noexcept

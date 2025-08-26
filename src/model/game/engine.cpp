@@ -349,11 +349,7 @@ void Engine::handle_power_up(GameModel &game_model)
     switch (active_power_up.get_power())
     {
     case Power::SLOW:
-    {
-        for (auto& ball: game_model.get_balls()) {
-            ball->update_speed_progress(progress);
-        }
-    }
+    game_model.update_ball_progress(progress);
     break;
     default:
         break;
