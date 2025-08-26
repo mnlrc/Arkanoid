@@ -18,7 +18,11 @@ Point Ball::get_speed() const noexcept { return speed_; }
 
 bool Ball::get_state() const noexcept { return is_moving_; };
 
-void Ball::reset_speed() noexcept { speed_ = default_ball_speed_; }
+void Ball::reset_speed() noexcept
+{
+    speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_), speed_.x_);
+    speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_), speed_.y_);
+}
 
 void Ball::set_speed(const Point &new_speed) noexcept { speed_ = new_speed; };
 
@@ -31,15 +35,11 @@ void Ball::apply_slow() noexcept
     speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * current_slow_factor_, speed_.x_);
     speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * current_slow_factor_, speed_.y_);
 }
-#include <iostream>
-using namespace std;
+
 void Ball::update_speed_progress(double progress) noexcept
 {
     // using linear interpolation
     double factor = current_slow_factor_ + (1.0 - current_slow_factor_) * progress;
     speed_.x_ = std::copysign(std::abs(default_ball_speed_.x_) * factor, speed_.x_);
     speed_.y_ = std::copysign(std::abs(default_ball_speed_.y_) * factor, speed_.y_);
-
-    cout << "Speed x: " << speed_.x_ << endl;
-    cout << "Speed y: " << speed_.y_ << endl;
 }

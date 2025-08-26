@@ -24,8 +24,7 @@ void PowerUp::activate() noexcept
     stop_fall();
     time_active_ = steady_clock::now();
 }
-#include <iostream>
-using namespace std;
+
 double PowerUp::progress() noexcept
 {
     int64_t time_limit;
@@ -39,9 +38,10 @@ double PowerUp::progress() noexcept
         return 0;
     }
     steady_clock::time_point end = steady_clock::now();
-    seconds delta = duration_cast<seconds>(end - time_active_);
-    cout << "Progress: " << std::min(1.0, double(delta.count() / double(time_limit))) << endl;
-    return std::min(1.0, double(delta.count() / double(time_limit)));
+    duration<double> delta = duration_cast<milliseconds>(end - time_active_);
+    double progress = std::min(1.0, delta.count() / time_limit);
+
+    return progress;
 }
 
 // bool PowerUp::time_up() noexcept
