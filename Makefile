@@ -2,7 +2,7 @@ TOPDIR := ./
 SRCDIR := $(TOPDIR)/src/
 OBJDIR := $(TOPDIR)/obj/
 BINDIR := $(TOPDIR)
-NAME   := a # easier to write
+NAME   := Arkanoid
 EXE    := $(BINDIR)$(NAME)
 
 # Extensions de fichiers
@@ -40,7 +40,7 @@ $(EXE): $(OBJECTS)
 
 # Compilation des fichiers objets
 $(OBJDIR)%.$(OFILES): $(SRCDIR)%.$(SFILES)
-	@mkdir -p $(OBJDIR) # Crée le dossier obj si nécessaire
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -I$(SRCDIR) $< -c -o $@
 
 # Nettoyage des fichiers objets et de l'exécutable
