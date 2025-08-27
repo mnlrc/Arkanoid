@@ -48,7 +48,7 @@ const std::unordered_map<Power, int64_t> POWER_UP_DURATION = {
     {Power::CATCH, 15.0},
     {Power::SLOW, 5.0}};
 
-class PowerUp : public Rectangle
+class PowerUp final : public Rectangle
 {
 public:
     PowerUp(Point center, Power power);

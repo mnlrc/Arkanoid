@@ -23,7 +23,7 @@ constexpr int64_t MAX_TIME_ON_RACKET = 3.0;
 
 using namespace std::chrono;
 
-class Ball : public Circle
+class Ball final : public Circle
 {
 public:
     // #### Constructor ####

@@ -28,7 +28,7 @@ int Brick::get_hp() const noexcept { return hp_; };
 
 Power Brick::get_power_up() const noexcept { return power_up_; };
 
-const int Brick::get_points() const noexcept { return points_; };
+int Brick::get_points() const noexcept { return points_; };
 
 bool Brick::hit() noexcept
 {
@@ -52,12 +52,9 @@ bool Brick::hit() noexcept
     }
 }
 
-Color Brick::determine_outer_color(Color color) const noexcept
+constexpr Color Brick::determine_outer_color(Color color) const noexcept
 {
     if (color == Color::GOLD)
         return Color::DARK_GOLD;
-    if (color == Color::SILVER)
-        return Color::BLACK;
-    else
-        return Color::BLACK;
+    return Color::BLACK;
 }

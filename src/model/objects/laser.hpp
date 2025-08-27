@@ -19,7 +19,7 @@ constexpr double LASER_HEIGHT = WINDOW_HEIGHT * 0.1;
 constexpr double LASER_Y_SPEED = - WINDOW_HEIGHT * 0.01;
 constexpr double LASER_X_SPEED = 0;
 
-class Laser : public Rectangle
+class Laser final : public Rectangle
 {
 public:
     Laser(Point center);

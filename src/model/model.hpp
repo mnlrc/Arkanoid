@@ -24,6 +24,7 @@ public:
 
     /**
      * @brief Destroy the Model object
+     * It is virtual because of it's inheritance
      *
      */
     virtual ~Model() = default;
@@ -31,30 +32,30 @@ public:
     /**
      * @brief Get the width_ attribute
      *
-     * @return const int
+     * @return The width of the Model
      */
-    const int get_width() const noexcept;
+    int get_width() const noexcept;
 
     /**
      * @brief Get the height_ attribute
      *
-     * @return const int
+     * @return The height of the Model
      */
-    const int get_height() const noexcept;
+    int get_height() const noexcept;
 
     /**
      * @brief Get the inner_color_ attribute
      *
-     * @return const Color
+     * @return The Color inner_color_ attribute of the Model
      */
-    const Color get_inner_color() const noexcept;
+    Color get_inner_color() const noexcept;
 
     /**
      * @brief Get the outer_color_ attribute
      *
-     * @return const Color
+     * @return The Color outer_color_ attribute of the Model
      */
-    const Color get_outer_color() const noexcept;
+    Color get_outer_color() const noexcept;
 
 protected:
     const int width_;

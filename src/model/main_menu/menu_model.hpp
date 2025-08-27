@@ -36,7 +36,7 @@ const std::vector<std::string> LEVEL_BUTTON_TEXT = {LEVEL_1,
                                                     LEVEL_4,
                                                     LEVEL_5};
 
-class MenuModel : public Model
+class MenuModel final : public Model
 {
 public:
     /**
@@ -46,12 +46,6 @@ public:
      * @param height The height of the model's window
      */
     MenuModel(const int width, const int height);
-
-    /**
-     * @brief Destroy the Menu Model object
-     *
-     */
-    ~MenuModel() = default;
 
     /**
      * @brief Get the Buttons object

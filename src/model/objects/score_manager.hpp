@@ -32,7 +32,7 @@ public:
     static void reset_score();
 
 private:
-    static bool check_score(unsigned previous_score, unsigned new_score);
+    static constexpr bool check_score(unsigned previous_score, unsigned new_score);
 
     static void update_file_content(unsigned new_high_score);
 };

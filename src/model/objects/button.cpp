@@ -27,7 +27,7 @@ void Button::previousText()
 
 void Button::set_selected_text(size_t idx)
 {
-    if (idx < texts_.size() && idx >= 0)
+    if (idx < texts_.size())
     {
         idx_ = idx;
     }

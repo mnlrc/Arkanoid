@@ -55,16 +55,16 @@ void View::render_button(const Button &button)
 void View::draw_window(const Model &model)
 {
     // drawing main window
-    const int window_width = model.get_width();
-    const int window_height = model.get_height();
-    const Color temp_inner_color = model.get_inner_color();
-    const Color temp_outer_color = model.get_outer_color();
+    const float WINDOW_WIDTH_TEMP = static_cast<float>(model.get_width());
+    const float WINDOW_HEIGHT_TEMP = static_cast<float>(model.get_height());
+    const Color TEMP_INNER_COLOR = model.get_inner_color();
+    const Color TEMP_OUTER_COLOR = model.get_outer_color();
 
-    ALLEGRO_COLOR window_inner_color = color_convertor(temp_inner_color);
-    ALLEGRO_COLOR window_outer_color = color_convertor(temp_outer_color);
+    ALLEGRO_COLOR WINDOW_INNER_COLOR = color_convertor(TEMP_INNER_COLOR);
+    ALLEGRO_COLOR WINDOW_OUTER_COLOR = color_convertor(TEMP_OUTER_COLOR);
 
-    al_draw_filled_rectangle(0, 0, window_width, window_height, window_inner_color);
-    al_draw_rectangle(0, 0, window_width, window_height, window_outer_color, 4.0);
+    al_draw_filled_rectangle(0, 0, WINDOW_WIDTH_TEMP, WINDOW_HEIGHT_TEMP, WINDOW_INNER_COLOR);
+    al_draw_rectangle(0, 0, WINDOW_WIDTH_TEMP, WINDOW_HEIGHT_TEMP, WINDOW_OUTER_COLOR, 4.0);
 }
 
 void View::draw(const std::unique_ptr<MenuModel> &model)
@@ -178,16 +178,16 @@ void View::draw(const Button &button)
 void View::draw(const Rectangle &rectangle)
 {
     Point RECTANGLE_CENTER = rectangle.get_center();
-    double RECTANGLE_WIDTH = rectangle.get_width();
-    double RECTANGLE_HEIGHT = rectangle.get_height();
+    float RECTANGLE_WIDTH = static_cast<float>(rectangle.get_width());
+    float RECTANGLE_HEIGHT = static_cast<float>(rectangle.get_height());
 
     // upper left
-    double x1 = RECTANGLE_CENTER.x_ - (RECTANGLE_WIDTH / 2);
-    double y1 = RECTANGLE_CENTER.y_ - (RECTANGLE_HEIGHT / 2);
+    float x1 = static_cast<float>(RECTANGLE_CENTER.x_ - (RECTANGLE_WIDTH / 2));
+    float y1 = static_cast<float>(RECTANGLE_CENTER.y_ - (RECTANGLE_HEIGHT / 2));
 
     // lower right
-    double x2 = RECTANGLE_CENTER.x_ + (RECTANGLE_WIDTH / 2);
-    double y2 = RECTANGLE_CENTER.y_ + (RECTANGLE_HEIGHT / 2);
+    float x2 = static_cast<float>(RECTANGLE_CENTER.x_ + (RECTANGLE_WIDTH / 2));
+    float y2 = static_cast<float>(RECTANGLE_CENTER.y_ + (RECTANGLE_HEIGHT / 2));
 
     // converting colors
     Color RECTANGLE_INNER_COLOR = rectangle.get_inner_color();
@@ -201,9 +201,9 @@ void View::draw(const Rectangle &rectangle)
 
 void View::draw(const Circle &circle)
 {
-    float CIRCLE_X = circle.get_center().x_;
-    float CIRCLE_Y = circle.get_center().y_;
-    float CIRCLE_RADIUS = circle.get_radius();
+    float CIRCLE_X = static_cast<float>(circle.get_center().x_);
+    float CIRCLE_Y = static_cast<float>(circle.get_center().y_);
+    float CIRCLE_RADIUS = static_cast<float>(circle.get_radius());
 
     // converting colors
     Color CIRCLE_INNER_COLOR = circle.get_inner_color();
@@ -221,7 +221,9 @@ void View::draw(Point &center, std::string &text, Color &color)
     {
         const char *c_text = text.c_str();
         ALLEGRO_COLOR allegro_color = color_convertor(color);
-        al_draw_text(font_, allegro_color, center.x_, center.y_, ALLEGRO_ALIGN_CENTRE, c_text);
+        float x = static_cast<float>(center.x_);
+        float y = static_cast<float>(center.y_);
+        al_draw_text(font_, allegro_color, x, y, ALLEGRO_ALIGN_CENTRE, c_text);
     }
 }
 

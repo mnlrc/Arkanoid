@@ -20,7 +20,7 @@ void ScoreManager::update_score(unsigned new_score)
         getline(file, line);
         try
         {
-            previous_score = std::stoul(line);
+            previous_score = static_cast<unsigned>(std::stoul(line));
         }
         catch (const std::exception &e)
         {
@@ -41,7 +41,7 @@ void ScoreManager::reset_score()
     ofs.close();
 }
 
-bool ScoreManager::check_score(unsigned previous_score, unsigned new_score)
+constexpr bool ScoreManager::check_score(unsigned previous_score, unsigned new_score)
 {
     return new_score > previous_score;
 }

@@ -13,12 +13,10 @@
 
 #include <memory>
 
-class MenuController : public Controller
+class MenuController final : public Controller
 {
 public:
     MenuController(std::shared_ptr<View> view);
-
-    ~MenuController() = default;
 
     InputResponse handle_key_down(int key_code) override;
 

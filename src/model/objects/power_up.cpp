@@ -27,10 +27,10 @@ void PowerUp::activate() noexcept
 
 double PowerUp::progress() noexcept
 {
-    int64_t time_limit;
+    double time_limit;
     try
     {
-        time_limit = POWER_UP_DURATION.at(power_);
+        time_limit = static_cast<double>(POWER_UP_DURATION.at(power_));
     }
     catch (const std::exception &e)
     {

@@ -24,7 +24,7 @@ public:
 
     Object() = default;
 
-    ~Object() = default;
+    virtual ~Object() = default;
 
     Color get_inner_color() const noexcept;
     Color get_outer_color() const noexcept;

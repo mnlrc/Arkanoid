@@ -41,7 +41,7 @@ const std::vector<Text> END_TEXT = {WIN_TEXT, LOSE_TEXT};
  * for a better management.
  *
  */
-class GameModel : public Model
+class GameModel final : public Model
 {
 public:
     /**
@@ -50,14 +50,8 @@ public:
      */
     GameModel(int level);
 
-    /**
-     * @brief Destroy the Game Model object
-     *
-     */
-    ~GameModel() = default;
-
     std::vector<std::shared_ptr<Ball>> &get_balls() noexcept;
-
+    
     std::vector<std::vector<std::shared_ptr<Brick>>> &get_bricks() noexcept;
 
     std::shared_ptr<Racket> get_racket() const noexcept;

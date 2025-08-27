@@ -14,7 +14,7 @@
 
 class Engine;
 
-class GameController : public Controller
+class GameController final : public Controller
 {
 public:
     /**
@@ -22,12 +22,6 @@ public:
      *
      */
     GameController(std::shared_ptr<View> view);
-
-    /**
-     * @brief Destroy the GameController object
-     *
-     */
-    ~GameController() = default;
 
     /**
      * @brief
@@ -47,7 +41,7 @@ public:
      *
      * @param key_code
      */
-    void handle_key_up(int key_code);
+    void handle_key_up(int key_code) override;
 
     void handle_mouse_movement(ALLEGRO_EVENT mouse_event);
 

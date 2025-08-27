@@ -43,7 +43,8 @@ InputResponse GameController::handle_key_down(int key_code)
         input_keys_[Direction::RIGHT] = true;
         return InputResponse::NONE;
     case ALLEGRO_KEY_SPACE: // launch a ball or shoot a laser
-        if (game_model) game_model->handle_space_input();
+        if (game_model)
+            game_model->handle_space_input();
         return InputResponse::NONE;
     case ALLEGRO_KEY_ESCAPE: // return to previous menu
         return InputResponse::QUIT;
@@ -61,17 +62,23 @@ void GameController::handle_key_up(int key_code)
     case ALLEGRO_KEY_Q:
     case ALLEGRO_KEY_LEFT:
         input_keys_[Direction::LEFT] = false;
+        break;
     case ALLEGRO_KEY_D:
     case ALLEGRO_KEY_P:
     case ALLEGRO_KEY_RIGHT:
         input_keys_[Direction::RIGHT] = false;
+        break;
+    default:
+        Logger::log("[ERROR] Invalid input");
+        return;
     }
 }
 
 void GameController::handle_mouse_movement(ALLEGRO_EVENT mouse_event)
 {
     double mouse_x_pos = mouse_event.mouse.x;
-    if (game_model) engine_->move(mouse_x_pos, *game_model);
+    if (game_model)
+        engine_->move(mouse_x_pos, *game_model);
 }
 
 UpdateResponse GameController::update_model()

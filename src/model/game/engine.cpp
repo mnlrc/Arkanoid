@@ -244,15 +244,14 @@ void Engine::check_racket_collision(GameModel &game_model, std::shared_ptr<Ball>
     }
 }
 
-const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
-                                        GameModel &game_model)
+int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
+                                  GameModel &game_model)
 {
     double C_X = ball->get_center().x_;
     double C_Y = ball->get_center().y_;
     double RADIUS = ball->get_radius();
     std::vector<std::vector<std::shared_ptr<Brick>>> &bricks = game_model.get_bricks();
 
-    // Checking all bricks
     for (auto &brick_row : bricks)
     {
         for (auto &brick : brick_row)
@@ -262,16 +261,16 @@ const int Engine::check_brick_collision(std::shared_ptr<Ball> ball,
                 continue;
             }
 
-            // Defining brick limits for clearer code
+            // defining brick limits for clearer code
             double LEFT = brick->get_left();
             double RIGHT = brick->get_right();
             double TOP = brick->get_top();
             double BOTTOM = brick->get_bottom();
 
-            if ((C_X + RADIUS > LEFT && C_X - RADIUS < RIGHT) && // Horizontal collision ?
+            if ((C_X + RADIUS > LEFT && C_X - RADIUS < RIGHT) &&
                 (C_Y + RADIUS > TOP && C_Y - RADIUS < BOTTOM))
-            { // Vertical collision ?
-                // Calculating side of collision
+            {
+                // calculating side of collision
                 double overlap_x = std::min(C_X + RADIUS - LEFT, RIGHT - (C_X - RADIUS));
                 double overlap_y = std::min(C_Y + RADIUS - TOP, BOTTOM - (C_Y - RADIUS));
 
@@ -377,7 +376,7 @@ int Engine::check_laser_collision(Laser &laser, GameModel &game_model)
     return 0; // no brick was hit
 }
 
-double Engine::return_angle(double x, double L) const
+constexpr double Engine::return_angle(double x, double L) const
 {
     return ((30 + 120 * (1 - (x / L))) * (M_PI / 180)); // converting to rads
 }
@@ -415,11 +414,17 @@ void Engine::handle_power_up(GameModel &game_model)
     case Power::SLOW:
         game_model.update_ball_progress(progress);
         break;
+    case Power::LASER:
+    case Power::ENLARGE:
+    case Power::CATCH:
+    case Power::STOP:
+    case Power::PLAYER:
+    case Power::NONE:
     default:
         break;
     }
 
-    if (progress == 1.0) // time is 100% up
+    if (progress >= 1.0) // time is 100% up
     {
         game_model.activate_power_up(PowerUp());
     }

@@ -171,6 +171,8 @@ void Game::handle_input_response(InputResponse response, bool &done)
                 done = true;
                 game_loop = false;
                 break;
+            case InputResponse::ENTER:
+            case InputResponse::NONE:
             default:
                 break;
             }
@@ -186,6 +188,7 @@ void Game::handle_input_response(InputResponse response, bool &done)
             case InputResponse::ENTER:
                 done = true;
                 game_loop = true;
+            case InputResponse::NONE:
             default:
                 break;
             }

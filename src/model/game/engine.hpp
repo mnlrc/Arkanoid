@@ -55,14 +55,14 @@ private:
 
     void check_racket_collision(GameModel &game_model, std::shared_ptr<Ball> ball);
 
-    const int check_brick_collision(std::shared_ptr<Ball> ball,
-                                    GameModel &game_model);
+    int check_brick_collision(std::shared_ptr<Ball> ball,
+                              GameModel &game_model);
 
     void check_power_up_collision(GameModel &game_model);
 
     int check_laser_collision(Laser &laser, GameModel &game_model);
 
-    double return_angle(double, double) const;
+    constexpr double return_angle(double, double) const;
 
     void delete_ball(std::vector<std::shared_ptr<Ball>> &balls, const std::vector<std::shared_ptr<Ball>> &balls_to_remove);
 

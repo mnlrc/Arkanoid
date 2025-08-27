@@ -22,8 +22,6 @@ public:
     Rectangle(Point center, double width, double height, Color inner_color, Color outer_color);
 
     Rectangle() = default;
-    // ##### Destructor #####
-    ~Rectangle() = default;
 
     // #### Getters #####
 

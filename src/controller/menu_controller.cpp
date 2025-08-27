@@ -28,6 +28,7 @@ InputResponse MenuController::handle_key_down(int key_code)
         return InputResponse::NONE;
     case ALLEGRO_KEY_R:
         ScoreManager::reset_score();
+        return InputResponse::NONE;
     default:
         Logger::log("[ERROR] Invalid input");
         return InputResponse::NONE;
@@ -36,4 +37,4 @@ InputResponse MenuController::handle_key_down(int key_code)
 
 void MenuController::update_view() { view_->render_menu_model(menu_model_); }
 
-short int MenuController::get_selected_level() const noexcept { return menu_model_->get_selected_level(); }
+short int MenuController::get_selected_level() const noexcept { return static_cast<short>(menu_model_->get_selected_level()); }
