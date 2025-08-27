@@ -65,7 +65,7 @@ void View::draw_window(const Model &model)
     ALLEGRO_COLOR WINDOW_OUTER_COLOR = color_convertor(TEMP_OUTER_COLOR);
 
     al_draw_filled_rectangle(0, 0, WINDOW_WIDTH_TEMP, WINDOW_HEIGHT_TEMP, WINDOW_INNER_COLOR);
-    al_draw_rectangle(0, 0, WINDOW_WIDTH_TEMP, WINDOW_HEIGHT_TEMP, WINDOW_OUTER_COLOR, 4.0);
+    al_draw_rectangle(0, 0, WINDOW_WIDTH_TEMP, WINDOW_HEIGHT_TEMP, WINDOW_OUTER_COLOR, 10.0);
 }
 
 void View::draw(const std::unique_ptr<MenuModel> &model)

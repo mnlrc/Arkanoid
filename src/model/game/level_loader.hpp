@@ -103,14 +103,6 @@ private:
     static Color color_from_char(const char &c);
 
     /**
-     * @brief Converts a string into a Color
-     *
-     * @param str
-     * @return Color
-     */
-    static Color color_from_string(const std::string &str);
-
-    /**
      * @brief Converts a char into a Power
      *
      * @param c

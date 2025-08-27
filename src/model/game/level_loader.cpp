@@ -65,10 +65,21 @@ LevelData LevelLoader::load_level(int level)
             level_data.racket = temp_racket;
             level_data.bricks = temp_bricks;
 
-            getline(file, line);
-            Color background_color = color_from_string(line);
-            getline(file, line);
-            Color line_color = color_from_string(line);
+            Color background_color;
+            Color line_color;
+            try
+            {
+                getline(file, line);
+                background_color = color_from_char(line[0]);
+                getline(file, line);
+                line_color = color_from_char(line[0]);
+            }
+            catch (const std::exception &e)
+            {
+                Logger::log("[ERROR] Exception when reading model colors: " + std::string(e.what()));
+                background_color = Color::GREY;
+                line_color = Color::DARK_GOLD;
+            }
 
             level_data.background_color = background_color;
             level_data.line_color = line_color;
@@ -130,6 +141,8 @@ Color LevelLoader::color_from_char(const char &c)
     {
     case 'W':
         return Color::WHITE;
+    case 'A':
+        return Color::BLACK;
     case 'Y':
         return Color::YELLOW;
     case 'M':
@@ -154,17 +167,6 @@ Color LevelLoader::color_from_char(const char &c)
         Logger::log("[ERROR] Unknown color when reading level file");
         return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
     }
-}
-
-Color LevelLoader::color_from_string(const std::string &str)
-{
-    if (str.compare("GREY"))
-        return Color::GREY;
-    if (str.compare("BLACK"))
-        return Color::BLACK;
-    if (str.compare("WHITE"))
-        return Color::WHITE;
-    return Color::BLACK; // using black as default because of RGB values being 0, 0, 0
 }
 
 Power LevelLoader::power_up_from_char(const char &c)
