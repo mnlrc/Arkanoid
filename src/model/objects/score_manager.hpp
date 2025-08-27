@@ -6,6 +6,9 @@
  *
  */
 
+#ifndef SCORE_MANAGER_HPP
+#define SCORE_MANAGER_HPP
+
 #include <string>
 #include <fstream>
 
@@ -33,3 +36,5 @@ private:
 
     static void update_file_content(unsigned new_high_score);
 };
+
+#endif
