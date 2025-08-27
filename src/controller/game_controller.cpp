@@ -43,7 +43,7 @@ InputResponse GameController::handle_key_down(int key_code)
         input_keys_[Direction::RIGHT] = true;
         return InputResponse::NONE;
     case ALLEGRO_KEY_SPACE: // launch a ball or shoot a laser
-        game_model->handle_space_input();
+        if (game_model) game_model->handle_space_input();
         return InputResponse::NONE;
     case ALLEGRO_KEY_ESCAPE: // return to previous menu
         return InputResponse::QUIT;
@@ -71,7 +71,7 @@ void GameController::handle_key_up(int key_code)
 void GameController::handle_mouse_movement(ALLEGRO_EVENT mouse_event)
 {
     double mouse_x_pos = mouse_event.mouse.x;
-    engine_->move(mouse_x_pos, *game_model);
+    if (game_model) engine_->move(mouse_x_pos, *game_model);
 }
 
 UpdateResponse GameController::update_model()
@@ -107,4 +107,10 @@ void GameController::reset_game_model() noexcept
         game_model.reset();
         current_level = 0;
     }
+}
+
+void GameController::update_score() const noexcept
+{
+    Score game_score = game_model->get_current_score();
+    ScoreManager::update_score(game_score.get_score());
 }

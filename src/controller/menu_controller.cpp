@@ -26,6 +26,8 @@ InputResponse MenuController::handle_key_down(int key_code)
     case ALLEGRO_KEY_RIGHT:
         menu_model_->cycle_text(Direction::RIGHT);
         return InputResponse::NONE;
+    case ALLEGRO_KEY_R:
+        ScoreManager::reset_score();
     default:
         Logger::log("[ERROR] Invalid input");
         return InputResponse::NONE;

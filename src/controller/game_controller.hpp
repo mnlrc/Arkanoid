@@ -10,6 +10,7 @@
 
 #include "controller.hpp"
 #include "../model/game/engine.hpp"
+#include "../model/objects/score_manager.hpp"
 
 class Engine;
 
@@ -57,6 +58,8 @@ public:
     void draw_end(bool is_win);
 
     void reset_game_model() noexcept;
+
+    void update_score() const noexcept;
 
 private:
     std::unique_ptr<Engine> engine_;

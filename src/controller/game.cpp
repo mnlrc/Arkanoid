@@ -133,8 +133,10 @@ void Game::run_game(short level)
             case ALLEGRO_EVENT_TIMER:
             {
                 if (handle_update_response(game_controller_->update_model()))
-                {
+                { // game ends
                     draw = false;
+                    game_controller_->update_score();
+                    game_controller_->reset_game_model();
                 }
                 else
                 {
@@ -200,11 +202,9 @@ bool Game::handle_update_response(UpdateResponse response)
         return false; // no update needed, continue the game loop
     case UpdateResponse::GAME_OVER:
         game_controller_->draw_end(false);
-        game_controller_->reset_game_model();
         return true;
     case UpdateResponse::GAME_WON:
         game_controller_->draw_end(true);
-        game_controller_->reset_game_model();
         return true;
     default:
         Logger::log("[ERROR] Unhandled update response");

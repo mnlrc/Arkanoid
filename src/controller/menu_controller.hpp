@@ -9,6 +9,7 @@
 #define MENU_CONTROLLER_HPP
 
 #include "controller.hpp"
+#include "../model/objects/score_manager.hpp"
 
 #include <memory>
 
