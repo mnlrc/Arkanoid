@@ -9,15 +9,15 @@
 #ifndef POWER_UP_HPP
 #define POWER_UP_HPP
 
-#define POWER_UP_WIDTH WINDOW_WIDTH * 0.05
-#define POWER_UP_HEIGHT WINDOW_HEIGHT * 0.05
-
 #include "rectangle.hpp"
 #include "../../log/logger.hpp"
 #include "../../global_variables.hpp"
 
 #include <unordered_map>
 #include <chrono>
+
+constexpr double POWER_UP_WIDTH = WINDOW_WIDTH * 0.03;
+constexpr double POWER_UP_HEIGHT = WINDOW_HEIGHT * 0.03;
 
 using namespace std::chrono;
 

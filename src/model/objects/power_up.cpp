@@ -8,7 +8,7 @@
 
 #include "power_up.hpp"
 
-PowerUp::PowerUp(Point center, Power power) : Rectangle{center, POWER_UP_HEIGHT, POWER_UP_WIDTH, POWER_UP_COLOR.at(power), Color::BLACK}, power_(power), is_falling_(true), is_active_(false) {}
+PowerUp::PowerUp(Point center, Power power) : Rectangle{center, POWER_UP_WIDTH, POWER_UP_HEIGHT, POWER_UP_COLOR.at(power), Color::BLACK}, power_(power), is_falling_(true), is_active_(false) {}
 
 PowerUp::PowerUp() : Rectangle{}, power_(Power::NONE), is_falling_(false), is_active_(false) {}
 

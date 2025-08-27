@@ -9,8 +9,6 @@
 #ifndef GAME_MODEL_HPP
 #define GAME_MODEL_HPP
 
-#define BRICKS_PER_ROW 14
-#define BRICKS_PER_COLUMN 8
 #define DEFAULT_LIVES 3
 
 // #### Internal includes ####
@@ -83,8 +81,6 @@ public:
     void reset_ball() noexcept;
 
     void handle_space_input() noexcept;
-
-    void handle_mouse_input(double mouse_x_pos) noexcept;
 
     void update_ball_progress(double progress);
 

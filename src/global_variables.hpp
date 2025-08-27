@@ -9,8 +9,9 @@
 #ifndef GLOBAL_VARIABLES_HPP
 #define GLOBAL_VARIABLES_HPP
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 700
+constexpr int WINDOW_WIDTH = 600;
+constexpr int WINDOW_HEIGHT = 700;
+constexpr int FREQUENCY = 60;
 
 enum class Direction : int
 {
