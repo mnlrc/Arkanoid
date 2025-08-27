@@ -9,12 +9,15 @@
 #ifndef LEVEL_LOADER_HPP
 #define LEVEL_LOADER_HPP
 
+// #### Internal inclusions ####
 #include "../objects/ball.hpp"
 #include "../objects/racket.hpp"
 #include "../objects/brick.hpp"
 #include "../../log/logger.hpp"
 #include "../objects/power_up.hpp"
 #include "../../global_variables.hpp"
+
+// #### C++ inclusions ####
 #include <string>
 #include <vector>
 #include <fstream>
@@ -27,6 +30,10 @@ const std::unordered_map<int, const std::string> LEVEL_MAP = {{1, "levels/level-
                                                               {4, "levels/level-4.txt"},
                                                               {5, "levels/level-5.txt"}};
 
+/**
+ * @brief Struct used to store the data held in the level text files
+ *
+ */
 struct LevelData
 {
     std::shared_ptr<Racket> racket;
@@ -37,7 +44,8 @@ struct LevelData
     int bricks_per_column;
 
     /**
-     * @brief
+     * @brief Checks if the struct is empty, can happen if an error occurs when
+     * reading a text file
      *
      * @return true
      * @return false
@@ -45,6 +53,10 @@ struct LevelData
     bool is_empty();
 };
 
+/**
+ * @brief Static class used to load the level following the level parameter
+ * 
+ */
 class LevelLoader
 {
 public:
@@ -55,11 +67,18 @@ public:
     LevelLoader() = delete;
     ~LevelLoader() = delete;
 
+    /**
+     * @brief Reads the level text file, and initializes the data of a level
+     * 
+     * @param level 
+     * @return LevelData 
+     */
     static LevelData load_level(int level);
 
 private:
     /**
-     * @brief
+     * @brief Checks if the tag in the text files is correct. Adds a 
+     * security layer
      *
      * @param level_tag
      * @return true
@@ -76,7 +95,7 @@ private:
     static std::vector<std::vector<std::shared_ptr<Brick>>> load_bricks(std::ifstream &file, LevelData &level_data);
 
     /**
-     * @brief
+     * @brief Converts a char into a Color
      *
      * @param c
      * @return Color
@@ -84,7 +103,7 @@ private:
     static Color color_from_char(const char &c);
 
     /**
-     * @brief
+     * @brief Converts a string into a Color
      *
      * @param str
      * @return Color
@@ -92,7 +111,7 @@ private:
     static Color color_from_string(const std::string &str);
 
     /**
-     * @brief
+     * @brief Converts a char into a Power
      *
      * @param c
      * @return Power

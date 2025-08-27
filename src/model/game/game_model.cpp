@@ -61,11 +61,11 @@ GameModel::GameModel(int level) : Model{WINDOW_WIDTH, WINDOW_HEIGHT}, end_button
     double ball_radius = racket_height / 2;
     std::shared_ptr<Ball> ball = std::make_shared<Ball>(ball_center, ball_radius, ball_speed);
     balls_[0] = ball;
-    if (ball->is_moving())
-    {
-    }
 
     setup_circles();
+
+    set_inner_color(level_data.background_color);
+    set_outer_color(level_data.line_color);
 }
 
 std::vector<std::shared_ptr<Ball>> &GameModel::get_balls() noexcept { return balls_; }

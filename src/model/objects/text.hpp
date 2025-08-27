@@ -9,15 +9,22 @@
 #ifndef TEXT_HPP
 #define TEXT_HPP
 
-#include <string>
-
+// #### Internal inclusions ####
 #include "point.hpp"
 #include "../../global_variables.hpp"
+
+// #### C++ inclusions ####
+#include <string>
 
 class Text
 {
 public:
-
+    /**
+     * @brief Construct a new Text object
+     *
+     * @param str
+     * @param color
+     */
     Text(std::string str, Color color);
 
     /**
@@ -27,14 +34,14 @@ public:
     ~Text() = default;
 
     /**
-     * @brief Get the Text object
+     * @brief Get the text
      *
      * @return std::string
      */
     std::string get_text() const noexcept;
 
     /**
-     * @brief Get the Color object
+     * @brief Get the color of the text
      *
      * @return Color
      */

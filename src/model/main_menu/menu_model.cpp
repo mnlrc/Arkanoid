@@ -53,10 +53,10 @@ void MenuModel::cycle_text(Direction direction)
     switch (direction)
     {
     case Direction::RIGHT:
-        buttons_[level_text_idx].nextText();
+        buttons_[level_text_idx].next_text();
         break;
     case Direction::LEFT:
-        buttons_[level_text_idx].previousText();
+        buttons_[level_text_idx].previous_text();
         break;
     default:
         break;

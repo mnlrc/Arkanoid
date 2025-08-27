@@ -12,4 +12,4 @@ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_
 W-_ W-_ W-_ W-_ W-_ W-_ W-_ I-_ I-_ W-_ W-_ W-_ W-_ W-_
 
 GREY
-BLACK
+GREY

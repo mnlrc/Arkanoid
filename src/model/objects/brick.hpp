@@ -9,12 +9,14 @@
 #ifndef BRICK_HPP
 #define BRICK_HPP
 
+// #### Internal inclusions ####
 #include "point.hpp"
 #include "rectangle.hpp"
 #include "object.hpp"
 #include "power_up.hpp"
 #include "../../global_variables.hpp"
 
+// #### C++ inclusions ####
 #include <unordered_map>
 #include <limits>
 #include <string>
@@ -47,19 +49,48 @@ const int GOLD_HP = std::numeric_limits<int>::max();
 class Brick final : public Rectangle
 {
 public:
-    // #### Constructors ####
+    /**
+     * @brief Construct a new Brick object
+     * 
+     * @param color 
+     * @param power_up 
+     */
     Brick(Color &color, Power &power_up);
 
-    // #### Getters ####
+    /**
+     * 
+     * @return true if the brick is broken 
+     * @return false otherwise
+     */
     bool is_broken() const noexcept;
 
+    /**
+     * @brief Get the remaining hp of the brick
+     * 
+     * @return int 
+     */
     int get_hp() const noexcept;
 
+    /**
+     * @brief Get the power held within the brick
+     * 
+     * @return Power 
+     */
     Power get_power_up() const noexcept;
 
+    /**
+     * @brief Get the points assigned to the brick
+     * 
+     * @return int 
+     */
     int get_points() const noexcept;
 
-    // #### Setters ####
+    /**
+     * @brief Decrements the hp of the brick
+     * 
+     * @return true if the brick is broken
+     * @return false otherwise
+     */
     bool hit() noexcept;
 
 private:
@@ -68,6 +99,13 @@ private:
     const int points_;
     int hp_;
 
+    /**
+     * @brief Small helper function to set up an outer color to the
+     * brick based on its inner color
+     * 
+     * @param color 
+     * @return constexpr Color 
+     */
     constexpr Color determine_outer_color(Color color) const noexcept;
 };
 

@@ -13,13 +13,13 @@ Button::Button(const std::vector<Text> &texts, Point center, double width, doubl
 
 const Text &Button::get_selected_text() const noexcept { return texts_[idx_]; }
 
-void Button::nextText()
+void Button::next_text()
 {
     if (texts_.size() > 1)
         idx_ = (idx_ + 1) % texts_.size();
 }
 
-void Button::previousText()
+void Button::previous_text()
 {
     if (texts_.size() > 1)
         idx_ = (idx_ + texts_.size() - 1) % texts_.size();

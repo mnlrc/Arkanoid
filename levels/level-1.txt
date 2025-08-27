@@ -11,5 +11,5 @@ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_ C-_
 O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_ O-_
 W-L W-L W-_ W-_ W-_ W-_ W-_ W-L W-L W-_ W-_ W-_ W-_ W-_
 
+WHITE
 GREY
-BLACK

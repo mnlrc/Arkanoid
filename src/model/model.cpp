@@ -17,3 +17,7 @@ int Model::get_height() const noexcept { return height_; }
 Color Model::get_inner_color() const noexcept { return inner_color_; }
 
 Color Model::get_outer_color() const noexcept { return outer_color_; }
+
+void Model::set_inner_color(Color new_color) noexcept { inner_color_ = new_color; }
+
+void Model::set_outer_color(Color new_color) noexcept { outer_color_ = new_color; }

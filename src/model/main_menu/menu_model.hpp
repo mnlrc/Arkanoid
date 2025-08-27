@@ -9,13 +9,7 @@
 #ifndef MENU_MODEL_HPP
 #define MENU_MODEL_HPP
 
-#define NUMBER_OF_BUTTONS 3
-
-#include <cmath>
-#include <string>
-#include <unordered_map>
-#include <map>
-
+// #### Internal inclusions ####
 #include "../model.hpp"
 #include "../objects/rectangle.hpp"
 #include "../objects/button.hpp"
@@ -23,6 +17,13 @@
 #include "../../global_variables.hpp"
 #include "../../log/logger.hpp"
 
+// #### C++ inclusions ####
+#include <cmath>
+#include <string>
+#include <unordered_map>
+#include <map>
+
+constexpr size_t NUMBER_OF_BUTTONS = 3;
 const std::string PLAY_BUTTON_TEXT = "Play - Enter";
 const std::string EXIT_BUTTON_TEXT = "Quit Game - Escape";
 const std::string LEVEL_1 = "<-      Level 1      ->";
@@ -36,6 +37,11 @@ const std::vector<std::string> LEVEL_BUTTON_TEXT = {LEVEL_1,
                                                     LEVEL_4,
                                                     LEVEL_5};
 
+/**
+ * @brief The model representing and holding objects of the main menu
+ * used to select the level, start a game or leave the program
+ *
+ */
 class MenuModel final : public Model
 {
 public:
@@ -48,21 +54,21 @@ public:
     MenuModel(const int width, const int height);
 
     /**
-     * @brief Get the Buttons object
+     * @brief Get the buttons of the Model
      *
      * @return Rectangle*
      */
     std::vector<Button> get_buttons();
 
     /**
-     * @brief
+     * @brief Changes the text of the level selection button
      *
      * @param direction
      */
     void cycle_text(Direction direction);
 
     /**
-     * @brief Get the selected level object
+     * @brief Get the selected level
      *
      * @return int
      */

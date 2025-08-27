@@ -8,7 +8,7 @@
 
 #include "score.hpp"
 
-Score::Score() : rectangle_{Point{WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.8}, 0, 0, Color::BLACK, Color::BLACK}, score_(STARTING_SCORE) {}
+Score::Score() : rectangle_{Point{WINDOW_WIDTH * SCORE_WIDTH_PERCENTAGE, WINDOW_HEIGHT * SCORE_HEIGHT_PERCENTAGE}, 0, 0, Color::BLACK, Color::BLACK}, score_(STARTING_SCORE) {}
 
 unsigned Score::get_score() const noexcept { return score_; };
 

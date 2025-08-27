@@ -18,6 +18,7 @@ View::~View()
     if (display_)
     {
         al_destroy_display(display_);
+        al_destroy_font(font_);
     }
 };
 
