@@ -18,8 +18,9 @@
 
 constexpr bool DEFAULT_BALL_STATE = false;
 constexpr double DEFAULT_BALL_SPEED = 5.0;
-constexpr double SLOW_FACTOR = 0.5;
+constexpr double SLOW_FACTOR = 0.5; // slow percentage
 constexpr int64_t MAX_TIME_ON_RACKET = 3.0;
+constexpr double BALL_VERTICAL_POS = 0.895; // the percentage of the position on the window
 
 using namespace std::chrono;
 

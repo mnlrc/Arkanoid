@@ -59,7 +59,7 @@ UpdateResponse Engine::update_model(GameModel &game_model)
 
     // updating ball positions
     size_t size = balls.size();
-    size_t temp_size = size;
+    size_t temp_size = size; // counts the remaining balls
     std::vector<std::shared_ptr<Ball>> balls_to_remove;
     for (size_t i = 0; i < size; i++)
     {
@@ -71,11 +71,8 @@ UpdateResponse Engine::update_model(GameModel &game_model)
                 ball->set_moving();
             }
             else
-            {                                          // updating the position to follow the racket
-                double ball_shift = ball->get_shift(); // TODO: add this to a methode "track racket"
-                double racket_center_x = racket->get_center().x_;
-                Point ball_center = Point{racket_center_x + ball_shift, ball->get_center().y_};
-                ball->set_center(ball_center);
+            { // updating the position to follow the racket
+                track_racket(ball, racket);
                 continue; // ball is not moving, skip it
             }
         }
@@ -129,24 +126,7 @@ UpdateResponse Engine::update_model(GameModel &game_model)
 
     if (game_model.get_active_power_up().get_power() == Power::LASER)
     {
-        std::vector<Laser> &lasers = game_model.get_lasers();
-        for (auto &laser : lasers)
-        {
-            if (!laser.is_launched()) // the lasers are activated from idx 0 to 1000
-            {                         // so if we run into a laser that isn't launched
-                                      // we don't need to check the rest
-                break;
-            }
-            if (laser.was_used())
-            {
-                continue;
-            }
-            Point previous_center = laser.get_center();
-            Point laser_speed = laser.get_speed();
-            Point new_center = Point{previous_center.x_, previous_center.y_ + laser_speed.y_};
-            laser.set_center(new_center);
-            game_model.add_score(check_laser_collision(laser, game_model));
-        }
+        handle_laser_power_up(game_model);
     }
 
     return UpdateResponse::CONTINUE;
@@ -154,7 +134,6 @@ UpdateResponse Engine::update_model(GameModel &game_model)
 
 void Engine::handle_falling_power_ups(GameModel &game_model)
 {
-    const int FALLING_SPEED = 3; // TODO: set as global variable
     std::vector<PowerUp> &power_ups = game_model.get_falling_power_ups();
 
     if (power_ups.empty())
@@ -382,7 +361,7 @@ constexpr double Engine::return_angle(double x, double L) const
 }
 
 void Engine::delete_ball(std::vector<std::shared_ptr<Ball>> &balls, const std::vector<std::shared_ptr<Ball>> &balls_to_remove)
-{ // TODO: move to game model
+{
     for (const auto &ball : balls_to_remove)
     {
         balls.erase(std::remove(balls.begin(), balls.end(), ball), balls.end());
@@ -426,7 +405,7 @@ void Engine::handle_power_up(GameModel &game_model)
 
     if (progress >= 1.0) // time is 100% up
     {
-        game_model.activate_power_up(PowerUp());
+        game_model.activate_power_up(PowerUp()); // setting active power up to None
     }
 }
 
@@ -442,4 +421,34 @@ int Engine::brick_hit(GameModel &game_model, std::shared_ptr<Brick> hit_brick)
         }
     }
     return hit_brick->get_points();
+}
+
+void Engine::track_racket(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket)
+{
+    double ball_shift = ball->get_shift();
+    double racket_center_x = racket->get_center().x_;
+    Point ball_center = Point{racket_center_x + ball_shift, ball->get_center().y_};
+    ball->set_center(ball_center);
+}
+
+void Engine::handle_laser_power_up(GameModel &game_model)
+{
+    std::vector<Laser> &lasers = game_model.get_lasers();
+    for (auto &laser : lasers)
+    {
+        if (!laser.is_launched()) // the lasers are activated from idx 0 to 1000
+        {                         // so if we run into a laser that isn't launched
+                                  // we don't need to check the rest
+            break;
+        }
+        if (laser.was_used())
+        {
+            continue;
+        }
+        Point previous_center = laser.get_center();
+        Point laser_speed = laser.get_speed();
+        Point new_center = Point{previous_center.x_, previous_center.y_ + laser_speed.y_};
+        laser.set_center(new_center);
+        game_model.add_score(check_laser_collision(laser, game_model));
+    }
 }

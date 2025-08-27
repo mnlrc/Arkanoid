@@ -71,6 +71,10 @@ private:
     void handle_power_up(GameModel &game_model);
 
     int brick_hit(GameModel &game_model, std::shared_ptr<Brick> hit_brick);
+
+    void track_racket(std::shared_ptr<Ball> ball, std::shared_ptr<Racket> racket);
+
+    void handle_laser_power_up(GameModel &game_model);
 };
 
 #endif

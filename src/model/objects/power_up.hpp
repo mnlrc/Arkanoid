@@ -18,6 +18,7 @@
 
 constexpr double POWER_UP_WIDTH = WINDOW_WIDTH * 0.03;
 constexpr double POWER_UP_HEIGHT = WINDOW_HEIGHT * 0.03;
+constexpr int FALLING_SPEED = 3;
 
 using namespace std::chrono;
 

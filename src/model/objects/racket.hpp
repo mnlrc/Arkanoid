@@ -14,6 +14,12 @@
 #include "global_variables.hpp"
 #include "object.hpp"
 
+constexpr double RACKET_HEIGHT = WINDOW_HEIGHT / 25;
+constexpr double RACKET_VERTICAL_POS = 0.955; // the percentage of the position on the window
+constexpr double DEFAULT_RACKET_WIDTH_PERCENTAGE = 0.25;
+constexpr Color DEFAULT_INNER_COLOR = Color::WHITE;
+constexpr Color DEFAULT_OUTER_COLOR = Color::BLACK;
+
 /**
  * @class Racket
  * @brief Represents the racket used by the player

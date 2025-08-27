@@ -40,7 +40,7 @@ LevelData LevelLoader::load_level(int level)
             catch (int error)
             {
                 Logger::log("[ERROR] Conversion error for racket size, error code: " + std::to_string(error));
-                racket_width = 0.25; // setting racket size to an arbitrary value TODO magic numbers
+                racket_width = DEFAULT_RACKET_WIDTH_PERCENTAGE; // setting racket size to an arbitrary value
             }
 
             Color racket_inner_color;
@@ -55,11 +55,10 @@ LevelData LevelLoader::load_level(int level)
             catch (const std::exception &e)
             {
                 Logger::log("[ERROR] Exception when reading racket colors: " + std::string(e.what()));
-                racket_inner_color = Color::WHITE; // setting default color: TODO: set defaults as global variables
-                racket_outer_color = Color::BLACK; // setting default color
+                racket_inner_color = DEFAULT_INNER_COLOR;
+                racket_outer_color = DEFAULT_OUTER_COLOR;
             }
 
-            // TODO: remove magic numbers
             std::shared_ptr<Racket> temp_racket = std::make_shared<Racket>(racket_inner_color, racket_outer_color, racket_width);
             std::vector<std::vector<std::shared_ptr<Brick>>> temp_bricks = load_bricks(file, level_data);
 
