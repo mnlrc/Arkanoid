@@ -10,7 +10,7 @@
 
 // #### Internal inclusions ####
 #include "controller.hpp"
-#include "../model/objects/score_manager.hpp"
+#include "score_manager.hpp"
 
 // #### C++ inclusions ####
 #include <memory>

@@ -129,7 +129,7 @@ void View::draw(const std::unique_ptr<GameModel> &game_model)
     Score temp_score = game_model->get_current_score();
     std::string score_string = "Score: " + std::to_string(temp_score.get_score());
     Point score_center = temp_score.get_center();
-    Color score_color = temp_score.get_color();
+    Color score_color = temp_score.get_inner_color();
 
     draw(score_center, score_string, score_color);
 

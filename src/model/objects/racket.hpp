@@ -18,6 +18,7 @@
 constexpr double RACKET_HEIGHT = WINDOW_HEIGHT / 25;
 constexpr double RACKET_VERTICAL_POS = 0.955; // the percentage of the position on the window
 constexpr double DEFAULT_RACKET_WIDTH_PERCENTAGE = 0.25;
+constexpr double DEFAULT_RACKET_SPEED = 10;
 constexpr Color DEFAULT_INNER_COLOR = Color::WHITE;
 constexpr Color DEFAULT_OUTER_COLOR = Color::BLACK;
 
@@ -76,7 +77,7 @@ public:
 private:
     double racket_width_percentage_; // percentage of the windows width
     double default_width_percentage_;
-    double speed_ = 10;
+    double speed_ = DEFAULT_RACKET_SPEED;
 };
 
 #endif

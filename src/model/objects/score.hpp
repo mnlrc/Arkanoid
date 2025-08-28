@@ -22,7 +22,7 @@ constexpr double SCORE_WIDTH_PERCENTAGE = 0.5;
  * a rectangle that helps the view draw the score
  *
  */
-class Score
+class Score final: public Rectangle
 {
 public:
     /**
@@ -46,20 +46,6 @@ public:
     void add_score(unsigned points) noexcept;
 
     /**
-     * @brief Get the center of the rectangle
-     * 
-     * @return Point 
-     */
-    Point get_center() const noexcept;
-
-    /**
-     * @brief Get the color of the score
-     * 
-     * @return Color 
-     */
-    Color get_color() const noexcept;
-
-    /**
      * @brief Set the score to a new value
      * 
      * @param new_score 
@@ -67,7 +53,6 @@ public:
     void set_score(unsigned new_score) noexcept;
 
 private:
-    Rectangle rectangle_;
     unsigned score_;
 };
 

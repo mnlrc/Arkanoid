@@ -6,6 +6,7 @@
  *
  * @details This file contains the definition of the Logger class, which is a
  * Singleton that saves all the logs in a file arkanoid.log
+ * This code was taken from the year project of 2024-2025 (Tetris Royale)
  */
 
 #pragma once

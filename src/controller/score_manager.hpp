@@ -10,7 +10,7 @@
 #define SCORE_MANAGER_HPP
 
 // #### Internal inclusions ####
-#include "../../log/logger.hpp"
+#include "../log/logger.hpp"
 
 // #### C++ inclusions ####
 #include <string>

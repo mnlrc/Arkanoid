@@ -188,9 +188,6 @@ private:
     PowerUp active_power_;
     std::vector<Laser> lasers_;
 
-    Color background_color_;
-    Color line_color_;
-
     Button end_button_; // idx 0 is the win text, idx 1 is the lose text
 
     /**
