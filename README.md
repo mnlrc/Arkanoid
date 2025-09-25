@@ -15,6 +15,10 @@
 ```
 # Project from the "Langages de Programmation 2" class at ULB in computer science (2024 - 2025)
 
-<img src="res/game1.png" width="1920" alt="Main Menu"/> <img src="res/game2.png" width="1920" alt="Level 1"/>
+The main menu:
+<img src="res/game1.png" width="1920" alt="Main Menu"/>
+
+The first level:
+<img src="res/game2.png" width="1920" alt="Level 1"/>
 
 ## General description
